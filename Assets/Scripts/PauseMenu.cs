@@ -96,14 +96,15 @@ public class PauseMenu : MonoBehaviour
 
     public void Confirm()
     {
-        Unpause();
         switch (selectedAction)
         {
             case "Restart":
+                Unpause();
                 GameInitialization.StartNewGame();
                 break;
             case "ExitToMenu":
-                //TODO
+                Unpause();
+                SceneManager.LoadScene("MainMenuScene");
                 break;
             case "ExitGame":
                 Application.Quit();

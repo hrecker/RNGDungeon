@@ -11,6 +11,7 @@ public class BattleController : MonoBehaviour
     private bool completed;
 
     public Text resultText;
+    public GameObject exitToMenuButton;
 
     public Text playerRollUI;
     public Text enemyRollUI;
@@ -28,6 +29,7 @@ public class BattleController : MonoBehaviour
 
     private void Start()
     {
+        exitToMenuButton.SetActive(false);
         CheckBattleComplete();
     }
 
@@ -101,6 +103,7 @@ public class BattleController : MonoBehaviour
             else
             {
                 resultText.text = "Defeat";
+                exitToMenuButton.SetActive(true);
             }
             completed = true;
         }
