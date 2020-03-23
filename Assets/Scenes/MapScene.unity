@@ -488,6 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDelay: 0.15
+  inventoryInput: {fileID: 537628959}
 --- !u!212 &1401362713
 SpriteRenderer:
   m_ObjectHideFlags: 0

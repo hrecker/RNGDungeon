@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float moveDelay = 0.5f;
+    public PauseAndInventoryInput inventoryInput;
     private float timer;
     private bool moving;
 
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
             targetPosition = startPosition + new Vector2(horizontal, vertical);
             moving = true;
             timer = 0.0f;
+            // Inventory can't be opened while moving
+            inventoryInput.SetInventoryEnabled(false);
         }
     }
 
@@ -80,6 +83,7 @@ public class PlayerController : MonoBehaviour
                     break;
                 case MoveResult.NOTHING:
                     // Check input as soon as move is finished so there's no jittering
+                    inventoryInput.SetInventoryEnabled(true);
                     CheckInput();
                     break;
             }

@@ -26,6 +26,11 @@ public class BattleController : MonoBehaviour
     public BattleStatus playerBattleStatus;
     public BattleStatus enemyBattleStatus;
 
+    private void Start()
+    {
+        CheckBattleComplete();
+    }
+
     void Update()
     {
         timer += Time.deltaTime;
@@ -79,6 +84,13 @@ public class BattleController : MonoBehaviour
         playerBattleStatus.applyResult(rollResult);
         enemyBattleStatus.applyResult(rollResult);
 
+        CheckBattleComplete();
+
+        UpdateRollUI(rollValues.Item1, rollValues.Item2, !completed);
+    }
+
+    private void CheckBattleComplete()
+    {
         // Disable when the battle is over, and display result
         if (playerBattleStatus.currentHealth <= 0 || enemyBattleStatus.currentHealth <= 0)
         {
@@ -92,8 +104,6 @@ public class BattleController : MonoBehaviour
             }
             completed = true;
         }
-
-        UpdateRollUI(rollValues.Item1, rollValues.Item2, !completed);
     }
 
     private void UpdateRollUI(int playerRoll, int enemyRoll, bool fade)

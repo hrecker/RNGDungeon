@@ -5,14 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class PauseAndInventoryInput : MonoBehaviour
 {
-    private bool inventoryEnabled;
+    private bool openInventoryEnabled;
     private bool isInInventory;
 
     void Start()
     {
         Scene active = SceneManager.GetActiveScene();
-        inventoryEnabled = active.name == "MapScene";
+        openInventoryEnabled = active.name == "MapScene";
         isInInventory = active.name == "InventoryScene";
+    }
+
+    public void SetInventoryEnabled(bool enabled)
+    {
+        openInventoryEnabled = enabled;
     }
 
     void Update()
@@ -21,7 +26,7 @@ public class PauseAndInventoryInput : MonoBehaviour
         {
             SceneManager.LoadScene("MapScene");
         }
-        else if (inventoryEnabled && Input.GetKeyDown(KeyCode.I))
+        else if (openInventoryEnabled && Input.GetKeyDown(KeyCode.I))
         {
             SceneManager.LoadScene("InventoryScene");
         }
