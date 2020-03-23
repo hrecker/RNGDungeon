@@ -1,11 +1,16 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BattleController : MonoBehaviour
 {
     public float rollInterval = 1.0f;
+    public float victoryDisplayTime = 2.0f;
     private float timer = 0.0f;
+    private bool completed;
+
+    public Text resultText;
 
     public Text playerRollUI;
     public Text enemyRollUI;
@@ -25,10 +30,20 @@ public class BattleController : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= rollInterval)
+        if (!completed && timer >= rollInterval)
         {
             Roll();
             timer = timer - rollInterval;
+        }
+        else if (completed && timer >= victoryDisplayTime)
+        {
+            enabled = false;
+            // If player wins, return to map. Otherwise just stop here.
+            //TODO game end screen etc.
+            if (playerBattleStatus.currentHealth > 0)
+            {
+                SceneManager.LoadScene("MapScene");
+            }
         }
     }
 
@@ -64,13 +79,21 @@ public class BattleController : MonoBehaviour
         playerBattleStatus.applyResult(rollResult);
         enemyBattleStatus.applyResult(rollResult);
 
-        // Disable when the battle is over
+        // Disable when the battle is over, and display result
         if (playerBattleStatus.currentHealth <= 0 || enemyBattleStatus.currentHealth <= 0)
         {
-            this.enabled = false;
+            if (playerBattleStatus.currentHealth > 0)
+            {
+                resultText.text = "Victory";
+            }
+            else
+            {
+                resultText.text = "Defeat";
+            }
+            completed = true;
         }
 
-        UpdateRollUI(rollValues.Item1, rollValues.Item2, this.enabled);
+        UpdateRollUI(rollValues.Item1, rollValues.Item2, !completed);
     }
 
     private void UpdateRollUI(int playerRoll, int enemyRoll, bool fade)

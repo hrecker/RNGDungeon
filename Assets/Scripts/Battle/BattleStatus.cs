@@ -9,10 +9,8 @@ public abstract class BattleStatus : MonoBehaviour
 
     private int lastRenderCurrentHealth;
 
-    private void Start()
+    void Start()
     {
-        //TODO loading health from non-battle scene
-        currentHealth = maxHealth;
         healthUIText = GetComponentInChildren<Text>();
         UpdateHealthText();
     }

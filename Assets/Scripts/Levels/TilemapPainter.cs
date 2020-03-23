@@ -11,7 +11,8 @@ public class TilemapPainter : MonoBehaviour
 
     void Awake()
     {
-        //TODO won't want to do this on awake, only when new level is needed
+        //TODO won't want to generate on awake, only when new level is needed - 
+        //ideally before loading the scene
         CurrentLevel.generateLevel(width, height);
         paintLevel(CurrentLevel.getTiles());
     }
@@ -27,7 +28,7 @@ public class TilemapPainter : MonoBehaviour
             {
                 CustomTile tile = ScriptableObject.CreateInstance<CustomTile>();
                 tile.Init(tiles[x, y]);
-                tileMap.SetTile(new Vector3Int(x - (xLength / 2), y - (yLength / 2), 0), tile);
+                tileMap.SetTile(new Vector3Int(x, y, 0), tile);
             }
         }
     }

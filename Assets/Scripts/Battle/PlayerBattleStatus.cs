@@ -2,6 +2,12 @@
 
 public class PlayerBattleStatus : BattleStatus
 {
+    void Awake()
+    {
+        currentHealth = PlayerStatus.Health;
+        maxHealth = PlayerStatus.MaxHealth;
+    }
+
     public override void applyResult(RollResult rollResult)
     {
         currentHealth -= rollResult.PlayerDamage;
@@ -9,5 +15,6 @@ public class PlayerBattleStatus : BattleStatus
         {
             currentHealth = 0;
         }
+        PlayerStatus.Health = currentHealth;
     }
 }
