@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseAndInventoryInput : MonoBehaviour
+public class InventoryInput : MonoBehaviour
 {
+    private PauseMenu pauseMenu;
     private bool openInventoryEnabled;
     private bool isInInventory;
 
     void Start()
     {
+        pauseMenu = FindObjectOfType<PauseMenu>();
         Scene active = SceneManager.GetActiveScene();
         openInventoryEnabled = active.name == "MapScene";
         isInInventory = active.name == "InventoryScene";
@@ -22,13 +24,22 @@ public class PauseAndInventoryInput : MonoBehaviour
 
     void Update()
     {
-        if (isInInventory && (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Escape)))
+        // Don't accept input while paused
+        if (pauseMenu.IsPaused())
         {
-            SceneManager.LoadScene("MapScene");
+            return;
         }
-        else if (openInventoryEnabled && Input.GetKeyDown(KeyCode.I))
+
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            SceneManager.LoadScene("InventoryScene");
+            if (isInInventory)
+            {
+                SceneManager.LoadScene("MapScene");
+            }
+            else if (openInventoryEnabled)
+            {
+                SceneManager.LoadScene("InventoryScene");
+            }
         }
     }
 }

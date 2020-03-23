@@ -12,11 +12,15 @@ public class StanceButton : MonoBehaviour
     private StanceButtonController buttonController;
     private Image buttonImage;
     private Text tooltip;
+    private Button button;
+    private PauseMenu pauseMenu;
 
     void Start()
     {
+        pauseMenu = FindObjectOfType<PauseMenu>();
         buttonController = GetComponentInParent<StanceButtonController>();
         buttonImage = GetComponent<Image>();
+        button = GetComponent<Button>();
         foreach (Text child in GetComponentsInChildren<Text>())
         {
             if (child.name == "Tooltip")
@@ -31,6 +35,12 @@ public class StanceButton : MonoBehaviour
         {
             OnSelected();
         }
+    }
+
+    private void Update()
+    {
+        // Disable button when paused
+        button.enabled = !pauseMenu.IsPaused();
     }
 
     public void OnSelected()

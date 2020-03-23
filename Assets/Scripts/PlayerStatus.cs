@@ -12,11 +12,16 @@ public class PlayerStatus
     {
         if (!Initialized)
         {
-            MaxHealth = 10;
-            Health = MaxHealth;
-            MapPosition = CurrentLevel.GetPlayerStartingPosition();
-            SelectedStance = "Neutral";
-            Initialized = true;
+            Restart();
         }
+    }
+
+    public static void Restart()
+    {
+        MaxHealth = 10;
+        Health = MaxHealth;
+        MapPosition = CurrentLevel.GetPlayerStartingPosition();
+        SelectedStance = "Neutral";
+        Initialized = true;
     }
 }

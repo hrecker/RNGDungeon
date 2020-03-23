@@ -6,22 +6,36 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float moveDelay = 0.5f;
-    public PauseAndInventoryInput inventoryInput;
+    public InventoryInput inventoryInput;
     private float timer;
     private bool moving;
+    private PauseMenu pauseMenu;
 
     private Vector2 startPosition;
     private Vector2 targetPosition;
 
+    // This is just for testing individually the map scene
+    private void Awake()
+    {
+        if (!GameInitialization.HasInitialized())
+        {
+            GameInitialization.StartNewGame();
+        }
+    }
+
     void Start()
     {
-        //TODO move player initialization to a better location
-        PlayerStatus.InitializeIfNecessary();
+        pauseMenu = FindObjectOfType<PauseMenu>();
         this.transform.position = PlayerStatus.MapPosition;
     }
 
     void Update()
     {
+        if (pauseMenu.IsPaused())
+        {
+            return;
+        }
+
         if (moving)
         {
             timer += Time.deltaTime;
