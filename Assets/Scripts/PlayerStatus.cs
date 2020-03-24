@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerStatus
 {
@@ -7,6 +8,8 @@ public class PlayerStatus
     public static int Health { get; set; }
     public static string SelectedStance { get; set; }
     public static bool Initialized { get; set; }
+    // Dictionary of item counts in inventory
+    public static Dictionary<Item, int> Inventory { get; set; }
 
     public static void InitializeIfNecessary()
     {
@@ -22,6 +25,10 @@ public class PlayerStatus
         Health = MaxHealth;
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
         SelectedStance = "Neutral";
+        Inventory = new Dictionary<Item, int>();
+        Inventory.Add(Cache.GetItem("HealthPotion"), 3);
+        Inventory.Add(Cache.GetItem("BlockingPotion"), 1);
+        Inventory.Add(Cache.GetItem("RecoilPotion"), 1);
         Initialized = true;
     }
 }

@@ -1,10 +1,37 @@
 {
     "items": [
         {
-            "name": "HealthPotion"
+            "name": "HealthPotion",
+            "tooltipText": "Heals 3 health",
+            "itemEffect": {
+                "playerHealthChange": 3,
+                "playerMaxRollChange": 0,
+                "playerMinRollChange": 0,
+                "rollBoundedEffect": 0,
+                "numRollsInEffect": 0
+            }
         },
         {
-            "name": "AggressionPotion"
+            "name": "BlockingPotion",
+            "tooltipText": "Blocks incoming damage for 3 turns",
+            "itemEffect": {
+                "playerHealthChange": 0,
+                "playerMaxRollChange": 0,
+                "playerMinRollChange": 0,
+                "rollBoundedEffect": 1,
+                "numRollsInEffect": 3
+            }
+        },
+        {
+            "name": "RecoilPotion",
+            "tooltipText": "Recoils 1 damage to enemy for 3 turns",
+            "itemEffect": {
+                "playerHealthChange": 0,
+                "playerMaxRollChange": 0,
+                "playerMinRollChange": 0,
+                "rollBoundedEffect": 2,
+                "numRollsInEffect": 3
+            }
         }
     ]
 }

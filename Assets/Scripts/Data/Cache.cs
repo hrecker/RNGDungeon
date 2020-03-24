@@ -11,6 +11,7 @@ public class Cache
     private static Dictionary<string, Item> items;
     private static Dictionary<string, Enemy> enemies;
     private static Dictionary<string, Ability> abilities;
+    private static Dictionary<string, Sprite> itemIcons;
 
     private static string levelsJsonPath = @"Levels/levels";
     private static string itemsJsonPath = @"Items/items";
@@ -35,6 +36,7 @@ public class Cache
         items = new Dictionary<string, Item>();
         enemies = new Dictionary<string, Enemy>();
         abilities = new Dictionary<string, Ability>();
+        itemIcons = new Dictionary<string, Sprite>();
 
         // Load JSON from resouce files
         TextAsset levelsFile = Resources.Load<TextAsset>(levelsJsonPath);
@@ -54,6 +56,7 @@ public class Cache
         foreach (Item item in itemsContainer.items)
         {
             items.Add(item.name, item);
+            itemIcons.Add(item.name, Resources.Load<Sprite>(@"Items/sprites/" + item.name));
         }
         foreach (Enemy enemy in enemiesContainer.enemies)
         {
@@ -79,6 +82,12 @@ public class Cache
     {
         Load();
         return items[name];
+    }
+
+    public static Sprite GetItemIcon(string name)
+    {
+        Load();
+        return itemIcons[name];
     }
 
     public static Enemy GetEnemy(string name)
@@ -124,8 +133,23 @@ public class Cache
             enemyEncounterRates = new float[] { 0.7f, 0.3f }
         });
         // Sample items
-        itemContainer.items.Add(new Item() { name = "HealthPotion" });
-        itemContainer.items.Add( new Item() { name = "AggressionPotion" });
+        itemContainer.items.Add(new Item() 
+        { 
+            name = "HealthPotion", 
+            itemEffect = new ItemEffect() 
+            { 
+                playerHealthChange = 3
+            } 
+        });
+        itemContainer.items.Add( new Item() 
+        { 
+            name = "BlockingPotion", 
+            itemEffect = new ItemEffect() 
+            { 
+                rollBoundedEffect = RollBoundedEffect.BLOCK,
+                numRollsInEffect = 3
+            }
+        });
         // Sample enemies
         enemyContainer.enemies.Add(new Enemy()
         {
@@ -145,11 +169,11 @@ public class Cache
         abilityContainer.abilities.Add(new Ability() { name = "Stalwart" });
         abilityContainer.abilities.Add(new Ability() { name = "HighRoller" });
 
-        string resourcesDevelopmentPath = @"C:\Users\henry\PTOGameJam\Assets\Resources\";
-        string levelJsonPath = resourcesDevelopmentPath + @"Levels\levels.json";
-        string itemJsonPath = resourcesDevelopmentPath + @"Items\items.json";
-        string enemyJsonPath = resourcesDevelopmentPath + @"Enemies\enemies.json";
-        string abilityJsonPath = resourcesDevelopmentPath + @"Abilities\abilities.json";
+        string outputPath = @"C:\Users\henry\SampleSerializedJson\";
+        string levelJsonPath = outputPath + "levels.json";
+        string itemJsonPath = outputPath + "items.json";
+        string enemyJsonPath = outputPath + "enemies.json";
+        string abilityJsonPath = outputPath + "abilities.json";
 
         // Write json files
         File.WriteAllText(levelJsonPath, JsonUtility.ToJson(levelContainer, true));
@@ -157,24 +181,6 @@ public class Cache
         File.WriteAllText(enemyJsonPath, JsonUtility.ToJson(enemyContainer, true));
         File.WriteAllText(abilityJsonPath, JsonUtility.ToJson(abilityContainer, true));
     }
-
-    private static string GetJson(IDictionary<object, object> dictionary)
-    {
-        string json = "{";
-        int i = 0;
-        foreach (object obj in dictionary.Values)
-        {
-            json += UnityEngine.JsonUtility.ToJson(obj, true);
-            if (i < dictionary.Values.Count - 1)
-            {
-                json += ",";
-            }
-            i++;
-        }
-        json += "}";
-        return json;
-    }
-
 }
 
 // Wrapper classes for serialization

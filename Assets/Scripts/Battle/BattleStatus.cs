@@ -29,5 +29,18 @@ public abstract class BattleStatus : MonoBehaviour
         lastRenderCurrentHealth = currentHealth;
     }
 
-    public abstract void applyResult(RollResult rollResult);
+    public abstract void ApplyResult(RollResult rollResult);
+
+    public virtual void ApplyHealthChange(int diff)
+    {
+        currentHealth += diff;
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
+        else if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
 }

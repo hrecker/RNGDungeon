@@ -11,7 +11,6 @@ public class StanceButton : MonoBehaviour
 
     private StanceButtonController buttonController;
     private Image buttonImage;
-    private Text tooltip;
     private Button button;
     private PauseMenu pauseMenu;
 
@@ -21,14 +20,6 @@ public class StanceButton : MonoBehaviour
         buttonController = GetComponentInParent<StanceButtonController>();
         buttonImage = GetComponent<Image>();
         button = GetComponent<Button>();
-        foreach (Text child in GetComponentsInChildren<Text>())
-        {
-            if (child.name == "Tooltip")
-            {
-                tooltip = child;
-                break;
-            }
-        }
         buttonController.RegisterStanceButton(this);
 
         if (stanceName == PlayerStatus.SelectedStance)
@@ -52,15 +43,5 @@ public class StanceButton : MonoBehaviour
     public void SetUnselected()
     {
         buttonImage.color = unselectedColor;
-    }
-
-    public void ShowTooltip()
-    {
-        tooltip.enabled = true;
-    }
-
-    public void HideTooltip()
-    {
-        tooltip.enabled = false;
     }
 }

@@ -8,13 +8,14 @@ public class PlayerBattleStatus : BattleStatus
         maxHealth = PlayerStatus.MaxHealth;
     }
 
-    public override void applyResult(RollResult rollResult)
+    public override void ApplyResult(RollResult rollResult)
     {
-        currentHealth -= rollResult.PlayerDamage;
-        if (currentHealth < 0)
-        {
-            currentHealth = 0;
-        }
+        ApplyHealthChange(-rollResult.PlayerDamage);
+    }
+
+    public override void ApplyHealthChange(int diff)
+    {
+        base.ApplyHealthChange(diff);
         PlayerStatus.Health = currentHealth;
     }
 }

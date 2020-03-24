@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -27,9 +28,12 @@ public class BattleController : MonoBehaviour
     public BattleStatus playerBattleStatus;
     public BattleStatus enemyBattleStatus;
 
+    private Dictionary<RollResultModifier, int> modsToAdd;
+
     private void Start()
     {
         exitToMenuButton.SetActive(false);
+        modsToAdd = new Dictionary<RollResultModifier, int>();
         CheckBattleComplete();
     }
 
@@ -65,6 +69,20 @@ public class BattleController : MonoBehaviour
             return;
         }
 
+        // If there are modifiers to add, add before the roll starts
+        foreach (RollResultModifier mod in modsToAdd.Keys)
+        {
+            if (mod.IsPlayer())
+            {
+                playerRollResultGenerator.AddModifier(mod, modsToAdd[mod]);
+            }
+            else
+            {
+                enemyRollResultGenerator.AddModifier(mod, modsToAdd[mod]);
+            }
+        }
+        modsToAdd.Clear();
+
         // Generate roll numeric values
         int playerInitial = playerRollGenerator.generateInitialRoll();
         int enemyInitial = enemyRollGenerator.generateInitialRoll();
@@ -83,8 +101,8 @@ public class BattleController : MonoBehaviour
         rollResult = playerRollResultGenerator.applyModifiers(rollResult);
 
         // Apply roll results
-        playerBattleStatus.applyResult(rollResult);
-        enemyBattleStatus.applyResult(rollResult);
+        playerBattleStatus.ApplyResult(rollResult);
+        enemyBattleStatus.ApplyResult(rollResult);
 
         CheckBattleComplete();
 
@@ -130,5 +148,34 @@ public class BattleController : MonoBehaviour
             playerRollUI.CrossFadeAlpha(0, rollInterval, false);
             enemyRollUI.CrossFadeAlpha(0, rollInterval, false);
         }
+    }
+
+    public bool ApplyPlayerItem(Item item)
+    {
+        if (completed)
+        {
+            return false;
+        }
+
+        PlayerStatus.Inventory[item]--;
+        if (item.itemEffect.rollBoundedEffect != RollBoundedEffect.NONE)
+        {
+            switch (item.itemEffect.rollBoundedEffect)
+            {
+                case RollBoundedEffect.BLOCK:
+                    modsToAdd.Add(new BlockingRollResultModifier(true), 
+                        item.itemEffect.numRollsInEffect);
+                    break;
+                case RollBoundedEffect.RECOIL:
+                    modsToAdd.Add(new RecoilRollResultModifer(true), 
+                        item.itemEffect.numRollsInEffect);
+                    break;
+            }
+        }
+        playerBattleStatus.ApplyHealthChange(item.itemEffect.playerHealthChange);
+        //TODO should roll buffs be bounded?
+        playerRollGenerator.minRoll += item.itemEffect.playerMinRollChange;
+        playerRollGenerator.maxRoll += item.itemEffect.playerMaxRollChange;
+        return true;
     }
 }
