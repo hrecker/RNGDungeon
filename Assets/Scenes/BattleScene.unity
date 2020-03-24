@@ -1152,6 +1152,7 @@ GameObject:
   - component: {fileID: 841298418}
   - component: {fileID: 841298417}
   - component: {fileID: 841298416}
+  - component: {fileID: 841298419}
   m_Layer: 5
   m_Name: Enemy
   m_TagString: Untagged
@@ -1255,6 +1256,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 0
+--- !u!114 &841298419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841298412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d41cf05b829b60459ecea3c53ed0e65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  batSprite: {fileID: 21300000, guid: 32e9ccff68d2f44469ab51c3de8bd7f7, type: 3}
+  slimeSprite: {fileID: 21300000, guid: 22c26b9b4e1ffc54f94e0e965c07055f, type: 3}
 --- !u!1 &904725843
 GameObject:
   m_ObjectHideFlags: 0

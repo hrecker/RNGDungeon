@@ -1,10 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CurrentLevel
 {
     private static TileType[,] tiles;
     private static Vector3 playerStartingPosition;
     private static float encounterRate = 0.1f;
+
+    public static string currentEnemyName = "Bat";
+    private static List<string> levelEnemies = 
+        new List<string>() { "Slime", "Bat" };
+    private static List<float> enemyEncounterChances = 
+        new List<float>() { 0.5f, 0.5f };
 
     public static void generateLevel(int width, int height)
     {
@@ -47,11 +54,33 @@ public class CurrentLevel
     {
         if (Random.value < encounterRate)
         {
+            SelectEnemy();
             return MoveResult.BATTLE;
         }
         else
         {
             return MoveResult.NOTHING;
+        }
+    }
+
+    private static void SelectEnemy()
+    {
+        float randomVal = Random.value;
+        float totalEncounterChance = 0;
+        currentEnemyName = "";
+        for (int i = 0; i < enemyEncounterChances.Count; i++)
+        {
+            totalEncounterChance += enemyEncounterChances[i];
+            if (randomVal <= totalEncounterChance)
+            {
+                currentEnemyName = levelEnemies[i];
+                break;
+            }
+        }
+
+        if (currentEnemyName == "")
+        {
+            currentEnemyName = levelEnemies[levelEnemies.Count - 1];
         }
     }
 }
