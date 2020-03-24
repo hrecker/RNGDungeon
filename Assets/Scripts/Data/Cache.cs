@@ -68,6 +68,10 @@ public class Cache
     public static Level GetLevel(int floor)
     {
         Load();
+        if (!levels.ContainsKey(floor))
+        {
+            return null;
+        }
         return levels[floor];
     }
 

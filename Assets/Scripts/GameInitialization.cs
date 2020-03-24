@@ -11,7 +11,8 @@ public class GameInitialization
 
     public static void StartNewGame()
     {
-        CurrentLevel.generateLevel(10, 10);
+        Level level1 = Cache.GetLevel(1);
+        CurrentLevel.InitLevel(level1);
         PlayerStatus.Restart();
         SceneManager.LoadScene("MapScene");
         hasInitialized = true;

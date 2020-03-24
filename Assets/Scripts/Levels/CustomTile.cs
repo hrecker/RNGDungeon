@@ -8,6 +8,7 @@ public class CustomTile : Tile
     private TileType type;
 
     public Sprite floor;
+    public Sprite stairs;
     public Sprite[] wallSprites;
 
     public void Init(TileType type)
@@ -21,6 +22,7 @@ public class CustomTile : Tile
             wallSprites[i] = (Sprite)wallSpriteObjects[i + 1];
         }
         floor = (Sprite)wallSpriteObjects[17];
+        stairs = (Sprite)wallSpriteObjects[18];
     }
 
     public TileType GetTileType()
@@ -30,7 +32,7 @@ public class CustomTile : Tile
 
     public override void RefreshTile(Vector3Int location, ITilemap tilemap)
     {
-        if (type == TileType.FLOOR)
+        if (type != TileType.WALL)
         {
             tilemap.RefreshTile(location);
         }
@@ -53,6 +55,11 @@ public class CustomTile : Tile
         if (type == TileType.FLOOR)
         {
             tileData.sprite = floor;
+            return;
+        }
+        if (type == TileType.STAIRS)
+        {
+            tileData.sprite = stairs;
             return;
         }
 

@@ -11,6 +11,12 @@
             "baseMinRoll": 2,
             "baseMaxRoll": 2,
             "maxHealth": 4
+        },
+        {
+            "name": "Ghost",
+            "baseMinRoll": 3,
+            "baseMaxRoll": 4,
+            "maxHealth": 3
         }
     ]
 }

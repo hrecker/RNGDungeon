@@ -95,6 +95,13 @@ public class PlayerController : MonoBehaviour
                 case MoveResult.BATTLE:
                     SceneManager.LoadScene("BattleScene");
                     break;
+                case MoveResult.STAIRSDOWN:
+                    // Update player position to new level map position
+                    PlayerStatus.MapPosition = CurrentLevel.GetPlayerStartingPosition();
+                    this.transform.position = PlayerStatus.MapPosition;
+                    inventoryInput.SetInventoryEnabled(true);
+                    CheckInput();
+                    break;
                 case MoveResult.NOTHING:
                     // Check input as soon as move is finished so there's no jittering
                     inventoryInput.SetInventoryEnabled(true);

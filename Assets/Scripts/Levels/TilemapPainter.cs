@@ -14,10 +14,11 @@ public class TilemapPainter : MonoBehaviour
         //TODO won't want to generate on awake, only when new level is needed - 
         //ideally before loading the scene
         //CurrentLevel.generateLevel(width, height);
-        paintLevel(CurrentLevel.getTiles());
+        //paintLevel(CurrentLevel.getTiles());
+        CurrentLevel.SetTilemapPainter(this);
     }
 
-    private void paintLevel(TileType[,] tiles)
+    public void PaintLevel(TileType[,] tiles)
     {
         tileMap.ClearAllTiles();
         int xLength = tiles.GetLength(0);

@@ -5,25 +5,36 @@ public class CurrentLevel
 {
     private static TileType[,] tiles;
     private static Vector3 playerStartingPosition;
-    private static float encounterRate = 0.1f;
+    private static TilemapPainter tilemapPainter;
 
     public static string currentEnemyName = "Bat";
-    private static List<string> levelEnemies = 
-        new List<string>() { "Slime", "Bat" };
-    private static List<float> enemyEncounterChances = 
-        new List<float>() { 0.5f, 0.5f };
+    private static Level activeLevel;
 
-    public static void generateLevel(int width, int height)
+    public static void SetTilemapPainter(TilemapPainter painter)
     {
-        tiles = new TileType[width, height];
-        //TODO actual generation logic
-        for (int x = 0; x < width; x++)
+        tilemapPainter = painter;
+        if (tiles != null)
         {
-            for (int y = 0; y < height; y++)
+            tilemapPainter.PaintLevel(tiles);
+        }
+    }
+
+    public static void InitLevel(Level level)
+    {
+        activeLevel = level;
+        tiles = new TileType[level.width, level.height];
+        //TODO actual generation logic
+        for (int x = 0; x < level.width; x++)
+        {
+            for (int y = 0; y < level.height; y++)
             {
-                if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
+                if (x == 0 || y == 0 || x == level.width - 1 || y == level.height - 1)
                 {
                     tiles[x, y] = TileType.WALL;
+                }
+                else if (x == level.width - 2 && y == level.height - 2)
+                {
+                    tiles[x, y] = TileType.STAIRS;
                 }
                 else
                 {
@@ -32,6 +43,10 @@ public class CurrentLevel
             }
         }
         playerStartingPosition = new Vector3(1.5f, 1.5f, 0);
+        if (tilemapPainter != null)
+        {
+            tilemapPainter.PaintLevel(tiles);
+        }
     }
 
     public static Vector3 GetPlayerStartingPosition()
@@ -52,7 +67,18 @@ public class CurrentLevel
 
     public static MoveResult Move(Vector2 targetPosition)
     {
-        if (Random.value < encounterRate)
+        if (tiles[(int) targetPosition.x, (int) targetPosition.y] == TileType.STAIRS)
+        {
+            //TODO load next level
+            Level nextLevel = Cache.GetLevel(activeLevel.floor + 1);
+            if (nextLevel != null)
+            {
+                InitLevel(nextLevel);
+                return MoveResult.STAIRSDOWN;
+            }
+        }
+
+        if (Random.value < activeLevel.encounterRate)
         {
             SelectEnemy();
             return MoveResult.BATTLE;
@@ -68,19 +94,19 @@ public class CurrentLevel
         float randomVal = Random.value;
         float totalEncounterChance = 0;
         currentEnemyName = "";
-        for (int i = 0; i < enemyEncounterChances.Count; i++)
+        for (int i = 0; i < activeLevel.enemyEncounterRates.Length; i++)
         {
-            totalEncounterChance += enemyEncounterChances[i];
+            totalEncounterChance += activeLevel.enemyEncounterRates[i];
             if (randomVal <= totalEncounterChance)
             {
-                currentEnemyName = levelEnemies[i];
+                currentEnemyName = activeLevel.enemies[i];
                 break;
             }
         }
 
         if (currentEnemyName == "")
         {
-            currentEnemyName = levelEnemies[levelEnemies.Count - 1];
+            currentEnemyName = activeLevel.enemies[0];
         }
     }
 }

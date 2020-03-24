@@ -7,5 +7,6 @@ using UnityEngine;
 public enum MoveResult
 {
     NOTHING,
+    STAIRSDOWN,
     BATTLE
 }
