@@ -1,0 +1,16 @@
+{
+    "enemies": [
+        {
+            "name": "Bat",
+            "baseMinRoll": 1,
+            "baseMaxRoll": 3,
+            "maxHealth": 5
+        },
+        {
+            "name": "Slime",
+            "baseMinRoll": 2,
+            "baseMaxRoll": 2,
+            "maxHealth": 4
+        }
+    ]
+}

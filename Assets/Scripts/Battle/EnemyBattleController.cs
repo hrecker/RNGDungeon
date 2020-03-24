@@ -9,12 +9,8 @@ public class EnemyBattleController : MonoBehaviour
     private EnemyRollGenerator rollGenerator;
     private RollResultGenerator rollResultGenerator;
     private Image enemySprite;
+    private Enemy enemy;
 
-    //TODO load from resources eventually
-    public Sprite batSprite;
-    public Sprite slimeSprite;
-
-    // Start is called before the first frame update
     void Awake()
     {
         status = GetComponent<EnemyBattleStatus>();
@@ -22,21 +18,13 @@ public class EnemyBattleController : MonoBehaviour
         rollResultGenerator = GetComponent<RollResultGenerator>();
         enemySprite = GetComponent<Image>();
 
-        if (CurrentLevel.currentEnemyName == "Bat")
-        {
-            status.maxHealth = 5;
-            status.currentHealth = status.maxHealth;
-            rollGenerator.minRoll = 1;
-            rollGenerator.maxRoll = 3;
-            enemySprite.sprite = batSprite;
-        }
-        else if (CurrentLevel.currentEnemyName == "Slime")
-        {
-            status.maxHealth = 4;
-            status.currentHealth = status.maxHealth;
-            rollGenerator.minRoll = 2;
-            rollGenerator.maxRoll = 2;
-            enemySprite.sprite = slimeSprite;
-        }
+        enemy = Cache.GetEnemy(CurrentLevel.currentEnemyName);
+        status.maxHealth = enemy.maxHealth;
+        status.currentHealth = status.maxHealth;
+        rollGenerator.minRoll = enemy.baseMinRoll;
+        rollGenerator.maxRoll = enemy.baseMaxRoll;
+
+        // Load sprite
+        enemySprite.sprite = Resources.Load<Sprite>(@"Enemies/sprites/" + enemy.name);
     }
 }
