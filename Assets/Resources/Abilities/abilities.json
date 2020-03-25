@@ -1,10 +1,12 @@
 {
     "abilities": [
         {
-            "name": "Stalwart"
+            "name": "Stalwart",
+            "description": "Chance to survive when reduced to zero health"
         },
         {
-            "name": "HighRoller"
+            "name": "HighRoller",
+            "description": "Chance to double any roll"
         }
     ]
 }

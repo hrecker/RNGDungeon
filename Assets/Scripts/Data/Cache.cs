@@ -12,6 +12,8 @@ public class Cache
     private static Dictionary<string, Enemy> enemies;
     private static Dictionary<string, Ability> abilities;
     private static Dictionary<string, Sprite> itemIcons;
+    private static Dictionary<string, Sprite> abilityIcons;
+    private static Dictionary<string, Sprite> enemyIcons;
 
     private static string levelsJsonPath = @"Levels/levels";
     private static string itemsJsonPath = @"Items/items";
@@ -37,6 +39,8 @@ public class Cache
         enemies = new Dictionary<string, Enemy>();
         abilities = new Dictionary<string, Ability>();
         itemIcons = new Dictionary<string, Sprite>();
+        enemyIcons = new Dictionary<string, Sprite>();
+        abilityIcons = new Dictionary<string, Sprite>();
 
         // Load JSON from resouce files
         TextAsset levelsFile = Resources.Load<TextAsset>(levelsJsonPath);
@@ -61,10 +65,12 @@ public class Cache
         foreach (Enemy enemy in enemiesContainer.enemies)
         {
             enemies.Add(enemy.name, enemy);
+            enemyIcons.Add(enemy.name, Resources.Load<Sprite>(@"Enemies/sprites/" + enemy.name));
         }
         foreach (Ability ability in abilitiesContainer.abilities)
         {
             abilities.Add(ability.name, ability);
+            abilityIcons.Add(ability.name, Resources.Load<Sprite>(@"Abilities/sprites/" + ability.name));
         }
     }
 
@@ -101,10 +107,45 @@ public class Cache
         return enemies[name];
     }
 
+    public static Sprite GetEnemyIcon(string name)
+    {
+        Load();
+        return enemyIcons[name];
+    }
+
     public static Ability GetAbility(string name)
     {
         Load();
         return abilities[name];
+    }
+
+    public static Sprite GetAbilityIcon(string name)
+    {
+        Load();
+        return abilityIcons[name];
+    }
+
+    public static List<Ability> GetRandomAbilities(int numAbilities, List<Ability> disallowed)
+    {
+        List<Ability> chosenAbilities = new List<Ability>();
+        List<Ability> allAbilities = new List<Ability>(abilities.Values);
+        // Don't select abilities from the disallowed list
+        foreach (Ability disallow in disallowed)
+        {
+            allAbilities.Remove(disallow);
+        }
+        for (int i = 0; i < numAbilities; i++)
+        {
+            Ability chosen = allAbilities[UnityEngine.Random.Range(0, allAbilities.Count)];
+            // If there are enough abilities, prevent duplicates
+            if (allAbilities.Count > 1)
+            {
+                allAbilities.Remove(chosen);
+            }
+            chosenAbilities.Add(chosen);
+        }
+
+        return chosenAbilities;
     }
 
 

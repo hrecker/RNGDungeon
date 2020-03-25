@@ -25,6 +25,6 @@ public class EnemyBattleController : MonoBehaviour
         rollGenerator.maxRoll = enemy.baseMaxRoll;
 
         // Load sprite
-        enemySprite.sprite = Resources.Load<Sprite>(@"Enemies/sprites/" + enemy.name);
+        enemySprite.sprite = Cache.GetEnemyIcon(enemy.name);
     }
 }

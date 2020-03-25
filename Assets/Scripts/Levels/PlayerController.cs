@@ -9,8 +9,10 @@ public class PlayerController : MonoBehaviour
     public InventoryInput inventoryInput;
     public GameObject pickupPanel;
     public GameObject itemIconPrefab;
+    public AbilitySelectionUI abilitySelection;
     private float timer;
     private bool moving;
+    private bool selectingAbility;
     private PauseMenu pauseMenu;
 
     private Vector2 startPosition;
@@ -29,12 +31,13 @@ public class PlayerController : MonoBehaviour
     {
         pauseMenu = FindObjectOfType<PauseMenu>();
         pickupPanel.SetActive(false);
+        abilitySelection.gameObject.SetActive(false);
         this.transform.position = PlayerStatus.MapPosition;
     }
 
     void Update()
     {
-        if (pauseMenu.IsPaused())
+        if (pauseMenu.IsPaused() || selectingAbility)
         {
             return;
         }
@@ -102,8 +105,14 @@ public class PlayerController : MonoBehaviour
                     // Update player position to new level map position
                     PlayerStatus.MapPosition = CurrentLevel.GetPlayerStartingPosition();
                     this.transform.position = PlayerStatus.MapPosition;
-                    inventoryInput.SetInventoryEnabled(true);
-                    CheckInput();
+
+                    // Display ability selection UI
+                    //TODO rule out abilities the player already has
+                    abilitySelection.gameObject.SetActive(true);
+                    List<Ability> availableAbilities = Cache.GetRandomAbilities(3, PlayerStatus.Abilities);
+                    abilitySelection.DisplayAbilitySelection(availableAbilities[0],
+                        availableAbilities[1], availableAbilities[2]);
+                    selectingAbility = true;
                     break;
                 case MoveResult.ITEMPICKUP:
                     Item pickedUp = Cache.GetRandomItem();
@@ -130,5 +139,14 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void SelectAbility(Ability ability)
+    {
+        PlayerStatus.Abilities.Add(ability);
+        abilitySelection.gameObject.SetActive(false);
+        // Re-enable input
+        selectingAbility = false;
+        inventoryInput.SetInventoryEnabled(true);
     }
 }

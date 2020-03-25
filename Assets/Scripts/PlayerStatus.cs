@@ -10,6 +10,7 @@ public class PlayerStatus
     public static bool Initialized { get; set; }
     // Dictionary of item counts in inventory
     public static Dictionary<Item, int> Inventory { get; set; }
+    public static List<Ability> Abilities { get; set; }
 
     public static void InitializeIfNecessary()
     {
@@ -29,6 +30,7 @@ public class PlayerStatus
         Inventory.Add(Cache.GetItem("HealthPotion"), 3);
         Inventory.Add(Cache.GetItem("BlockingPotion"), 1);
         Inventory.Add(Cache.GetItem("RecoilPotion"), 1);
+        Abilities = new List<Ability>();
         Initialized = true;
     }
 

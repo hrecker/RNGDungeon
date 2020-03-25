@@ -4,4 +4,5 @@
 public class Ability
 {
     public string name;
+    public string description;
 }
