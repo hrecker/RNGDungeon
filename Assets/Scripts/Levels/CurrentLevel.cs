@@ -4,11 +4,15 @@ using UnityEngine;
 public class CurrentLevel
 {
     private static TileType[,] tiles;
+    private static Dictionary<Vector2Int, Item> floorItems;
     private static Vector3 playerStartingPosition;
     private static TilemapPainter tilemapPainter;
 
     public static string currentEnemyName = "Bat";
     private static Level activeLevel;
+    public static string[] drops = new string[] { "HealthPotion", "BlockingPotion" };
+    private static int dropsReceivedOnActiveLevel;
+    private static int maxDropsPerFloor = 5;
 
     public static void SetTilemapPainter(TilemapPainter painter)
     {
@@ -21,6 +25,8 @@ public class CurrentLevel
 
     public static void InitLevel(Level level)
     {
+        dropsReceivedOnActiveLevel = 0;
+        floorItems = new Dictionary<Vector2Int, Item>();
         activeLevel = level;
         tiles = new TileType[level.width, level.height];
         //TODO actual generation logic
@@ -42,6 +48,20 @@ public class CurrentLevel
                 }
             }
         }
+
+        // Generate item locations
+        int itemsGenerated = 0;
+        while (itemsGenerated < activeLevel.floorItems)
+        {
+            int randomX = Random.Range(1, activeLevel.width - 2);
+            int randomY = Random.Range(1, activeLevel.height - 2);
+            if (tiles[randomX, randomY] == TileType.FLOOR)
+            {
+                tiles[randomX, randomY] = TileType.ITEM;
+                itemsGenerated++;
+            }
+        }
+
         playerStartingPosition = new Vector3(1.5f, 1.5f, 0);
         if (tilemapPainter != null)
         {
@@ -67,15 +87,26 @@ public class CurrentLevel
 
     public static MoveResult Move(Vector2 targetPosition)
     {
-        if (tiles[(int) targetPosition.x, (int) targetPosition.y] == TileType.STAIRS)
+        int tileX = (int)targetPosition.x;
+        int tileY = (int)targetPosition.y;
+        if (tiles[tileX, tileY] == TileType.STAIRS)
         {
-            //TODO load next level
             Level nextLevel = Cache.GetLevel(activeLevel.floor + 1);
             if (nextLevel != null)
             {
                 InitLevel(nextLevel);
                 return MoveResult.STAIRSDOWN;
             }
+        }
+
+        if (tiles[tileX, tileY] == TileType.ITEM)
+        {
+            tiles[tileX, tileY] = TileType.FLOOR;
+            if (tilemapPainter != null)
+            {
+                tilemapPainter.PaintLevel(tiles);
+            }
+            return MoveResult.ITEMPICKUP;
         }
 
         if (Random.value < activeLevel.encounterRate)
@@ -109,11 +140,24 @@ public class CurrentLevel
             currentEnemyName = activeLevel.enemies[0];
         }
     }
+
+    public static string GetEnemyItemDrop()
+    {
+        float dropRate = (maxDropsPerFloor - dropsReceivedOnActiveLevel) / 
+            (float)maxDropsPerFloor * activeLevel.enemyItemDropRate;
+        if (Random.value < dropRate)
+        {
+            dropsReceivedOnActiveLevel++;
+            return drops[Random.Range(0, drops.Length)];
+        }
+        return null;
+    }
 }
 
 public enum TileType
 {
     FLOOR,
     WALL,
-    STAIRS
+    STAIRS,
+    ITEM
 }

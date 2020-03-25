@@ -31,4 +31,17 @@ public class PlayerStatus
         Inventory.Add(Cache.GetItem("RecoilPotion"), 1);
         Initialized = true;
     }
+
+    public static void AddItem(Item item)
+    {
+        int currentCount;
+        if (Inventory.TryGetValue(item, out currentCount))
+        {
+            Inventory[item] = currentCount + 1;
+        }
+        else
+        {
+            Inventory.Add(item, 1);
+        }
+    }
 }

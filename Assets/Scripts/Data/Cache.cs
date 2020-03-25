@@ -84,6 +84,11 @@ public class Cache
         return items[name];
     }
 
+    public static Item GetRandomItem()
+    {
+        return items.ElementAt(UnityEngine.Random.Range(0, items.Count)).Value;
+    }
+
     public static Sprite GetItemIcon(string name)
     {
         Load();

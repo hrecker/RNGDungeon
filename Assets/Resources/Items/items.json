@@ -2,6 +2,7 @@
     "items": [
         {
             "name": "HealthPotion",
+            "inBattleItem": true,
             "tooltipText": "Heals 3 health",
             "itemEffect": {
                 "playerHealthChange": 3,
@@ -13,6 +14,7 @@
         },
         {
             "name": "BlockingPotion",
+            "inBattleItem": true,
             "tooltipText": "Blocks incoming damage for 3 turns",
             "itemEffect": {
                 "playerHealthChange": 0,
@@ -24,6 +26,7 @@
         },
         {
             "name": "RecoilPotion",
+            "inBattleItem": true,
             "tooltipText": "Recoils 1 damage to enemy for 3 turns",
             "itemEffect": {
                 "playerHealthChange": 0,
@@ -31,6 +34,18 @@
                 "playerMinRollChange": 0,
                 "rollBoundedEffect": 2,
                 "numRollsInEffect": 3
+            }
+        },
+        {
+            "name": "Shortsword",
+            "inBattleItem": false,
+            "tooltipText": "+1 min roll, +1 max roll",
+            "itemEffect": {
+                "playerHealthChange": 0,
+                "playerMaxRollChange": 1,
+                "playerMinRollChange": 1,
+                "rollBoundedEffect": 0,
+                "numRollsInEffect": 0
             }
         }
     ]

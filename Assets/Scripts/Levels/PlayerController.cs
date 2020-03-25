@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     public float moveDelay = 0.5f;
     public InventoryInput inventoryInput;
+    public GameObject pickupPanel;
+    public GameObject itemIconPrefab;
     private float timer;
     private bool moving;
     private PauseMenu pauseMenu;
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         pauseMenu = FindObjectOfType<PauseMenu>();
+        pickupPanel.SetActive(false);
         this.transform.position = PlayerStatus.MapPosition;
     }
 
@@ -99,6 +102,24 @@ public class PlayerController : MonoBehaviour
                     // Update player position to new level map position
                     PlayerStatus.MapPosition = CurrentLevel.GetPlayerStartingPosition();
                     this.transform.position = PlayerStatus.MapPosition;
+                    inventoryInput.SetInventoryEnabled(true);
+                    CheckInput();
+                    break;
+                case MoveResult.ITEMPICKUP:
+                    Item pickedUp = Cache.GetRandomItem();
+                    PlayerStatus.AddItem(pickedUp);
+                    // Update UI
+                    pickupPanel.SetActive(true);
+                    ItemIcon currentPickupIcon = pickupPanel.GetComponentInChildren<ItemIcon>();
+                    if (currentPickupIcon != null)
+                    {
+                        Destroy(currentPickupIcon.gameObject);
+                    }
+                    GameObject newIcon = BattleItemUI.InstantiateItemIcon(pickedUp, 
+                        itemIconPrefab, pickupPanel.transform, false);
+                    newIcon.GetComponent<ItemIcon>().ItemCount = 1;
+                    pickupPanel.GetComponent<SelfDeactivate>().ResetTimer();
+                    // Re-enable input
                     inventoryInput.SetInventoryEnabled(true);
                     CheckInput();
                     break;

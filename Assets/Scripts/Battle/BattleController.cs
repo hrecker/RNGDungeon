@@ -13,6 +13,8 @@ public class BattleController : MonoBehaviour
 
     public Text resultText;
     public GameObject exitToMenuButton;
+    public GameObject itemIconPrefab;
+    public GameObject itemDropPanel;
 
     public Text playerRollUI;
     public Text enemyRollUI;
@@ -33,6 +35,7 @@ public class BattleController : MonoBehaviour
     private void Start()
     {
         exitToMenuButton.SetActive(false);
+        itemDropPanel.SetActive(false);
         modsToAdd = new Dictionary<RollResultModifier, int>();
         CheckBattleComplete();
     }
@@ -117,6 +120,7 @@ public class BattleController : MonoBehaviour
             if (playerBattleStatus.currentHealth > 0)
             {
                 resultText.text = "Victory";
+                GenerateItemDrop();
             }
             else
             {
@@ -177,5 +181,19 @@ public class BattleController : MonoBehaviour
         playerRollGenerator.minRoll += item.itemEffect.playerMinRollChange;
         playerRollGenerator.maxRoll += item.itemEffect.playerMaxRollChange;
         return true;
+    }
+
+    public void GenerateItemDrop()
+    {
+        string itemDrop = CurrentLevel.GetEnemyItemDrop();
+        if (itemDrop != null)
+        {
+            Item item = Cache.GetItem(itemDrop);
+            PlayerStatus.AddItem(item);
+            itemDropPanel.SetActive(true);
+            GameObject newIcon = BattleItemUI.InstantiateItemIcon(item, 
+                itemIconPrefab, itemDropPanel.transform, false);
+            newIcon.GetComponent<ItemIcon>().ItemCount = 1;
+        }
     }
 }

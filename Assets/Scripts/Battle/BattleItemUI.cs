@@ -31,19 +31,28 @@ public class BattleItemUI : MonoBehaviour
 
         foreach (Item item in PlayerStatus.Inventory.Keys)
         {
-            if (PlayerStatus.Inventory[item] > 0)
+            if (PlayerStatus.Inventory[item] > 0 && item.inBattleItem)
             {
-                GameObject newIcon = Instantiate(itemIconPrefab, itemIconParent.transform);
+                GameObject newIcon = InstantiateItemIcon(item, 
+                    itemIconPrefab, itemIconParent.transform, true);
                 itemIcons.Add(item, newIcon);
-                Image itemImage = newIcon.GetComponent<Image>();
-                Text tooltip = newIcon.GetComponentInChildren<Text>();
-                ItemIcon icon = newIcon.GetComponent<ItemIcon>();
-                itemImage.sprite = Cache.GetItemIcon(item.name);
-                tooltip.text = item.tooltipText;
-                icon.ItemName = item.name;
-                icon.ItemCount = PlayerStatus.Inventory[item];
             }
         }
+    }
+
+    public static GameObject InstantiateItemIcon(Item item, 
+        GameObject itemIconPrefab, Transform itemIconParent, bool enableClick)
+    {
+        GameObject newIcon = Instantiate(itemIconPrefab, itemIconParent);
+        Image itemImage = newIcon.GetComponent<Image>();
+        Text tooltip = newIcon.GetComponentInChildren<Text>();
+        ItemIcon icon = newIcon.GetComponent<ItemIcon>();
+        itemImage.sprite = Cache.GetItemIcon(item.name);
+        tooltip.text = item.tooltipText;
+        icon.ItemName = item.name;
+        icon.ItemCount = PlayerStatus.Inventory[item];
+        icon.clickEnabled = enableClick;
+        return newIcon;
     }
 
     private void Render()

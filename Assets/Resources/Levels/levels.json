@@ -4,7 +4,9 @@
             "floor": 1,
             "width": 10,
             "height": 10,
+            "floorItems": 2,
             "encounterRate": 0.1,
+            "enemyItemDropRate": 0.3,
             "enemyEncounterRates": [
                 0.5,
                 0.5
@@ -18,7 +20,9 @@
             "floor": 2,
             "width": 15,
             "height": 15,
+            "floorItems": 3,
             "encounterRate": 0.1,
+            "enemyItemDropRate": 0.4,
             "enemyEncounterRates": [
                 0.6,
                 0.2,

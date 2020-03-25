@@ -10,16 +10,20 @@ public class ItemIcon : MonoBehaviour
     public string ItemName { get; set; }
     public int ItemCount { get; set; }
     public Text itemCountText;
+    public bool clickEnabled = true;
 
     private void Start()
     {
-        itemUIController = GameObject.Find("ItemScrollPanel").GetComponent<BattleItemUI>();
+        if (clickEnabled)
+        {
+            itemUIController = GameObject.Find("ItemScrollPanel").GetComponent<BattleItemUI>();
+        }
         UpdateItemCount();
     }
 
     public void OnClick()
     {
-        if (itemUIController.UseItem(ItemName))
+        if (clickEnabled && itemUIController.UseItem(ItemName))
         {
             ItemCount--;
             UpdateItemCount();

@@ -8,5 +8,6 @@ public enum MoveResult
 {
     NOTHING,
     STAIRSDOWN,
+    ITEMPICKUP,
     BATTLE
 }
