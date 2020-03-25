@@ -87,6 +87,10 @@ public class Cache
     public static Item GetItem(string name)
     {
         Load();
+        if (name == null || !items.ContainsKey(name))
+        {
+            return null;
+        }
         return items[name];
     }
 

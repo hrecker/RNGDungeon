@@ -161,7 +161,7 @@ public class BattleController : MonoBehaviour
             return false;
         }
 
-        PlayerStatus.Inventory[item]--;
+        PlayerStatus.UseItem(item);
         if (item.itemEffect.rollBoundedEffect != RollBoundedEffect.NONE)
         {
             switch (item.itemEffect.rollBoundedEffect)

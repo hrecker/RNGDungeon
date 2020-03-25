@@ -55,7 +55,8 @@ public class CurrentLevel
         {
             int randomX = Random.Range(1, activeLevel.width - 2);
             int randomY = Random.Range(1, activeLevel.height - 2);
-            if (tiles[randomX, randomY] == TileType.FLOOR)
+            if (tiles[randomX, randomY] == TileType.FLOOR && 
+                (randomX != 1 || randomY != 1))
             {
                 tiles[randomX, randomY] = TileType.ITEM;
                 itemsGenerated++;

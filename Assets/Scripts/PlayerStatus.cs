@@ -10,6 +10,9 @@ public class PlayerStatus
     public static bool Initialized { get; set; }
     // Dictionary of item counts in inventory
     public static Dictionary<Item, int> Inventory { get; set; }
+    public static Item EquippedWeapon { get; set; }
+    public static Item EquippedArmor { get; set; }
+    public static List<Item> EquippedTrinkets { get; set; }
     public static List<Ability> Abilities { get; set; }
 
     public static void InitializeIfNecessary()
@@ -30,7 +33,10 @@ public class PlayerStatus
         Inventory.Add(Cache.GetItem("HealthPotion"), 3);
         Inventory.Add(Cache.GetItem("BlockingPotion"), 1);
         Inventory.Add(Cache.GetItem("RecoilPotion"), 1);
+        Inventory.Add(Cache.GetItem("Shortsword"), 1);
         Abilities = new List<Ability>();
+        EquippedTrinkets = new List<Item>();
+        EquippedWeapon = Cache.GetItem("Shortsword");
         Initialized = true;
     }
 
@@ -44,6 +50,18 @@ public class PlayerStatus
         else
         {
             Inventory.Add(item, 1);
+        }
+    }
+
+    public static void UseItem(Item item)
+    {
+        if (Inventory.ContainsKey(item))
+        {
+            Inventory[item]--;
+        }
+        if (Inventory[item] <= 0)
+        {
+            Inventory.Remove(item);
         }
     }
 }

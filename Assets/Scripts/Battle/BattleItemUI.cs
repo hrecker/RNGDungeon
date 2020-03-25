@@ -31,7 +31,9 @@ public class BattleItemUI : MonoBehaviour
 
         foreach (Item item in PlayerStatus.Inventory.Keys)
         {
-            if (PlayerStatus.Inventory[item] > 0 && item.inBattleItem)
+            if (PlayerStatus.Inventory[item] > 0 && 
+                (item.itemType == ItemType.USABLE_ANYTIME || 
+                item.itemType == ItemType.USABLE_ONLY_IN_BATTLE))
             {
                 GameObject newIcon = InstantiateItemIcon(item, 
                     itemIconPrefab, itemIconParent.transform, true);
@@ -93,7 +95,7 @@ public class BattleItemUI : MonoBehaviour
         }
 
         // if player has no more of the given item, remove the icon and rerender
-        if (PlayerStatus.Inventory[found] <= 0)
+        if (!PlayerStatus.Inventory.ContainsKey(found) || PlayerStatus.Inventory[found] <= 0)
         {
             Destroy(itemIcons[found]);
             itemIcons.Remove(found);
