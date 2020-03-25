@@ -436,6 +436,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textPrefab: {fileID: 1593962159659508132, guid: 5fb4ed2c3a7702c4498ebd27fb3756c5,
     type: 3}
+  selectableTextPrefab: {fileID: 4955514045700002723, guid: 0f47656edb6e40b40912d5d2854feb9d,
+    type: 3}
   redHealthBar: {fileID: 1400870253}
   healthText: {fileID: 404930992}
   statusBase: {fileID: 1283815465}
