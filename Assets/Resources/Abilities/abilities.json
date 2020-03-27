@@ -2,11 +2,19 @@
     "abilities": [
         {
             "name": "Stalwart",
-            "description": "Chance to survive when reduced to zero health"
+            "description": "Chance to survive when reduced to zero health",
+            "modType": 4,
+            "modEffect": {
+                "baseModTriggerChance": 0.2
+            }
         },
         {
             "name": "HighRoller",
-            "description": "Chance to double any roll"
+            "description": "Chance to double any roll",
+            "modType": 5,
+            "modEffect": {
+                "baseModTriggerChance": 0.1
+            }
         }
     ]
 }

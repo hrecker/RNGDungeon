@@ -200,7 +200,7 @@ public class InventoryUIController : MonoBehaviour
 
     private void UpdateAbilityUI()
     {
-        UpdateListUI(PlayerStatus.Abilities.Select(a => a.name).ToList(), abilityBase);
+        UpdateListUI(PlayerStatus.GetAbilities().Select(a => a.name).ToList(), abilityBase);
     }
 
     private void UpdateInventoryUI()

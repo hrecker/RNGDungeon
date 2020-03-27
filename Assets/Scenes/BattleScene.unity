@@ -456,7 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e410b9a7fffa94d81f56308a8d6354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stanceName: Defensive
+  stanceName: 1
   selectedColor: {r: 0, g: 1, b: 0, a: 1}
   unselectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &131293011
@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e410b9a7fffa94d81f56308a8d6354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stanceName: Aggressive
+  stanceName: 2
   selectedColor: {r: 0, g: 1, b: 0, a: 1}
   unselectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &620962003
@@ -1462,7 +1462,6 @@ GameObject:
   - component: {fileID: 841298414}
   - component: {fileID: 841298418}
   - component: {fileID: 841298417}
-  - component: {fileID: 841298416}
   - component: {fileID: 841298419}
   m_Layer: 5
   m_Name: Enemy
@@ -1527,18 +1526,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 841298412}
   m_CullTransparentMesh: 0
---- !u!114 &841298416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841298412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33687f511d256624db860022703c8a5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &841298417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1836,7 +1823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e410b9a7fffa94d81f56308a8d6354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stanceName: Neutral
+  stanceName: 0
   selectedColor: {r: 0, g: 1, b: 0, a: 1}
   unselectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1069025147
@@ -3147,7 +3134,6 @@ GameObject:
   - component: {fileID: 1792967438}
   - component: {fileID: 1792967442}
   - component: {fileID: 1792967441}
-  - component: {fileID: 1792967440}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -3211,18 +3197,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1792967436}
   m_CullTransparentMesh: 0
---- !u!114 &1792967440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1792967436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33687f511d256624db860022703c8a5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1792967441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3236,7 +3210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minRoll: 1
-  maxRoll: 6
+  maxRoll: 4
 --- !u!114 &1792967442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3605,8 +3579,6 @@ MonoBehaviour:
   previousEnemyRoll2UI: {fileID: 1816249787}
   playerRollGenerator: {fileID: 1792967441}
   enemyRollGenerator: {fileID: 841298417}
-  playerRollResultGenerator: {fileID: 1792967440}
-  enemyRollResultGenerator: {fileID: 841298416}
   playerBattleStatus: {fileID: 1792967442}
   enemyBattleStatus: {fileID: 841298418}
 --- !u!1 &2093419577

@@ -7,7 +7,6 @@ public class EnemyBattleController : MonoBehaviour
 {
     private EnemyBattleStatus status;
     private EnemyRollGenerator rollGenerator;
-    private RollResultGenerator rollResultGenerator;
     private Image enemySprite;
     private Enemy enemy;
 
@@ -15,7 +14,6 @@ public class EnemyBattleController : MonoBehaviour
     {
         status = GetComponent<EnemyBattleStatus>();
         rollGenerator = GetComponent<EnemyRollGenerator>();
-        rollResultGenerator = GetComponent<RollResultGenerator>();
         enemySprite = GetComponent<Image>();
 
         enemy = Cache.GetEnemy(CurrentLevel.currentEnemyName);

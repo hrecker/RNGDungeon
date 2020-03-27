@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
                     // Display ability selection UI
                     //TODO rule out abilities the player already has
                     abilitySelection.gameObject.SetActive(true);
-                    List<Ability> availableAbilities = Cache.GetRandomAbilities(3, PlayerStatus.Abilities);
+                    List<Ability> availableAbilities = Cache.GetRandomAbilities(3, PlayerStatus.GetAbilities());
                     abilitySelection.DisplayAbilitySelection(availableAbilities[0],
                         availableAbilities[1], availableAbilities[2]);
                     selectingAbility = true;
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
 
     public void SelectAbility(Ability ability)
     {
-        PlayerStatus.Abilities.Add(ability);
+        PlayerStatus.AddAbility(ability);
         abilitySelection.gameObject.SetActive(false);
         // Re-enable input
         selectingAbility = false;

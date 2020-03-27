@@ -10,11 +10,6 @@ public class StanceButtonController : MonoBehaviour
     private void Awake()
     {
         buttons = new List<StanceButton>();
-        // For testing
-        if (PlayerStatus.SelectedStance == null)
-        {
-            PlayerStatus.SelectedStance = "Neutral";
-        }
     }
 
     public void RegisterStanceButton(StanceButton button)

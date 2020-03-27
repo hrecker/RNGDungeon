@@ -2,54 +2,32 @@
     "items": [
         {
             "name": "HealthPotion",
-            "itemType": 0,
-            "tooltipText": "Heals 3 health",
-            "equipSlot": 0,
-            "itemEffect": {
-                "playerHealthChange": 3,
-                "playerMaxRollChange": 0,
-                "playerMinRollChange": 0,
-                "rollBoundedEffect": 0,
-                "numRollsInEffect": 0
-            }
+            "playerHealthChange": 3,
+            "tooltipText": "Heals 3 health"
         },
         {
             "name": "BlockingPotion",
             "itemType": 1,
             "tooltipText": "Blocks incoming damage for 3 turns",
-            "equipSlot": 0,
-            "itemEffect": {
-                "playerHealthChange": 0,
-                "playerMaxRollChange": 0,
-                "playerMinRollChange": 0,
-                "rollBoundedEffect": 1,
-                "numRollsInEffect": 3
-            }
+            "numRollsInEffect": 3,
+            "modType": 2
         },
         {
             "name": "RecoilPotion",
             "itemType": 1,
             "tooltipText": "Recoils 1 damage to enemy for 3 turns",
-            "equipSlot": 0,
-            "itemEffect": {
-                "playerHealthChange": 0,
-                "playerMaxRollChange": 0,
-                "playerMinRollChange": 0,
-                "rollBoundedEffect": 2,
-                "numRollsInEffect": 3
-            }
+            "numRollsInEffect": 3,
+            "modType": 3
         },
         {
             "name": "Shortsword",
             "itemType": 2,
             "tooltipText": "+1 min roll, +1 max roll",
             "equipSlot": 1,
-            "itemEffect": {
-                "playerHealthChange": 0,
-                "playerMaxRollChange": 1,
+            "modType": 1,
+            "modEffect": {
                 "playerMinRollChange": 1,
-                "rollBoundedEffect": 0,
-                "numRollsInEffect": 0
+                "playerMaxRollChange": 1
             }
         }
     ]

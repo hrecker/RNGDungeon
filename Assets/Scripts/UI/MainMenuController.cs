@@ -11,6 +11,7 @@ public class MainMenuController : MonoBehaviour
 
     public void ExitGame()
     {
+        Cache.SerializeExample();
         Application.Quit();
     }
 }

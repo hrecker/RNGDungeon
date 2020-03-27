@@ -5,15 +5,50 @@ public class PlayerStatus
 {
     public static Vector3 MapPosition { get; set; }
     public static int MaxHealth { get; set; }
-    public static int Health { get; set; }
-    public static string SelectedStance { get; set; }
+    private static int health;
+    public static int Health { get { return health; } 
+        set
+        {
+            health = value;
+            if (health < 0)
+            {
+                health = 0;
+            }
+            else if (health > MaxHealth)
+            {
+                health = MaxHealth;
+            }
+        }
+    }
+    public static Stance SelectedStance { get; set; }
     public static bool Initialized { get; set; }
     // Dictionary of item counts in inventory
     public static Dictionary<Item, int> Inventory { get; set; }
-    public static Item EquippedWeapon { get; set; }
+
+    private static Item equippedWeapon;
+    private static Modifier weaponMod;
+    public static Item EquippedWeapon { 
+        get { return equippedWeapon; } 
+        set
+        {
+            equippedWeapon = value;
+            //TODO this will potentially be pretty inefficient in the inventory screen
+            if (weaponMod != null)
+            {
+                Mods.DeregisterModifier(weaponMod);
+            }
+            if (equippedWeapon != null)
+            {
+                weaponMod = equippedWeapon.CreateItemModifier();
+                Mods.RegisterModifier(weaponMod, equippedWeapon.modEffect.modPriority);
+            }
+        }
+    }
     public static Item EquippedArmor { get; set; }
     public static List<Item> EquippedTrinkets { get; set; }
-    public static List<Ability> Abilities { get; set; }
+    private static List<Ability> abilities;
+
+    public static PlayerModifiers Mods { get; private set; }
 
     public static void InitializeIfNecessary()
     {
@@ -27,14 +62,15 @@ public class PlayerStatus
     {
         MaxHealth = 10;
         Health = MaxHealth;
+        Mods = new PlayerModifiers();
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
-        SelectedStance = "Neutral";
+        SelectedStance = Stance.NEUTRAL;
         Inventory = new Dictionary<Item, int>();
         Inventory.Add(Cache.GetItem("HealthPotion"), 3);
         Inventory.Add(Cache.GetItem("BlockingPotion"), 1);
         Inventory.Add(Cache.GetItem("RecoilPotion"), 1);
         Inventory.Add(Cache.GetItem("Shortsword"), 1);
-        Abilities = new List<Ability>();
+        abilities = new List<Ability>();
         EquippedTrinkets = new List<Item>();
         EquippedWeapon = Cache.GetItem("Shortsword");
         Initialized = true;
@@ -63,5 +99,17 @@ public class PlayerStatus
         {
             Inventory.Remove(item);
         }
+    }
+
+    public static List<Ability> GetAbilities()
+    {
+        return new List<Ability>(abilities);
+    }
+
+    public static void AddAbility(Ability ability)
+    {
+        abilities.Add(ability);
+        Mods.RegisterModifier(ability.CreateAbilityModifier(), 
+            ability.modEffect.modPriority);
     }
 }

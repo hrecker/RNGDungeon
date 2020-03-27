@@ -5,4 +5,25 @@ public class Ability
 {
     public string name;
     public string description;
+    public ModType modType;
+    public ModEffect modEffect;
+
+    public Modifier CreateAbilityModifier()
+    {
+        Modifier result = null;
+        switch (modType)
+        {
+            case ModType.HIGHROLLER:
+                result = new HighRollerRollValueModifier();
+                break;
+            case ModType.STALWART:
+                result = new StalwartRollResultModifier();
+                break;
+        }
+        if (result != null)
+        {
+            result.triggerChance = modEffect.baseModTriggerChance;
+        }
+        return result;
+    }
 }

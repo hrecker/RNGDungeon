@@ -25,18 +25,18 @@ public class BattleController : MonoBehaviour
 
     public RollGenerator playerRollGenerator;
     public RollGenerator enemyRollGenerator;
-    public RollResultGenerator playerRollResultGenerator;
-    public RollResultGenerator enemyRollResultGenerator;
     public BattleStatus playerBattleStatus;
     public BattleStatus enemyBattleStatus;
 
-    private Dictionary<RollResultModifier, int> modsToAdd;
+    private List<Item> itemModsToAdd;
+    private List<Modifier> currentRollBoundedMods;
 
     private void Start()
     {
         exitToMenuButton.SetActive(false);
         itemDropPanel.SetActive(false);
-        modsToAdd = new Dictionary<RollResultModifier, int>();
+        itemModsToAdd = new List<Item>();
+        currentRollBoundedMods = new List<Modifier>();
         CheckBattleComplete();
     }
 
@@ -64,35 +64,34 @@ public class BattleController : MonoBehaviour
     private void Roll()
     {
         if (playerRollGenerator == null || enemyRollGenerator == null ||
-            playerRollResultGenerator == null || enemyRollResultGenerator == null ||
             playerBattleStatus == null || enemyBattleStatus == null)
         {
-            Debug.LogWarning("Skipping roll - one or more rollgenerators, " +
-                "rollresultgenerators, or battlestatuses are null");
+            Debug.LogWarning("Skipping roll - one or more rollgenerators " +
+                "or battlestatuses are null");
             return;
         }
 
         // If there are modifiers to add, add before the roll starts
-        foreach (RollResultModifier mod in modsToAdd.Keys)
+        foreach (Item itemMod in itemModsToAdd)
         {
-            if (mod.IsPlayer())
-            {
-                playerRollResultGenerator.AddModifier(mod, modsToAdd[mod]);
-            }
-            else
-            {
-                enemyRollResultGenerator.AddModifier(mod, modsToAdd[mod]);
-            }
+            //TODO implement priority
+            Modifier mod = itemMod.CreateItemModifier();
+            PlayerStatus.Mods.RegisterModifier(mod, itemMod.modEffect.modPriority);
+            currentRollBoundedMods.Add(mod);
         }
-        modsToAdd.Clear();
+        itemModsToAdd.Clear();
 
         // Generate roll numeric values
         int playerInitial = playerRollGenerator.generateInitialRoll();
         int enemyInitial = enemyRollGenerator.generateInitialRoll();
         Tuple<int, int> rollValues = new Tuple<int, int>(playerInitial, enemyInitial);
         // Apply enemy mods first, then player mods to get final roll values
-        rollValues = enemyRollGenerator.applyPostRollModifiers(rollValues);
-        rollValues = playerRollGenerator.applyPostRollModifiers(rollValues);
+        // TODO enemy mods
+        foreach (RollValueModifier mod in PlayerStatus.Mods.GetRollValueModifiers())
+        {
+            rollValues = mod.apply(rollValues.Item1, rollValues.Item2);
+            DecrementAndDeregisterIfNecessary(mod);
+        }
 
         // Generate roll results
         int playerDamage = Math.Max(0, rollValues.Item2 - rollValues.Item1);
@@ -100,8 +99,12 @@ public class BattleController : MonoBehaviour
         RollResult rollResult = new RollResult 
         { PlayerDamage = playerDamage, EnemyDamage = enemyDamage };
         // Again apply enemy result mods forst, then player
-        rollResult = enemyRollResultGenerator.applyModifiers(rollResult);
-        rollResult = playerRollResultGenerator.applyModifiers(rollResult);
+        //TODO enemy mods
+        foreach (RollResultModifier mod in PlayerStatus.Mods.GetRollResultModifiers())
+        {
+            rollResult = mod.apply(rollResult);
+            DecrementAndDeregisterIfNecessary(mod);
+        }
 
         // Apply roll results
         playerBattleStatus.ApplyResult(rollResult);
@@ -117,6 +120,12 @@ public class BattleController : MonoBehaviour
         // Disable when the battle is over, and display result
         if (playerBattleStatus.currentHealth <= 0 || enemyBattleStatus.currentHealth <= 0)
         {
+            // End any roll-bounded modifiers
+            foreach (Modifier mod in currentRollBoundedMods)
+            {
+                mod.DeregisterSelf();
+            }
+
             if (playerBattleStatus.currentHealth > 0)
             {
                 resultText.text = "Victory";
@@ -128,6 +137,18 @@ public class BattleController : MonoBehaviour
                 exitToMenuButton.SetActive(true);
             }
             completed = true;
+        }
+    }
+
+    public static void DecrementAndDeregisterIfNecessary(Modifier mod)
+    {
+        if (mod.isRollBounded)
+        {
+            mod.numRollsRemaining--;
+            if (mod.numRollsRemaining <= 0)
+            {
+                mod.DeregisterSelf();
+            }
         }
     }
 
@@ -162,24 +183,14 @@ public class BattleController : MonoBehaviour
         }
 
         PlayerStatus.UseItem(item);
-        if (item.itemEffect.rollBoundedEffect != RollBoundedEffect.NONE)
+        if (item.modType != ModType.NONE)
         {
-            switch (item.itemEffect.rollBoundedEffect)
-            {
-                case RollBoundedEffect.BLOCK:
-                    modsToAdd.Add(new BlockingRollResultModifier(true), 
-                        item.itemEffect.numRollsInEffect);
-                    break;
-                case RollBoundedEffect.RECOIL:
-                    modsToAdd.Add(new RecoilRollResultModifer(true), 
-                        item.itemEffect.numRollsInEffect);
-                    break;
-            }
+            itemModsToAdd.Add(item);
         }
-        playerBattleStatus.ApplyHealthChange(item.itemEffect.playerHealthChange);
-        //TODO should roll buffs be bounded?
-        playerRollGenerator.minRoll += item.itemEffect.playerMinRollChange;
-        playerRollGenerator.maxRoll += item.itemEffect.playerMaxRollChange;
+        else
+        {
+            item.ApplyEffect();
+        }
         return true;
     }
 

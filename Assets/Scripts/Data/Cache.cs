@@ -185,19 +185,25 @@ public class Cache
         // Sample items
         itemContainer.items.Add(new Item() 
         { 
-            name = "HealthPotion", 
-            itemEffect = new ItemEffect() 
-            { 
-                playerHealthChange = 3
-            } 
+            name = "HealthPotion",
+            playerHealthChange = 3,
+            itemType = ItemType.USABLE_ANYTIME,
         });
         itemContainer.items.Add( new Item() 
         { 
-            name = "BlockingPotion", 
-            itemEffect = new ItemEffect() 
-            { 
-                rollBoundedEffect = RollBoundedEffect.BLOCK,
-                numRollsInEffect = 3
+            name = "BlockingPotion",
+            modType = ModType.BLOCK,
+            numRollsInEffect = 3,
+        });
+        itemContainer.items.Add(new Item()
+        {
+            name = "Shortsword",
+            modType = ModType.WEAPON,
+            modEffect = new ModEffect()
+            {
+                modPriority = 0,
+                playerMinRollChange = 1,
+                playerMaxRollChange = 1,
             }
         });
         // Sample enemies
@@ -216,8 +222,24 @@ public class Cache
             baseMaxRoll = 2,
         });
         // Sample abilities
-        abilityContainer.abilities.Add(new Ability() { name = "Stalwart" });
-        abilityContainer.abilities.Add(new Ability() { name = "HighRoller" });
+        abilityContainer.abilities.Add(new Ability() 
+        { 
+            name = "Stalwart",
+            modType = ModType.STALWART,
+            modEffect = new ModEffect()
+            {
+                baseModTriggerChance = 0.2f
+            }
+        });
+        abilityContainer.abilities.Add(new Ability() 
+        { 
+            name = "HighRoller",
+            modType = ModType.HIGHROLLER,
+            modEffect = new ModEffect()
+            {
+                baseModTriggerChance = 0.1f
+            }
+        });
 
         string outputPath = @"C:\Users\henry\SampleSerializedJson\";
         string levelJsonPath = outputPath + "levels.json";

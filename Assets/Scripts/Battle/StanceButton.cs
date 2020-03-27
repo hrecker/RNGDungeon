@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StanceButton : MonoBehaviour
 {
-    public string stanceName;
+    public Stance stanceName;
     public Color selectedColor = Color.green;
     public Color unselectedColor = Color.white;
 

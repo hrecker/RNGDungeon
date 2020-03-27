@@ -3,63 +3,57 @@ using UnityEngine;
 
 public class PlayerRollGenerator : RollGenerator
 {
-    //TODO stances
-    private string currentStance;
+    private Stance currentStance;
 
     private void Start()
     {
         currentStance = PlayerStatus.SelectedStance;
     }
 
-    public void SetStance(string stanceName)
+    public void SetStance(Stance stance)
     {
-        this.currentStance = stanceName;
-        PlayerStatus.SelectedStance = stanceName;
-    }
-
-    public override Tuple<int, int> applyPostRollModifiers(Tuple<int, int> playerEnemyRolls)
-    {
-        //TODO
-        return playerEnemyRolls;
+        this.currentStance = stance;
+        PlayerStatus.SelectedStance = stance;
     }
 
     public override int generateInitialRoll()
     {
-        return generateBasicRoll(getMinRoll(), getMaxRoll());
+        int min = getMinRoll();
+        int max = getMaxRoll();
+        foreach (RollGenerationModifier mod in PlayerStatus.Mods.GetRollGenerationModifiers())
+        {
+            Tuple<int, int> modified = mod.apply(min, max, PlayerStatus.SelectedStance);
+            min = modified.Item1;
+            max = modified.Item2;
+            BattleController.DecrementAndDeregisterIfNecessary(mod);
+        }
+        return generateBasicRoll(min, max);
     }
 
     private int getMinRoll()
     {
-        //TODO probably will want stance numbers to be in some configurable location outside of code
-        if (currentStance == null || currentStance == "Neutral")
+        switch (currentStance)
         {
-            return minRoll;
-        }
-        else if (currentStance == "Defensive")
-        {
-            return minRoll + 1;
-        }
-        else if (currentStance == "Aggressive")
-        {
-            return minRoll - 1;
+            case Stance.NEUTRAL:
+                return minRoll;
+            case Stance.DEFENSIVE:
+                return minRoll + 1;
+            case Stance.AGGRESSIVE:
+                return minRoll - 1;
         }
         return minRoll;
     }
 
     private int getMaxRoll()
     {
-        //TODO probably will want stance numbers to be in some configurable location outside of code
-        if (currentStance == null || currentStance == "Neutral")
+        switch (currentStance)
         {
-            return maxRoll;
-        }
-        else if (currentStance == "Defensive")
-        {
-            return maxRoll - 1;
-        }
-        else if (currentStance == "Aggressive")
-        {
-            return maxRoll + 1;
+            case Stance.NEUTRAL:
+                return maxRoll;
+            case Stance.DEFENSIVE:
+                return maxRoll - 1;
+            case Stance.AGGRESSIVE:
+                return maxRoll + 1;
         }
         return maxRoll;
     }
