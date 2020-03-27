@@ -15,7 +15,7 @@ public abstract class BattleStatus : MonoBehaviour
         UpdateHealthText();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (lastRenderCurrentHealth != currentHealth)
         {

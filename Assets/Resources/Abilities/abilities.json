@@ -5,6 +5,7 @@
             "description": "Chance to survive when reduced to zero health",
             "modType": 4,
             "modEffect": {
+                "modPriority": 3,
                 "baseModTriggerChance": 0.2
             }
         },

@@ -4,8 +4,13 @@ public class PlayerBattleStatus : BattleStatus
 {
     void Awake()
     {
-        currentHealth = PlayerStatus.Health;
-        maxHealth = PlayerStatus.MaxHealth;
+        UpdateBattleStatusHealth();
+    }
+
+    protected override void Update()
+    {
+        UpdateBattleStatusHealth();
+        base.Update();
     }
 
     public override void ApplyResult(RollResult rollResult)
@@ -16,6 +21,11 @@ public class PlayerBattleStatus : BattleStatus
     public override void ApplyHealthChange(int diff)
     {
         PlayerStatus.Health += diff;
+        UpdateBattleStatusHealth();
+    }
+
+    private void UpdateBattleStatusHealth()
+    {
         currentHealth = PlayerStatus.Health;
         maxHealth = PlayerStatus.MaxHealth;
     }
