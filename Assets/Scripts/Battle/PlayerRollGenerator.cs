@@ -37,7 +37,7 @@ public class PlayerRollGenerator : RollGenerator
             case Stance.NEUTRAL:
                 return minRoll;
             case Stance.DEFENSIVE:
-                return minRoll + 1;
+                return Math.Min(minRoll + 1, maxRoll);
             case Stance.AGGRESSIVE:
                 return minRoll - 1;
         }
@@ -51,7 +51,7 @@ public class PlayerRollGenerator : RollGenerator
             case Stance.NEUTRAL:
                 return maxRoll;
             case Stance.DEFENSIVE:
-                return maxRoll - 1;
+                return Math.Max(maxRoll - 1, minRoll);
             case Stance.AGGRESSIVE:
                 return maxRoll + 1;
         }

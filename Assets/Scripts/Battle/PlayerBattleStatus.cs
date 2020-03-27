@@ -15,7 +15,7 @@ public class PlayerBattleStatus : BattleStatus
 
     public override void ApplyHealthChange(int diff)
     {
-        PlayerStatus.Health = currentHealth;
+        PlayerStatus.Health += diff;
         currentHealth = PlayerStatus.Health;
         maxHealth = PlayerStatus.MaxHealth;
     }
