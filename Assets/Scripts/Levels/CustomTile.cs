@@ -54,6 +54,11 @@ public class CustomTile : Tile
 
     public override void GetTileData(Vector3Int location, ITilemap tilemap, ref TileData tileData)
     {
+        if (type == TileType.NONE)
+        {
+            tileData.sprite = null;
+            return;
+        }
         if (type == TileType.FLOOR)
         {
             tileData.sprite = floor;
@@ -89,7 +94,8 @@ public class CustomTile : Tile
         CustomTile tile = (CustomTile) tilemap.GetTile(position);
         if (tile != null)
         {
-            return tile.GetTileType() == TileType.WALL;
+            return tile.GetTileType() == TileType.WALL || 
+                tile.GetTileType() == TileType.NONE;
         }
         else
         {

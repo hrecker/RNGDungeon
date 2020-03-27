@@ -74,7 +74,6 @@ public class BattleController : MonoBehaviour
         // If there are modifiers to add, add before the roll starts
         foreach (Item itemMod in itemModsToAdd)
         {
-            //TODO implement priority
             Modifier mod = itemMod.CreateItemModifier();
             PlayerStatus.Mods.RegisterModifier(mod, itemMod.modEffect.modPriority);
             currentRollBoundedMods.Add(mod);

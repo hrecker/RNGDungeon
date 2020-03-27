@@ -4,8 +4,9 @@
 public class Level
 {
     public int floor;
-    public int width;
-    public int height;
+    public int roomWidth;
+    public int roomHeight;
+    public int numRooms;
     public int floorItems;
     public float enemyItemDropRate;
     public float encounterRate;

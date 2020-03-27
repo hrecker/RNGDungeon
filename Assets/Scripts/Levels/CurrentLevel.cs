@@ -28,42 +28,12 @@ public class CurrentLevel
         dropsReceivedOnActiveLevel = 0;
         floorItems = new Dictionary<Vector2Int, Item>();
         activeLevel = level;
-        tiles = new TileType[level.width, level.height];
-        //TODO actual generation logic
-        for (int x = 0; x < level.width; x++)
-        {
-            for (int y = 0; y < level.height; y++)
-            {
-                if (x == 0 || y == 0 || x == level.width - 1 || y == level.height - 1)
-                {
-                    tiles[x, y] = TileType.WALL;
-                }
-                else if (x == level.width - 2 && y == level.height - 2)
-                {
-                    tiles[x, y] = TileType.STAIRS;
-                }
-                else
-                {
-                    tiles[x, y] = TileType.FLOOR;
-                }
-            }
-        }
 
-        // Generate item locations
-        int itemsGenerated = 0;
-        while (itemsGenerated < activeLevel.floorItems)
-        {
-            int randomX = Random.Range(1, activeLevel.width - 2);
-            int randomY = Random.Range(1, activeLevel.height - 2);
-            if (tiles[randomX, randomY] == TileType.FLOOR && 
-                (randomX != 1 || randomY != 1))
-            {
-                tiles[randomX, randomY] = TileType.ITEM;
-                itemsGenerated++;
-            }
-        }
+        LevelGenerator generator = new LevelGenerator(activeLevel);
+        generator.GenerateLevel();
+        tiles = generator.GetTiles();
+        playerStartingPosition = generator.GetPlayerStartingPosition();
 
-        playerStartingPosition = new Vector3(1.5f, 1.5f, 0);
         if (tilemapPainter != null)
         {
             tilemapPainter.PaintLevel(tiles);
@@ -157,6 +127,7 @@ public class CurrentLevel
 
 public enum TileType
 {
+    NONE,
     FLOOR,
     WALL,
     STAIRS,

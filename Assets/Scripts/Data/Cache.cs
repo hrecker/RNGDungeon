@@ -167,8 +167,9 @@ public class Cache
         levelContainer.levels.Add(new Level()
         {
             floor = 1,
-            height = 10,
-            width = 10,
+            roomHeight = 6,
+            roomWidth = 6,
+            numRooms = 8,
             encounterRate = 0.1f,
             enemies = new string[] { "Bat", "Slime" },
             enemyEncounterRates = new float[] { 0.5f, 0.5f }
@@ -176,8 +177,9 @@ public class Cache
         levelContainer.levels.Add(new Level()
         {
             floor = 2,
-            height = 15,
-            width = 10,
+            roomHeight = 8,
+            roomWidth = 7,
+            numRooms = 11,
             encounterRate = 0.15f,
             enemies = new string[] { "Bat", "Slime" },
             enemyEncounterRates = new float[] { 0.7f, 0.3f }
