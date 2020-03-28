@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class WeaponRollGenerationModifier : RollGenerationModifier
+public class WeaponRollGenerationModifier : Modifier, IRollGenerationModifier
 {
     private int minRollDiff;
     private int maxRollDiff;
@@ -14,10 +11,15 @@ public class WeaponRollGenerationModifier : RollGenerationModifier
         this.maxRollDiff = maxRollDiff;
     }
 
-    public override Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll, Stance currentStance)
+    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll, Stance currentStance)
     {
         initialMinRoll += minRollDiff;
         initialMaxRoll += maxRollDiff;
         return new Tuple<int, int>(initialMinRoll, initialMaxRoll);
+    }
+
+    public override void DeregisterSelf()
+    {
+        PlayerStatus.Mods.DeregisterModifier((IRollGenerationModifier)this);
     }
 }

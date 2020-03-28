@@ -1,15 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class StalwartRollResultModifier : RollResultModifier
+﻿public class StalwartRollResultModifier : Modifier, IRollResultModifier
 {
-    public override RollResult apply(RollResult initial)
+    public RollResult apply(RollResult initial)
     {
         if (initial.PlayerDamage >= PlayerStatus.Health && RollTrigger())
         {
             initial.PlayerDamage--;
         }
         return initial;
+    }
+
+    public override void DeregisterSelf()
+    {
+        PlayerStatus.Mods.DeregisterModifier((IRollResultModifier)this);
     }
 }

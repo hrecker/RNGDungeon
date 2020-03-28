@@ -20,12 +20,12 @@ public class PlayerRollGenerator : RollGenerator
     {
         int min = getMinRoll();
         int max = getMaxRoll();
-        foreach (RollGenerationModifier mod in PlayerStatus.Mods.GetRollGenerationModifiers())
+        foreach (IRollGenerationModifier mod in PlayerStatus.Mods.GetRollGenerationModifiers())
         {
             Tuple<int, int> modified = mod.apply(min, max, PlayerStatus.SelectedStance);
             min = modified.Item1;
             max = modified.Item2;
-            BattleController.DecrementAndDeregisterIfNecessary(mod);
+            BattleController.DecrementAndDeregisterIfNecessary((Modifier)mod);
         }
         return generateBasicRoll(min, max);
     }

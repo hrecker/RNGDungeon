@@ -5,98 +5,100 @@ using UnityEngine;
 public class PlayerModifiers
 {
     // Registered modifiers by priority
-    private SortedDictionary<int, List<RollGenerationModifier>> rollGenMods;
-    private SortedDictionary<int, List<RollResultModifier>> rollResultMods;
-    private SortedDictionary<int, List<RollValueModifier>> rollValueMods;
+    private SortedDictionary<int, List<IRollGenerationModifier>> rollGenMods;
+    private SortedDictionary<int, List<IRollResultModifier>> rollResultMods;
+    private SortedDictionary<int, List<IRollValueModifier>> rollValueMods;
 
     public PlayerModifiers()
     {
-        rollGenMods = new SortedDictionary<int, List<RollGenerationModifier>>();
-        rollResultMods = new SortedDictionary<int, List<RollResultModifier>>();
-        rollValueMods = new SortedDictionary<int, List<RollValueModifier>>();
+        rollGenMods = new SortedDictionary<int, List<IRollGenerationModifier>>();
+        rollResultMods = new SortedDictionary<int, List<IRollResultModifier>>();
+        rollValueMods = new SortedDictionary<int, List<IRollValueModifier>>();
     }
 
-    public List<RollGenerationModifier> GetRollGenerationModifiers()
+    public List<IRollGenerationModifier> GetRollGenerationModifiers()
     {
         return GetModifiers(rollGenMods);
     }
 
-    public List<RollResultModifier> GetRollResultModifiers()
+    public List<IRollResultModifier> GetRollResultModifiers()
     {
         return GetModifiers(rollResultMods);
     }
 
-    public List<RollValueModifier> GetRollValueModifiers()
+    public List<IRollValueModifier> GetRollValueModifiers()
     {
         return GetModifiers(rollValueMods);
     }
 
     public void RegisterModifier(Modifier mod, int priority)
     {
-        if (mod is RollGenerationModifier)
+        bool registered = false;
+        if (mod is IRollGenerationModifier)
         {
-            RegisterModifier((RollGenerationModifier)mod, priority);
+            registered = true;
+            RegisterModifier((IRollGenerationModifier)mod, priority);
         }
-        else if (mod is RollResultModifier)
+        if (mod is IRollResultModifier)
         {
-            RegisterModifier((RollResultModifier)mod, priority);
+            registered = true;
+            RegisterModifier((IRollResultModifier)mod, priority);
         }
-        else if (mod is RollValueModifier)
+        if (mod is IRollValueModifier)
         {
-            RegisterModifier((RollValueModifier)mod, priority);
+            registered = true;
+            RegisterModifier((IRollValueModifier)mod, priority);
         }
-        else
+        if (!registered)
         {
             throw new System.Exception("Invalid modification type?");
         }
     }
 
-    public void RegisterModifier(RollGenerationModifier mod, int priority)
+    public void RegisterModifier(IRollGenerationModifier mod, int priority)
     {
         RegisterModifier(rollGenMods, mod, priority);
     }
 
-    public void RegisterModifier(RollResultModifier mod, int priority)
+    public void RegisterModifier(IRollResultModifier mod, int priority)
     {
         RegisterModifier(rollResultMods, mod, priority);
     }
 
-    public void RegisterModifier(RollValueModifier mod, int priority)
+    public void RegisterModifier(IRollValueModifier mod, int priority)
     {
         RegisterModifier(rollValueMods, mod, priority);
     }
 
     public bool DeregisterModifier(Modifier mod)
     {
-        if (mod is RollGenerationModifier)
+        bool deregistered = false;
+        if (mod is IRollGenerationModifier)
         {
-            return DeregisterModifier((RollGenerationModifier)mod);
+            deregistered |= DeregisterModifier((IRollGenerationModifier)mod);
         }
-        else if (mod is RollResultModifier)
+        if (mod is IRollResultModifier)
         {
-            return DeregisterModifier((RollResultModifier)mod);
+            deregistered |= DeregisterModifier((IRollResultModifier)mod);
         }
-        else if (mod is RollValueModifier)
+        if (mod is IRollValueModifier)
         {
-            return DeregisterModifier((RollValueModifier)mod);
+            deregistered |= DeregisterModifier((IRollValueModifier)mod);
         }
-        else
-        {
-            throw new System.Exception("Invalid modification type?");
-        }
+        return deregistered;
     }
 
-    public bool DeregisterModifier(RollGenerationModifier mod)
+    public bool DeregisterModifier(IRollGenerationModifier mod)
     {
         return DeregisterModifier(rollGenMods, mod);
     }
 
-    public bool DeregisterModifier(RollResultModifier mod)
+    public bool DeregisterModifier(IRollResultModifier mod)
     {
         return DeregisterModifier(rollResultMods, mod);
     }
 
-    public bool DeregisterModifier(RollValueModifier mod)
+    public bool DeregisterModifier(IRollValueModifier mod)
     {
         return DeregisterModifier(rollValueMods, mod);
     }

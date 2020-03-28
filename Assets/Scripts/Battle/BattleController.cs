@@ -86,10 +86,10 @@ public class BattleController : MonoBehaviour
         Tuple<int, int> rollValues = new Tuple<int, int>(playerInitial, enemyInitial);
         // Apply enemy mods first, then player mods to get final roll values
         // TODO enemy mods
-        foreach (RollValueModifier mod in PlayerStatus.Mods.GetRollValueModifiers())
+        foreach (IRollValueModifier mod in PlayerStatus.Mods.GetRollValueModifiers())
         {
             rollValues = mod.apply(rollValues.Item1, rollValues.Item2);
-            DecrementAndDeregisterIfNecessary(mod);
+            DecrementAndDeregisterIfNecessary((Modifier)mod);
         }
 
         // Generate roll results
@@ -99,10 +99,10 @@ public class BattleController : MonoBehaviour
         { PlayerDamage = playerDamage, EnemyDamage = enemyDamage };
         // Again apply enemy result mods forst, then player
         //TODO enemy mods
-        foreach (RollResultModifier mod in PlayerStatus.Mods.GetRollResultModifiers())
+        foreach (IRollResultModifier mod in PlayerStatus.Mods.GetRollResultModifiers())
         {
             rollResult = mod.apply(rollResult);
-            DecrementAndDeregisterIfNecessary(mod);
+            DecrementAndDeregisterIfNecessary((Modifier)mod);
         }
 
         // Apply roll results
