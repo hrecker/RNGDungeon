@@ -12,6 +12,7 @@ public class BattleController : MonoBehaviour
     private bool completed;
 
     public Text resultText;
+    public TechButtonController techUI;
     public GameObject exitToMenuButton;
     public GameObject itemIconPrefab;
     public GameObject itemDropPanel;
@@ -30,6 +31,7 @@ public class BattleController : MonoBehaviour
 
     private List<Item> itemModsToAdd;
     private List<Modifier> currentRollBoundedMods;
+    private Dictionary<string, Modifier> techMods;
 
     private void Start()
     {
@@ -37,6 +39,7 @@ public class BattleController : MonoBehaviour
         itemDropPanel.SetActive(false);
         itemModsToAdd = new List<Item>();
         currentRollBoundedMods = new List<Modifier>();
+        techMods = new Dictionary<string, Modifier>();
         CheckBattleComplete();
     }
 
@@ -72,12 +75,26 @@ public class BattleController : MonoBehaviour
         }
 
         // If there are modifiers to add, add before the roll starts
+        // First, add mods for and used items
         foreach (Item itemMod in itemModsToAdd)
         {
             Modifier mod = itemMod.CreateItemModifier();
             PlayerStatus.Mods.RegisterModifier(mod, itemMod.modEffect.modPriority);
             currentRollBoundedMods.Add(mod);
         }
+        // Add mods for selected techs
+        if (techUI.GetSelectedTech() != null)
+        {
+            Tech selected = techUI.GetSelectedTech();
+            if (!techMods.ContainsKey(selected.name))
+            {
+                techMods.Add(selected.name, selected.CreateTechModifier());
+            }
+            PlayerStatus.Mods.RegisterModifier(techMods[selected.name],
+                selected.modEffect.modPriority);
+            currentRollBoundedMods.Add(techMods[selected.name]);
+        }
+        techUI.Roll();
         itemModsToAdd.Clear();
 
         // Generate roll numeric values
@@ -89,7 +106,6 @@ public class BattleController : MonoBehaviour
         foreach (IRollValueModifier mod in PlayerStatus.Mods.GetRollValueModifiers())
         {
             rollValues = mod.apply(rollValues.Item1, rollValues.Item2);
-            DecrementAndDeregisterIfNecessary((Modifier)mod);
         }
 
         // Generate roll results
@@ -102,12 +118,14 @@ public class BattleController : MonoBehaviour
         foreach (IRollResultModifier mod in PlayerStatus.Mods.GetRollResultModifiers())
         {
             rollResult = mod.apply(rollResult);
-            DecrementAndDeregisterIfNecessary((Modifier)mod);
         }
 
         // Apply roll results
         playerBattleStatus.ApplyResult(rollResult);
         enemyBattleStatus.ApplyResult(rollResult);
+
+        // Decrement roll-bounded mods
+        PlayerStatus.Mods.DecrementAndDeregisterModsIfNecessary();
 
         CheckBattleComplete();
 
@@ -136,18 +154,6 @@ public class BattleController : MonoBehaviour
                 exitToMenuButton.SetActive(true);
             }
             completed = true;
-        }
-    }
-
-    public static void DecrementAndDeregisterIfNecessary(Modifier mod)
-    {
-        if (mod.isRollBounded)
-        {
-            mod.numRollsRemaining--;
-            if (mod.numRollsRemaining <= 0)
-            {
-                mod.DeregisterSelf();
-            }
         }
     }
 

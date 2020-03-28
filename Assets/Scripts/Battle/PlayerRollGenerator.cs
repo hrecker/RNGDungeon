@@ -11,7 +11,6 @@ public class PlayerRollGenerator : RollGenerator
             Tuple<int, int> modified = mod.apply(min, max);
             min = modified.Item1;
             max = modified.Item2;
-            BattleController.DecrementAndDeregisterIfNecessary((Modifier)mod);
         }
         return generateBasicRoll(min, max);
     }

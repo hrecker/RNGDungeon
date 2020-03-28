@@ -103,6 +103,54 @@ public class PlayerModifiers
         return DeregisterModifier(rollValueMods, mod);
     }
 
+    public void DecrementAndDeregisterModsIfNecessary()
+    {
+        // Keep track of mods that have already been decremented so that
+        // modifiers that implement multiple types don't get
+        // decremented more than once.
+        List<Modifier> decremented = new List<Modifier>();
+        // Iterate over all mod lists to decrement them
+        foreach (IRollGenerationModifier rollGenMod in GetRollGenerationModifiers())
+        {
+            Modifier mod = (Modifier)rollGenMod;
+            if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
+            {
+                decremented.Add(mod);
+            }
+        }
+        foreach (IRollResultModifier rollResultMod in GetRollResultModifiers())
+        {
+            Modifier mod = (Modifier)rollResultMod;
+            if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
+            {
+                decremented.Add(mod);
+            }
+        }
+        foreach (IRollValueModifier rollValueMod in GetRollValueModifiers())
+        {
+            Modifier mod = (Modifier)rollValueMod;
+            if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
+            {
+                decremented.Add(mod);
+            }
+        }
+    }
+
+    // Return true if the mod was deregistered by this method
+    private static bool DecrementAndDeregisterIfNecessary(Modifier mod)
+    {
+        if (mod.isRollBounded)
+        {
+            mod.numRollsRemaining--;
+            if (mod.numRollsRemaining <= 0)
+            {
+                mod.DeregisterSelf();
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static List<T> GetModifiers<T>(SortedDictionary<int, List<T>> registered)
     {
         List<T> result = new List<T>();

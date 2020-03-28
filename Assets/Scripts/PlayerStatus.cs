@@ -45,6 +45,7 @@ public class PlayerStatus
     }
     public static List<Item> EquippedTrinkets { get; set; }
     private static List<Ability> abilities;
+    public static List<Tech> EnabledTechs { get; set; }
 
     public static PlayerModifiers Mods { get; private set; }
 
@@ -70,6 +71,9 @@ public class PlayerStatus
         abilities = new List<Ability>();
         EquippedTrinkets = new List<Item>();
         EquippedWeapon = Cache.GetItem("Shortsword");
+        EnabledTechs = new List<Tech>();
+        EnabledTechs.Add(Cache.GetTech("HeavySwing"));
+        EnabledTechs.Add(Cache.GetTech("Bulwark"));
         Initialized = true;
     }
 

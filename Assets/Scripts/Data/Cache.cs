@@ -164,9 +164,13 @@ public class Cache
         return chosenAbilities;
     }
 
-    public static Tech GetTect(string name)
+    public static Tech GetTech(string name)
     {
         Load();
+        if (name == null || !techs.ContainsKey(name))
+        {
+            return null;
+        }
         return techs[name];
     }
 
