@@ -55,17 +55,17 @@ public class PlayerModifiers
         }
     }
 
-    public void RegisterModifier(IRollGenerationModifier mod, int priority)
+    private void RegisterModifier(IRollGenerationModifier mod, int priority)
     {
         RegisterModifier(rollGenMods, mod, priority);
     }
 
-    public void RegisterModifier(IRollResultModifier mod, int priority)
+    private void RegisterModifier(IRollResultModifier mod, int priority)
     {
         RegisterModifier(rollResultMods, mod, priority);
     }
 
-    public void RegisterModifier(IRollValueModifier mod, int priority)
+    private void RegisterModifier(IRollValueModifier mod, int priority)
     {
         RegisterModifier(rollValueMods, mod, priority);
     }
@@ -88,17 +88,17 @@ public class PlayerModifiers
         return deregistered;
     }
 
-    public bool DeregisterModifier(IRollGenerationModifier mod)
+    private bool DeregisterModifier(IRollGenerationModifier mod)
     {
         return DeregisterModifier(rollGenMods, mod);
     }
 
-    public bool DeregisterModifier(IRollResultModifier mod)
+    private bool DeregisterModifier(IRollResultModifier mod)
     {
         return DeregisterModifier(rollResultMods, mod);
     }
 
-    public bool DeregisterModifier(IRollValueModifier mod)
+    private bool DeregisterModifier(IRollValueModifier mod)
     {
         return DeregisterModifier(rollValueMods, mod);
     }

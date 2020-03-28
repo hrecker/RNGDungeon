@@ -1,5 +1,5 @@
 ﻿using System;
-public class HighRollerRollValueModifier : Modifier, IRollValueModifier
+public class HighRollerModifier : Modifier, IRollValueModifier
 {
     public Tuple<int, int> apply(int playerRoll, int enemyRoll)
     {
@@ -8,10 +8,5 @@ public class HighRollerRollValueModifier : Modifier, IRollValueModifier
             playerRoll *= 2;
         }
         return new Tuple<int, int>(playerRoll, enemyRoll);
-    }
-
-    public override void DeregisterSelf()
-    {
-        PlayerStatus.Mods.DeregisterModifier((IRollValueModifier)this);
     }
 }

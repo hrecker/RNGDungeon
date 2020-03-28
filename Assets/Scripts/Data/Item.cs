@@ -19,13 +19,13 @@ public class Item
         switch (modType)
         {
             case ModType.BLOCK:
-                result = new BlockingRollResultModifier();
+                result = new BlockingModifier();
                 break;
             case ModType.RECOIL:
-                result = new RecoilRollResultModifer();
+                result = new RecoilModifer();
                 break;
             case ModType.WEAPON:
-                result = new WeaponRollGenerationModifier(
+                result = new WeaponModifier(
                     modEffect.playerMinRollChange, modEffect.playerMaxRollChange);
                 break;
         }

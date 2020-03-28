@@ -3,7 +3,7 @@
         {
             "name": "Stalwart",
             "description": "Chance to survive when reduced to zero health",
-            "modType": 4,
+            "modType": 201,
             "modEffect": {
                 "modPriority": 3,
                 "baseModTriggerChance": 0.2
@@ -12,7 +12,7 @@
         {
             "name": "HighRoller",
             "description": "Chance to double any roll",
-            "modType": 5,
+            "modType": 202,
             "modEffect": {
                 "baseModTriggerChance": 0.1
             }

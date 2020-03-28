@@ -14,10 +14,10 @@ public class Ability
         switch (modType)
         {
             case ModType.HIGHROLLER:
-                result = new HighRollerRollValueModifier();
+                result = new HighRollerModifier();
                 break;
             case ModType.STALWART:
-                result = new StalwartRollResultModifier();
+                result = new StalwartModifier();
                 break;
         }
         if (result != null)

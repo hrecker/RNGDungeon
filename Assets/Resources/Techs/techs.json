@@ -1,0 +1,26 @@
+{
+    "techs": [
+        {
+            "name": "HeavySwing",
+            "tooltip": "Increases rolls for one roll, followed by a two roll debuff",
+            "cooldownRolls": 6,
+            "numRollsInEffect": 3,
+            "modType": 301
+        },
+        {
+            "name": "Rage",
+            "tooltip": "Increases rolls when on low health",
+            "cooldownRolls": 5,
+            "modType": 302
+        },
+        {
+            "name": "Bulwark",
+            "tooltip": "Raises min roll, but does not deal damage",
+            "cooldownRolls": 8,
+            "modType": 303,
+            "modEffect": {
+                "playerMinRollChange": 3
+            }
+        }
+    ]
+}

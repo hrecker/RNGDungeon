@@ -1,11 +1,11 @@
 ﻿using System;
 
-public class WeaponRollGenerationModifier : Modifier, IRollGenerationModifier
+public class WeaponModifier : Modifier, IRollGenerationModifier
 {
     private int minRollDiff;
     private int maxRollDiff;
 
-    public WeaponRollGenerationModifier(int minRollDiff, int maxRollDiff)
+    public WeaponModifier(int minRollDiff, int maxRollDiff)
     {
         this.minRollDiff = minRollDiff;
         this.maxRollDiff = maxRollDiff;
@@ -16,10 +16,5 @@ public class WeaponRollGenerationModifier : Modifier, IRollGenerationModifier
         initialMinRoll += minRollDiff;
         initialMaxRoll += maxRollDiff;
         return new Tuple<int, int>(initialMinRoll, initialMaxRoll);
-    }
-
-    public override void DeregisterSelf()
-    {
-        PlayerStatus.Mods.DeregisterModifier((IRollGenerationModifier)this);
     }
 }

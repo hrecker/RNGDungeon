@@ -10,21 +10,21 @@
             "itemType": 1,
             "tooltipText": "Blocks incoming damage for 3 turns",
             "numRollsInEffect": 3,
-            "modType": 2
+            "modType": 1
         },
         {
             "name": "RecoilPotion",
             "itemType": 1,
             "tooltipText": "Recoils 1 damage to enemy for 3 turns",
             "numRollsInEffect": 3,
-            "modType": 3
+            "modType": 2
         },
         {
             "name": "Shortsword",
             "itemType": 2,
             "tooltipText": "+1 min roll, +1 max roll",
             "equipSlot": 1,
-            "modType": 1,
+            "modType": 101,
             "modEffect": {
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1

@@ -7,11 +7,14 @@ public abstract class Modifier
     public int numRollsRemaining; // Number of rolls that this modifier should exist for (if applicable)
     public float triggerChance; // 0-1 chance that this modifier triggers (if applicable)
 
-    public abstract void DeregisterSelf();
-
     // Randomly determine if this modifier should be triggered
     protected bool RollTrigger()
     {
         return Random.value < triggerChance;
+    }
+
+    public void DeregisterSelf()
+    {
+        PlayerStatus.Mods.DeregisterModifier(this);
     }
 }

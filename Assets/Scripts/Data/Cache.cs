@@ -11,14 +11,17 @@ public class Cache
     private static Dictionary<string, Item> items;
     private static Dictionary<string, Enemy> enemies;
     private static Dictionary<string, Ability> abilities;
+    private static Dictionary<string, Tech> techs;
     private static Dictionary<string, Sprite> itemIcons;
     private static Dictionary<string, Sprite> abilityIcons;
     private static Dictionary<string, Sprite> enemyIcons;
+    private static Dictionary<string, Sprite> techIcons;
 
     private static string levelsJsonPath = @"Levels/levels";
     private static string itemsJsonPath = @"Items/items";
     private static string enemiesJsonPath = @"Enemies/enemies";
     private static string abilitiesJsonPath = @"Abilities/abilities";
+    private static string techsJsonPath = @"Techs/techs";
 
     private static bool initialized;
 
@@ -38,20 +41,24 @@ public class Cache
         items = new Dictionary<string, Item>();
         enemies = new Dictionary<string, Enemy>();
         abilities = new Dictionary<string, Ability>();
+        techs = new Dictionary<string, Tech>();
         itemIcons = new Dictionary<string, Sprite>();
         enemyIcons = new Dictionary<string, Sprite>();
         abilityIcons = new Dictionary<string, Sprite>();
+        techIcons = new Dictionary<string, Sprite>();
 
         // Load JSON from resouce files
         TextAsset levelsFile = Resources.Load<TextAsset>(levelsJsonPath);
         TextAsset itemsFile = Resources.Load<TextAsset>(itemsJsonPath);
         TextAsset enemiesFile = Resources.Load<TextAsset>(enemiesJsonPath);
         TextAsset abilitiesFile = Resources.Load<TextAsset>(abilitiesJsonPath);
+        TextAsset techsFile = Resources.Load<TextAsset>(techsJsonPath);
 
         Levels levelsContainer = JsonUtility.FromJson<Levels>(levelsFile.text);
         Items itemsContainer = JsonUtility.FromJson<Items>(itemsFile.text);
         Enemies enemiesContainer = JsonUtility.FromJson<Enemies>(enemiesFile.text);
         Abilities abilitiesContainer = JsonUtility.FromJson<Abilities>(abilitiesFile.text);
+        Techs techsContainer = JsonUtility.FromJson<Techs>(techsFile.text);
 
         foreach (Level level in levelsContainer.levels)
         {
@@ -71,6 +78,11 @@ public class Cache
         {
             abilities.Add(ability.name, ability);
             abilityIcons.Add(ability.name, Resources.Load<Sprite>(@"Abilities/sprites/" + ability.name));
+        }
+        foreach (Tech tech in techsContainer.techs)
+        {
+            techs.Add(tech.name, tech);
+            techIcons.Add(tech.name, Resources.Load<Sprite>(@"Techs/sprites/" + tech.name));
         }
     }
 
@@ -152,16 +164,28 @@ public class Cache
         return chosenAbilities;
     }
 
+    public static Tech GetTect(string name)
+    {
+        Load();
+        return techs[name];
+    }
+
+    public static Sprite GetTechIcon(string name)
+    {
+        Load();
+        return techIcons[name];
+    }
+
 
     // Only to be used while developing - can't serialize to the resources
     // folder in the built game
     public static void SerializeExample()
     {
-        Reload();
         Levels levelContainer = new Levels() { levels = new List<Level>() };
         Items itemContainer = new Items() { items = new List<Item>() };
         Enemies enemyContainer = new Enemies() { enemies = new List<Enemy>() };
         Abilities abilityContainer = new Abilities() { abilities = new List<Ability>() };
+        Techs techContainer = new Techs() { techs = new List<Tech>() };
 
         // Sample levels
         levelContainer.levels.Add(new Level()
@@ -242,18 +266,47 @@ public class Cache
                 baseModTriggerChance = 0.1f
             }
         });
+        // Sample techs
+        techContainer.techs.Add(new Tech()
+        {
+            name = "HeavySwing",
+            tooltip = "Increases rolls for one roll, followed by a two roll debuff",
+            cooldownRolls = 6,
+            numRollsInEffect = 3,
+            modType = ModType.HEAVYSWING,
+        });
+        techContainer.techs.Add(new Tech()
+        {
+            name = "Rage",
+            tooltip = "Increases rolls when on low health",
+            cooldownRolls = 5,
+            modType = ModType.RAGE,
+        });
+        techContainer.techs.Add(new Tech()
+        {
+            name = "Bulwark",
+            tooltip = "Raises min roll, but does not deal damage",
+            cooldownRolls = 8,
+            modType = ModType.BULWARK,
+            modEffect = new ModEffect()
+            {
+                playerMinRollChange = 3
+            }
+        });
 
         string outputPath = @"C:\Users\henry\SampleSerializedJson\";
         string levelJsonPath = outputPath + "levels.json";
         string itemJsonPath = outputPath + "items.json";
         string enemyJsonPath = outputPath + "enemies.json";
         string abilityJsonPath = outputPath + "abilities.json";
+        string techJsonPath = outputPath + "techs.json";
 
         // Write json files
         File.WriteAllText(levelJsonPath, JsonUtility.ToJson(levelContainer, true));
         File.WriteAllText(itemJsonPath, JsonUtility.ToJson(itemContainer, true));
         File.WriteAllText(enemyJsonPath, JsonUtility.ToJson(enemyContainer, true));
         File.WriteAllText(abilityJsonPath, JsonUtility.ToJson(abilityContainer, true));
+        File.WriteAllText(techJsonPath, JsonUtility.ToJson(techContainer, true));
     }
 }
 
@@ -281,4 +334,10 @@ class Enemies
 class Abilities
 {
     public List<Ability> abilities;
+}
+
+[Serializable]
+class Techs
+{
+    public List<Tech> techs;
 }
