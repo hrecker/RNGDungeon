@@ -44,7 +44,6 @@ public class PlayerStatus
             }
         }
     }
-    public static Item EquippedArmor { get; set; }
     public static List<Item> EquippedTrinkets { get; set; }
     private static List<Ability> abilities;
 

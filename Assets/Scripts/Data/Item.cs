@@ -52,8 +52,7 @@ public enum EquipSlot
 {
     NONE = 0,
     WEAPON = 1,
-    ARMOR = 2,
-    TRINKET = 3 // Any number of trinkets can be equipped
+    TRINKET = 2 // Any number of trinkets can be equipped
 }
 
 [Serializable]

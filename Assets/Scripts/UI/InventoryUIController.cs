@@ -70,16 +70,6 @@ public class InventoryUIController : MonoBehaviour
             equipmentDisplayNames.Add("Weapon: None");
             equipmentNames.Add(null);
         }
-        if (PlayerStatus.EquippedArmor != null)
-        {
-            equipmentDisplayNames.Add("Armor: " + PlayerStatus.EquippedArmor.name);
-            equipmentNames.Add(PlayerStatus.EquippedArmor.name);
-        }
-        else
-        {
-            equipmentDisplayNames.Add("Armor: None");
-            equipmentNames.Add(null);
-        }
         foreach (Item trinket in PlayerStatus.EquippedTrinkets)
         {
             equipmentDisplayNames.Add(trinket.name);
@@ -127,15 +117,6 @@ public class InventoryUIController : MonoBehaviour
                 //Equip
                 switch (selected.equipSlot)
                 {
-                    case EquipSlot.ARMOR:
-                        Item currentArmor = PlayerStatus.EquippedArmor;
-                        if (currentArmor != null)
-                        {
-                            PlayerStatus.AddItem(currentArmor);
-                        }
-                        PlayerStatus.EquippedArmor = selected;
-                        PlayerStatus.UseItem(selected);
-                        break;
                     case EquipSlot.WEAPON:
                         Item currentWeapon = PlayerStatus.EquippedWeapon;
                         if (currentWeapon != null)
@@ -172,11 +153,7 @@ public class InventoryUIController : MonoBehaviour
             return;
         }
 
-        if (PlayerStatus.EquippedArmor == selected)
-        {
-            PlayerStatus.EquippedArmor = null;
-        }
-        else if (PlayerStatus.EquippedWeapon == selected)
+        if (PlayerStatus.EquippedWeapon == selected)
         {
             PlayerStatus.EquippedWeapon = null;
         }
