@@ -11,7 +11,7 @@ public class WeaponModifier : Modifier, IRollGenerationModifier
         this.maxRollDiff = maxRollDiff;
     }
 
-    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll, Stance currentStance)
+    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll)
     {
         initialMinRoll += minRollDiff;
         initialMaxRoll += maxRollDiff;

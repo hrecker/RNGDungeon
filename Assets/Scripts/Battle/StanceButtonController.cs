@@ -26,6 +26,6 @@ public class StanceButtonController : MonoBehaviour
                 b.SetUnselected();
             }
         }
-        playerRoll.SetStance(button.stanceName);
+        //playerRoll.SetStance(button.stanceName);
     }
 }

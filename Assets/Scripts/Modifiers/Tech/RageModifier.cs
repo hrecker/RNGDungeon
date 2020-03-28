@@ -7,7 +7,7 @@ public class RageModifier : Modifier, IRollGenerationModifier
     // The buff is based on a fraction of the current max roll. 
     private const float rollBuffFraction = 0.34f;
 
-    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll, Stance currentStance)
+    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll)
     {
         if ((float) PlayerStatus.Health / PlayerStatus.MaxHealth < playerHealthThreshold)
         {

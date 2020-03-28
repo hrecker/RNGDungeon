@@ -3,5 +3,5 @@
 // Modifiers that affect the min and max values used to generate a roll value
 public interface IRollGenerationModifier
 {
-    Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll, Stance currentStance);
+    Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll);
 }

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class StanceButton : MonoBehaviour
 {
-    public Stance stanceName;
     public Color selectedColor = Color.green;
     public Color unselectedColor = Color.white;
 
@@ -22,10 +21,10 @@ public class StanceButton : MonoBehaviour
         button = GetComponent<Button>();
         buttonController.RegisterStanceButton(this);
 
-        if (stanceName == PlayerStatus.SelectedStance)
+        /*if (stanceName == PlayerStatus.SelectedStance)
         {
             OnSelected();
-        }
+        }*/
     }
 
     private void Update()
@@ -36,7 +35,7 @@ public class StanceButton : MonoBehaviour
 
     public void OnSelected()
     {
-        buttonController.SelectStance(this);
+        //buttonController.SelectStance(this);
         buttonImage.color = selectedColor;
     }
 

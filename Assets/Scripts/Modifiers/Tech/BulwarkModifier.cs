@@ -10,7 +10,7 @@ public class BulwarkModifier : Modifier, IRollGenerationModifier, IRollResultMod
     }
 
     // Roll generation
-    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll, Stance currentStance)
+    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll)
     {
         // Do not allow the buff to raise the min roll above the max
         return new Tuple<int, int>(

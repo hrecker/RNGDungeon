@@ -20,7 +20,6 @@ public class PlayerStatus
             }
         }
     }
-    public static Stance SelectedStance { get; set; }
     public static bool Initialized { get; set; }
     // Dictionary of item counts in inventory
     public static Dictionary<Item, int> Inventory { get; set; }
@@ -63,7 +62,6 @@ public class PlayerStatus
         Health = MaxHealth;
         Mods = new PlayerModifiers();
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
-        SelectedStance = Stance.NEUTRAL;
         Inventory = new Dictionary<Item, int>();
         Inventory.Add(Cache.GetItem("HealthPotion"), 3);
         Inventory.Add(Cache.GetItem("BlockingPotion"), 1);
