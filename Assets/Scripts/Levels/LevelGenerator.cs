@@ -62,25 +62,27 @@ public class LevelGenerator
         while (roomsGenerated < level.numRooms)
         {
             List<Room> newLeafs = new List<Room>();
+            List<Room> usedLeafs = new List<Room>();
             foreach (Room leaf in leafRooms)
             {
+                usedLeafs.Add(leaf);
                 List<Room> generated = GenerateAdjacentRooms(leaf, level.numRooms - roomsGenerated);
                 allRooms.AddRange(generated);
                 roomsGenerated += generated.Count;
 
-                if (leaf.northRoom != null)
+                if (leaf.northRoom != null && !usedLeafs.Contains(leaf.northRoom))
                 {
                     newLeafs.Add(leaf.northRoom);
                 }
-                if (leaf.eastRoom != null)
+                if (leaf.eastRoom != null && !usedLeafs.Contains(leaf.eastRoom))
                 {
                     newLeafs.Add(leaf.eastRoom);
                 }
-                if (leaf.southRoom != null)
+                if (leaf.southRoom != null && !usedLeafs.Contains(leaf.southRoom))
                 {
                     newLeafs.Add(leaf.southRoom);
                 }
-                if (leaf.westRoom != null)
+                if (leaf.westRoom != null && !usedLeafs.Contains(leaf.westRoom))
                 {
                     newLeafs.Add(leaf.westRoom);
                 }
@@ -93,6 +95,7 @@ public class LevelGenerator
             else
             {
                 leafRooms.Clear();
+                usedLeafs.Clear();
                 leafRooms.Add(entrance);
                 roomChance += 0.1f;
             }
