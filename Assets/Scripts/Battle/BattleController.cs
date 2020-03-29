@@ -19,10 +19,14 @@ public class BattleController : MonoBehaviour
 
     public Text playerRollUI;
     public Text enemyRollUI;
-    public Text previousPlayerRoll1UI;
-    public Text previousEnemyRoll1UI;
-    public Text previousPlayerRoll2UI;
-    public Text previousEnemyRoll2UI;
+    public Color healthLossColor;
+    public Color healthGainColor;
+    public GameObject playerHealthChangeUI;
+    public GameObject enemyHealthChangeUI;
+    private Image playerHealthChangeBackground;
+    private Image enemyHealthChangeBackground;
+    private Text playerHealthChangeText;
+    private Text enemyHealthChangeText;
 
     public RollGenerator playerRollGenerator;
     public RollGenerator enemyRollGenerator;
@@ -40,6 +44,12 @@ public class BattleController : MonoBehaviour
         itemModsToAdd = new List<Item>();
         currentRollBoundedMods = new List<Modifier>();
         techMods = new Dictionary<string, Modifier>();
+        playerHealthChangeBackground = playerHealthChangeUI.GetComponent<Image>();
+        playerHealthChangeText = playerHealthChangeUI.GetComponentInChildren<Text>();
+        enemyHealthChangeBackground = enemyHealthChangeUI.GetComponent<Image>();
+        enemyHealthChangeText = enemyHealthChangeUI.GetComponentInChildren<Text>();
+        playerHealthChangeUI.SetActive(false);
+        enemyHealthChangeUI.SetActive(false);
         CheckBattleComplete();
     }
 
@@ -130,6 +140,7 @@ public class BattleController : MonoBehaviour
         CheckBattleComplete();
 
         UpdateRollUI(rollValues.Item1, rollValues.Item2, !completed);
+        UpdateHealthUI(-rollResult.PlayerDamage, -rollResult.EnemyDamage, !completed);
     }
 
     private void CheckBattleComplete()
@@ -159,13 +170,6 @@ public class BattleController : MonoBehaviour
 
     private void UpdateRollUI(int playerRoll, int enemyRoll, bool fade)
     {
-        // Update text values
-        previousEnemyRoll2UI.text = previousEnemyRoll1UI.text;
-        previousPlayerRoll2UI.text = previousPlayerRoll1UI.text;
-
-        previousPlayerRoll1UI.text = playerRollUI.text;
-        previousEnemyRoll1UI.text = enemyRollUI.text;
-
         // Reset the alpha for the texts
         playerRollUI.CrossFadeAlpha(1, 0, false);
         enemyRollUI.CrossFadeAlpha(1, 0, false);
@@ -177,6 +181,36 @@ public class BattleController : MonoBehaviour
             // Fade out over the roll interval
             playerRollUI.CrossFadeAlpha(0, rollInterval, false);
             enemyRollUI.CrossFadeAlpha(0, rollInterval, false);
+        }
+    }
+
+    private void UpdateHealthUI(int playerHealthDiff, int enemyHealthDiff, bool fade)
+    {
+        UpdateHealthUI(playerHealthDiff, playerHealthChangeUI,
+            playerHealthChangeBackground, playerHealthChangeText, fade);
+        UpdateHealthUI(enemyHealthDiff, enemyHealthChangeUI, 
+            enemyHealthChangeBackground, enemyHealthChangeText, fade);
+    }
+
+    private void UpdateHealthUI(int healthDiff, GameObject uiParent, Image background, Text text, bool fade)
+    {
+        if (healthDiff == 0)
+        {
+            uiParent.SetActive(false);
+        }
+        else
+        {
+            background.CrossFadeAlpha(1, 0, false);
+            text.CrossFadeAlpha(1, 0, false);
+            uiParent.SetActive(true);
+            background.color =
+                healthDiff > 0 ? healthGainColor : healthLossColor;
+            text.text = Math.Abs(healthDiff).ToString();
+            if (fade)
+            {
+                background.CrossFadeAlpha(0, rollInterval, false);
+                text.CrossFadeAlpha(0, rollInterval, false);
+            }
         }
     }
 
