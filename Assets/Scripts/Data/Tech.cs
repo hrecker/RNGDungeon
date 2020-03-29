@@ -34,4 +34,21 @@ public class Tech
         }
         return result;
     }
+
+    private int currentCooldown;
+
+    public int GetCurrentCooldown()
+    {
+        return currentCooldown;
+    }
+
+    public void ActivateCooldown()
+    {
+        currentCooldown = cooldownRolls;
+    }
+
+    public void DecrementCooldown()
+    {
+        currentCooldown--;
+    }
 }

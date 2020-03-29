@@ -13,17 +13,12 @@ public class TechButton : MonoBehaviour
 
     private TechButtonController buttonController;
     private PauseMenu pauseMenu;
-    private int currentCooldown;
 
     void Start()
     {
         pauseMenu = FindObjectOfType<PauseMenu>();
         buttonController = GetComponentInParent<TechButtonController>();
         buttonController.RegisterTechButton(this);
-        if (cooldownPanel != null)
-        {
-            cooldownPanel.SetActive(false);
-        }
 
         if (isDefaultTech)
         {
@@ -35,12 +30,13 @@ public class TechButton : MonoBehaviour
             gameObject.name = techName;
             techImage.sprite = Cache.GetTechIcon(techName);
             tooltipText.text = tech.tooltip;
+            UpdateCooldownText();
         }
     }
 
     public void OnSelected()
     {
-        if (!pauseMenu.IsPaused() && currentCooldown <= 0)
+        if (!pauseMenu.IsPaused() && tech.GetCurrentCooldown() <= 0)
         {
             buttonController.SelectTech(this);
         }
@@ -48,23 +44,16 @@ public class TechButton : MonoBehaviour
 
     public void DecrementCooldownIfNecessary()
     {
-        if (currentCooldown > 0)
+        if (tech != null && tech.GetCurrentCooldown() > 0)
         {
-            currentCooldown--;
+            tech.DecrementCooldown();
         }
         else
         {
             return;
         }
 
-        if (currentCooldown > 0)
-        {
-            UpdateCooldownText();
-        }
-        else
-        {
-            cooldownPanel.SetActive(false);
-        }
+        UpdateCooldownText();
     }
 
     public void ActivateCooldown()
@@ -75,13 +64,19 @@ public class TechButton : MonoBehaviour
             return;
         }
 
-        cooldownPanel.SetActive(true);
-        currentCooldown = tech.cooldownRolls;
+        tech.ActivateCooldown();
         UpdateCooldownText();
     }
 
     private void UpdateCooldownText()
     {
-        cooldownText.text = currentCooldown.ToString();
+        if (isDefaultTech)
+        {
+            return;
+        }
+
+        int cooldown = tech.GetCurrentCooldown();
+        cooldownPanel.SetActive(cooldown > 0);
+        cooldownText.text = cooldown.ToString();
     }
 }
