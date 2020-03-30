@@ -53,4 +53,9 @@ public class Tech
     {
         currentCooldown--;
     }
+
+    public void ResetCooldown()
+    {
+        currentCooldown = 0;
+    }
 }

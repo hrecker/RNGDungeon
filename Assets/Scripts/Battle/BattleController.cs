@@ -56,6 +56,7 @@ public class BattleController : MonoBehaviour
         enemyController = newEnemy.GetComponent<EnemyBattleController>();
         enemyBattleStatus = newEnemy.GetComponent<EnemyBattleStatus>();
         enemyHealthChangeUI = newEnemy.gameObject.transform.Find("RollDamage").gameObject;
+        newEnemy.transform.SetSiblingIndex(0);
     }
 
     private void Start()
@@ -88,9 +89,8 @@ public class BattleController : MonoBehaviour
         else if (completed && timer >= victoryDisplayTime)
         {
             enabled = false;
-            // If player wins, return to map. Otherwise just stop here.
-            //TODO game end screen etc.
-            if (playerBattleStatus.currentHealth > 0)
+            // If player wins and it's not the boss fight, return to map. Otherwise just stop here.
+            if (playerBattleStatus.currentHealth > 0 && CurrentLevel.currentEnemyName != "Boss")
             {
                 SceneManager.LoadScene("MapScene");
             }
@@ -190,8 +190,16 @@ public class BattleController : MonoBehaviour
 
             if (playerBattleStatus.currentHealth > 0)
             {
-                resultText.text = "Victory";
-                GenerateItemDrop();
+                if (CurrentLevel.currentEnemyName == "Boss")
+                {
+                    resultText.text = "Dungeon Defeated!";
+                    exitToMenuButton.SetActive(true);
+                }
+                else
+                {
+                    resultText.text = "Victory";
+                    GenerateItemDrop();
+                }
             }
             else
             {

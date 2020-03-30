@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class EnemyBattleController : RollGenerator
 {
-    private EnemyBattleStatus status;
+    protected EnemyBattleStatus status;
     private Image enemySprite;
     private Enemy enemy;
 

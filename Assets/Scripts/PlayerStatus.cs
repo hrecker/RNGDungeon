@@ -59,7 +59,7 @@ public class PlayerStatus
 
     public static void Restart()
     {
-        MaxHealth = 10;
+        MaxHealth = 100;
         Health = MaxHealth;
         Mods = new PlayerModifiers();
         MapPosition = CurrentLevel.GetPlayerStartingPosition();

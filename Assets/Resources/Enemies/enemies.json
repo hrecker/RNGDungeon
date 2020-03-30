@@ -23,6 +23,12 @@
             "baseMinRoll": 2,
             "baseMaxRoll": 6,
             "maxHealth": 5
+        },
+        {
+            "name": "Boss",
+            "baseMinRoll": 4,
+            "baseMaxRoll": 6,
+            "maxHealth": 25
         }
     ]
 }

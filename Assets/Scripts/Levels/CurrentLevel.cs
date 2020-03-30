@@ -68,6 +68,18 @@ public class CurrentLevel
                 InitLevel(nextLevel);
                 return MoveResult.STAIRSDOWN;
             }
+            else
+            {
+                // Initialize boss fight
+                // reset tech cooldowns
+                foreach (Tech tech in PlayerStatus.EnabledTechs)
+                {
+                    tech.ResetCooldown();
+                }
+                // set next enemy
+                currentEnemyName = "Boss";
+                return MoveResult.BATTLE;
+            }
         }
 
         if (tiles[tileX, tileY] == TileType.ITEM)
