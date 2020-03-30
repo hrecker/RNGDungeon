@@ -1,11 +1,11 @@
 ﻿using System;
 
-public class WeaponModifier : Modifier, IRollGenerationModifier
+public class RollBuffModifier : Modifier, IRollGenerationModifier
 {
     private int minRollDiff;
     private int maxRollDiff;
 
-    public WeaponModifier(int minRollDiff, int maxRollDiff)
+    public RollBuffModifier(int minRollDiff, int maxRollDiff)
     {
         this.minRollDiff = minRollDiff;
         this.maxRollDiff = maxRollDiff;

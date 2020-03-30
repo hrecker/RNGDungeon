@@ -26,9 +26,9 @@
             "encounterRate": 0.08,
             "enemyItemDropRate": 0.4,
             "enemyEncounterRates": [
-                0.6,
-                0.2,
-                0.2
+                0.3,
+                0.4,
+                0.3
             ],
             "enemies": [
                 "Bat",

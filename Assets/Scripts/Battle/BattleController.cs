@@ -22,20 +22,41 @@ public class BattleController : MonoBehaviour
     public Color healthLossColor;
     public Color healthGainColor;
     public GameObject playerHealthChangeUI;
-    public GameObject enemyHealthChangeUI;
+    private GameObject enemyHealthChangeUI;
     private Image playerHealthChangeBackground;
     private Image enemyHealthChangeBackground;
     private Text playerHealthChangeText;
     private Text enemyHealthChangeText;
 
     public RollGenerator playerRollGenerator;
-    public RollGenerator enemyRollGenerator;
+    public Transform enemyParent;
+    private EnemyBattleController enemyController;
     public BattleStatus playerBattleStatus;
-    public BattleStatus enemyBattleStatus;
+    private BattleStatus enemyBattleStatus;
+
+    public RectTransform playerStatusMessagesParent;
+    public RectTransform enemyStatusMessagesParent;
+    public GameObject statusMessagePrefab;
+    public float statusMessageSpacing = 40.0f;
 
     private List<Item> itemModsToAdd;
     private List<Modifier> currentRollBoundedMods;
     private Dictionary<string, Modifier> techMods;
+    private List<string> playerStatusMessagesToShow;
+    private List<string> enemyStatusMessagesToShow;
+
+    private const string enemyPrefabResourcePath = @"Enemies/battleprefabs/";
+
+    private void Awake()
+    {
+        // Instantiate enemy prefab
+        string enemyName = CurrentLevel.currentEnemyName;
+        GameObject newEnemy = (GameObject) Instantiate(
+            Resources.Load(enemyPrefabResourcePath + enemyName), enemyParent);
+        enemyController = newEnemy.GetComponent<EnemyBattleController>();
+        enemyBattleStatus = newEnemy.GetComponent<EnemyBattleStatus>();
+        enemyHealthChangeUI = newEnemy.gameObject.transform.Find("RollDamage").gameObject;
+    }
 
     private void Start()
     {
@@ -48,6 +69,8 @@ public class BattleController : MonoBehaviour
         playerHealthChangeText = playerHealthChangeUI.GetComponentInChildren<Text>();
         enemyHealthChangeBackground = enemyHealthChangeUI.GetComponent<Image>();
         enemyHealthChangeText = enemyHealthChangeUI.GetComponentInChildren<Text>();
+        playerStatusMessagesToShow = new List<string>();
+        enemyStatusMessagesToShow = new List<string>();
         playerHealthChangeUI.SetActive(false);
         enemyHealthChangeUI.SetActive(false);
         CheckBattleComplete();
@@ -76,7 +99,7 @@ public class BattleController : MonoBehaviour
 
     private void Roll()
     {
-        if (playerRollGenerator == null || enemyRollGenerator == null ||
+        if (playerRollGenerator == null || enemyController == null ||
             playerBattleStatus == null || enemyBattleStatus == null)
         {
             Debug.LogWarning("Skipping roll - one or more rollgenerators " +
@@ -100,6 +123,9 @@ public class BattleController : MonoBehaviour
             {
                 techMods.Add(selected.name, selected.CreateTechModifier());
             }
+            // Add UI messages if necessary
+            playerStatusMessagesToShow.Add(selected.playerStatusMessage);
+            enemyStatusMessagesToShow.Add(selected.enemyStatusMessage);
             PlayerStatus.Mods.RegisterModifier(techMods[selected.name],
                 selected.modEffect.modPriority);
             currentRollBoundedMods.Add(techMods[selected.name]);
@@ -108,11 +134,11 @@ public class BattleController : MonoBehaviour
         itemModsToAdd.Clear();
 
         // Generate roll numeric values
-        int playerInitial = playerRollGenerator.generateInitialRoll();
-        int enemyInitial = enemyRollGenerator.generateInitialRoll();
+        int playerInitial = playerRollGenerator.GenerateInitialRoll();
+        int enemyInitial = enemyController.GenerateInitialRoll();
         Tuple<int, int> rollValues = new Tuple<int, int>(playerInitial, enemyInitial);
         // Apply enemy mods first, then player mods to get final roll values
-        // TODO enemy mods
+        rollValues = enemyController.ApplyRollValueMods(playerInitial, enemyInitial);
         foreach (IRollValueModifier mod in PlayerStatus.Mods.GetRollValueModifiers())
         {
             rollValues = mod.apply(rollValues.Item1, rollValues.Item2);
@@ -124,7 +150,7 @@ public class BattleController : MonoBehaviour
         RollResult rollResult = new RollResult 
         { PlayerDamage = playerDamage, EnemyDamage = enemyDamage };
         // Again apply enemy result mods forst, then player
-        //TODO enemy mods
+        rollResult = enemyController.ApplyRollResultMods(rollResult);
         foreach (IRollResultModifier mod in PlayerStatus.Mods.GetRollResultModifiers())
         {
             rollResult = mod.apply(rollResult);
@@ -134,8 +160,16 @@ public class BattleController : MonoBehaviour
         playerBattleStatus.ApplyResult(rollResult);
         enemyBattleStatus.ApplyResult(rollResult);
 
+        // Post damage effects
+        enemyController.ApplyPostDamageEffects(rollResult);
+
         // Decrement roll-bounded mods
         PlayerStatus.Mods.DecrementAndDeregisterModsIfNecessary();
+
+        // Battle status messages
+        CreateStatusMessages(playerStatusMessagesToShow, enemyStatusMessagesToShow);
+        playerStatusMessagesToShow.Clear();
+        enemyStatusMessagesToShow.Clear();
 
         CheckBattleComplete();
 
@@ -221,7 +255,9 @@ public class BattleController : MonoBehaviour
             return false;
         }
 
+        // Update PlayerStatus
         PlayerStatus.UseItem(item);
+        // Add mod or apply effect directly
         if (item.modType != ModType.NONE)
         {
             itemModsToAdd.Add(item);
@@ -230,6 +266,9 @@ public class BattleController : MonoBehaviour
         {
             item.ApplyEffect();
         }
+        // Add status messages if there are any
+        CreateStatusMessages(new List<string>() { item.playerStatusMessage },
+            new List<string>() { item.enemyStatusMessage });
         return true;
     }
 
@@ -244,6 +283,55 @@ public class BattleController : MonoBehaviour
             GameObject newIcon = BattleItemUI.InstantiateItemIcon(item, 
                 itemIconPrefab, itemDropPanel.transform, false);
             newIcon.GetComponent<ItemIcon>().ItemCount = 1;
+        }
+    }
+
+    public void AddRollBoundedMod(Modifier mod, int priority)
+    {
+        AddRollBoundedMod(mod, priority, null, null);
+    }
+
+    // Used when something else (an enemy) needs to add a mod that ends when the battle ends
+    public void AddRollBoundedMod(Modifier mod, int priority, string playerUiMessage, string enemyUiMessage)
+    {
+        PlayerStatus.Mods.RegisterModifier(mod, priority);
+        currentRollBoundedMods.Add(mod);
+        playerStatusMessagesToShow.Add(playerUiMessage);
+        enemyStatusMessagesToShow.Add(enemyUiMessage);
+    }
+
+    private void CreateStatusMessages(List<string> playerMessages, List<string> enemyMessages)
+    {
+        if (playerMessages != null)
+        {
+            for (int i = 0; i < playerMessages.Count; i++)
+            {
+                CreateStatusMessage(playerMessages[i], playerStatusMessagesParent, i);
+            }
+        }
+        if (enemyMessages != null)
+        {
+            for (int i = 0; i < enemyMessages.Count; i++)
+            {
+                CreateStatusMessage(enemyMessages[i], enemyStatusMessagesParent, i);
+            }
+        }
+    }
+
+    private void CreateStatusMessage(string message, RectTransform parent, int index)
+    {
+        if (string.IsNullOrEmpty(message))
+        {
+            return;
+        }
+
+        GameObject newMessage = Instantiate(statusMessagePrefab, parent);
+        Text messageText = newMessage.GetComponentInChildren<Text>();
+        messageText.text = message;
+        if (index > 0)
+        {
+            newMessage.GetComponent<RectTransform>().anchoredPosition +=
+                (statusMessageSpacing * index * Vector2.down);
         }
     }
 }

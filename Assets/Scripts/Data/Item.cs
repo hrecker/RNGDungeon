@@ -7,6 +7,8 @@ public class Item
     public string tooltipText;
     public int numRollsInEffect; // For in-battle items
     public int playerHealthChange; // For healing items
+    public string playerStatusMessage;
+    public string enemyStatusMessage;
     public ItemType itemType;
     public EquipSlot equipSlot;
     public ModType modType;
@@ -25,7 +27,7 @@ public class Item
                 result = new RecoilModifer();
                 break;
             case ModType.WEAPON:
-                result = new WeaponModifier(
+                result = new RollBuffModifier(
                     modEffect.playerMinRollChange, modEffect.playerMaxRollChange);
                 break;
         }

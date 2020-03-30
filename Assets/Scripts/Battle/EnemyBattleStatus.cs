@@ -9,5 +9,9 @@ public class EnemyBattleStatus : BattleStatus
         {
             currentHealth = 0;
         }
+        else if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
     }
 }

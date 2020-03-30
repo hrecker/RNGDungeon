@@ -3,12 +3,14 @@
         {
             "name": "HealthPotion",
             "playerHealthChange": 3,
-            "tooltipText": "Heals 3 health"
+            "tooltipText": "Heals 3 health",
+            "playerStatusMessage": "+3 health"
         },
         {
             "name": "BlockingPotion",
             "itemType": 1,
             "tooltipText": "Blocks incoming damage for 3 turns",
+            "playerStatusMessage": "Block: 3 turns",
             "numRollsInEffect": 3,
             "modType": 1
         },
@@ -16,6 +18,7 @@
             "name": "RecoilPotion",
             "itemType": 1,
             "tooltipText": "Recoils 1 damage to enemy for 3 turns",
+            "playerStatusMessage": "Recoil: 3 turns",
             "numRollsInEffect": 3,
             "modType": 2
         },

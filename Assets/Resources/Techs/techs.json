@@ -3,6 +3,7 @@
         {
             "name": "HeavySwing",
             "tooltip": "Increases rolls for one roll, followed by a two roll debuff",
+            "playerStatusMessage": "-2 Roll: 2 turns",
             "cooldownRolls": 6,
             "numRollsInEffect": 3,
             "modType": 301

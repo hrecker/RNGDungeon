@@ -2,7 +2,7 @@
 
 public class PlayerRollGenerator : RollGenerator
 {
-    public override int generateInitialRoll()
+    public override int GenerateInitialRoll()
     {
         int min = minRoll;
         int max = maxRoll;
@@ -12,6 +12,6 @@ public class PlayerRollGenerator : RollGenerator
             min = modified.Item1;
             max = modified.Item2;
         }
-        return generateBasicRoll(min, max);
+        return GenerateBasicRoll(min, max);
     }
 }

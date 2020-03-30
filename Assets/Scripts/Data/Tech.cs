@@ -6,6 +6,8 @@ public class Tech
 {
     public string name;
     public string tooltip;
+    public string playerStatusMessage;
+    public string enemyStatusMessage;
     public int cooldownRolls;
     public int numRollsInEffect;
     public ModType modType;
