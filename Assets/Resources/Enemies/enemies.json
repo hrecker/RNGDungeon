@@ -17,6 +17,12 @@
             "baseMinRoll": 3,
             "baseMaxRoll": 4,
             "maxHealth": 1
+        },
+        {
+            "name": "MysteriousStatue",
+            "baseMinRoll": 2,
+            "baseMaxRoll": 6,
+            "maxHealth": 5
         }
     ]
 }

@@ -31,9 +31,9 @@
                 0.3
             ],
             "enemies": [
-                "Bat",
                 "Slime",
-                "Ghost"
+                "Ghost",
+                "MysteriousStatue"
             ]
         }
     ]

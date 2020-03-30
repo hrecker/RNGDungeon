@@ -20,10 +20,8 @@ public class EnemyBattleController : RollGenerator
         status.currentHealth = status.maxHealth;
         minRoll = enemy.baseMinRoll;
         maxRoll = enemy.baseMaxRoll;
-
-        // Load sprite
-        //enemySprite.sprite = Cache.GetEnemyIcon(enemy.name);
     }
+
     public override int GenerateInitialRoll()
     {
         return GenerateBasicRoll(minRoll, maxRoll);
