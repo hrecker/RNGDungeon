@@ -9,6 +9,7 @@ public class Item
     public int playerHealthChange; // For healing items
     public string playerStatusMessage;
     public string enemyStatusMessage;
+    public string failedUseMessage;
     public ItemType itemType;
     public EquipSlot equipSlot;
     public ModType modType;
@@ -42,10 +43,15 @@ public class Item
     }
 
     // For items like health potions that represent single use effects
-    public void ApplyEffect()
+    public bool ApplyEffect()
     {
         //TODO implementation for things besides health potions
+        if (PlayerStatus.Health >= PlayerStatus.MaxHealth)
+        {
+            return false;
+        }
         PlayerStatus.Health += playerHealthChange;
+        return true;
     }
 }
 

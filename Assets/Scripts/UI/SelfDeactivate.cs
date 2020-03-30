@@ -13,6 +13,7 @@ public class SelfDeactivate : MonoBehaviour
         if (timer >= lifetime)
         {
             gameObject.SetActive(false);
+            ResetTimer();
         }
     }
 

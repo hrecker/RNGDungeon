@@ -264,20 +264,19 @@ public class BattleController : MonoBehaviour
         }
 
         // Update PlayerStatus
-        PlayerStatus.UseItem(item);
-        // Add mod or apply effect directly
-        if (item.modType != ModType.NONE)
+        if (PlayerStatus.UseItem(item, true))
         {
-            itemModsToAdd.Add(item);
+            // Add battle mod if necessary
+            if (item.modType != ModType.NONE)
+            {
+                itemModsToAdd.Add(item);
+            }
+            // Add status messages if there are any
+            CreateStatusMessages(new List<string>() { item.playerStatusMessage },
+                new List<string>() { item.enemyStatusMessage });
+            return true;
         }
-        else
-        {
-            item.ApplyEffect();
-        }
-        // Add status messages if there are any
-        CreateStatusMessages(new List<string>() { item.playerStatusMessage },
-            new List<string>() { item.enemyStatusMessage });
-        return true;
+        return false;
     }
 
     public void GenerateItemDrop()

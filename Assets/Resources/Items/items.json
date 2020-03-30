@@ -4,7 +4,8 @@
             "name": "HealthPotion",
             "playerHealthChange": 3,
             "tooltipText": "Heals 3 health",
-            "playerStatusMessage": "+3 health"
+            "playerStatusMessage": "+3 health",
+            "failedUseMessage": "Already at maximum health"
         },
         {
             "name": "BlockingPotion",

@@ -90,8 +90,42 @@ public class PlayerStatus
         }
     }
 
-    public static void UseItem(Item item)
+    // Returns true if the item was successfully used
+    public static bool UseItem(Item item, bool isInBattle)
     {
+        switch (item.itemType)
+        {
+            case ItemType.EQUIPMENT:
+                //Equip
+                switch (item.equipSlot)
+                {
+                    case EquipSlot.WEAPON:
+                        Item currentWeapon = EquippedWeapon;
+                        if (currentWeapon != null)
+                        {
+                            AddItem(currentWeapon);
+                        }
+                        EquippedWeapon = item;
+                        break;
+                    case EquipSlot.TRINKET:
+                        EquippedTrinkets.Add(item);
+                        break;
+                }
+                break;
+            case ItemType.USABLE_ANYTIME:
+                if (!item.ApplyEffect())
+                {
+                    return false;
+                }
+                break;
+            case ItemType.USABLE_ONLY_IN_BATTLE:
+                if (!isInBattle)
+                {
+                    return false;
+                }
+                break;
+        }
+
         if (Inventory.ContainsKey(item))
         {
             Inventory[item]--;
@@ -100,6 +134,8 @@ public class PlayerStatus
         {
             Inventory.Remove(item);
         }
+
+        return true;
     }
 
     public static List<Ability> GetAbilities()

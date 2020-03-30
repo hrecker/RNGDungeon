@@ -11,6 +11,7 @@ public class InventoryUIController : MonoBehaviour
     public GameObject selectableTextPrefab;
     public RectTransform redHealthBar;
     public Text healthText;
+    public Text itemUseMessage;
     public Transform statusBase;
     public Transform equipmentBase;
     public Transform abilityBase;
@@ -23,6 +24,7 @@ public class InventoryUIController : MonoBehaviour
 
     void Start()
     {
+        itemUseMessage.text = "";
         UpdateHealthUI();
         UpdateStatusUI();
         UpdateEquipmentUI();
@@ -111,36 +113,34 @@ public class InventoryUIController : MonoBehaviour
             return;
         }
 
-        switch (selected.itemType)
+        string useMessage = null;
+        if (PlayerStatus.UseItem(selected, false))
         {
-            case ItemType.EQUIPMENT:
-                //Equip
-                switch (selected.equipSlot)
-                {
-                    case EquipSlot.WEAPON:
-                        Item currentWeapon = PlayerStatus.EquippedWeapon;
-                        if (currentWeapon != null)
-                        {
-                            PlayerStatus.AddItem(currentWeapon);
-                        }
-                        PlayerStatus.EquippedWeapon = selected;
-                        PlayerStatus.UseItem(selected);
-                        break;
-                    case EquipSlot.TRINKET:
-                        PlayerStatus.EquippedTrinkets.Add(selected);
-                        PlayerStatus.UseItem(selected);
-                        break;
-                }
-                UpdateEquipmentUI();
-                UpdateInventoryUI();
-                break;
-            case ItemType.USABLE_ANYTIME:
-                //TODO Use
-                UpdateInventoryUI();
-                break;
-            case ItemType.USABLE_ONLY_IN_BATTLE:
-                //TODO some kind of message indicating the item can't be used right now
-                break;
+            switch (selected.itemType)
+            {
+                case ItemType.EQUIPMENT:
+                    UpdateEquipmentUI();
+                    UpdateInventoryUI();
+                    break;
+                case ItemType.USABLE_ANYTIME:
+                    UpdateHealthUI();
+                    UpdateInventoryUI();
+                    break;
+            }
+        }
+        else
+        {
+            useMessage = selected.failedUseMessage;
+            if (selected.itemType == ItemType.USABLE_ONLY_IN_BATTLE)
+            {
+                useMessage = "This item can only be used in battle";
+            }
+        }
+        if (useMessage != null)
+        {
+            itemUseMessage.gameObject.SetActive(true);
+            itemUseMessage.text = useMessage;
+            itemUseMessage.GetComponent<SelfDeactivate>().ResetTimer();
         }
     }
 
