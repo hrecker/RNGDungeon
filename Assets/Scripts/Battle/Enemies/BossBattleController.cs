@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BossBattleController : EnemyBattleController
 {
     private Sprite defaultSprite;
-    public Sprite chargeSprite;
-    public Sprite releaseSprite;
-    public Sprite healSprite;
-    public Sprite exhaustSprite;
-    public Sprite defeatedSprite;
-    private Image bossSprite;
+    private Sprite chargeSprite;
+    private Sprite releaseSprite;
+    private Sprite healSprite;
+    private Sprite exhaustSprite;
+    private Sprite defeatedSprite;
 
-    public int minDefaultPhaseRolls;
-    public int maxDefaultPhaseRolls;
-    public int exhaustDebuff;
-    public int healOrChargeDebuff;
-    public int healRate;
-    public int healOrChargeRolls;
-    public int exhaustRolls;
+    private int minDefaultPhaseRolls = 2;
+    private int maxDefaultPhaseRolls = 5;
+    private int exhaustDebuff = 4;
+    private int healOrChargeDebuff = 2;
+    private int healRate = 3;
+    private int healOrChargeRolls = 2;
+    private int exhaustRolls = 2;
 
     private int chargeBuff;
     private int defaultPhaseMinRoll;
@@ -30,12 +26,18 @@ public class BossBattleController : EnemyBattleController
 
     void Start()
     {
-        bossSprite = GetComponent<Image>();
-        defaultSprite = bossSprite.sprite;
+        defaultSprite = enemySprite.sprite;
         defaultPhaseMinRoll = minRoll;
         defaultPhaseMaxRoll = maxRoll;
         currentPhase = BossPhase.DEFAULT;
         phaseRollsRemaining = 3;
+
+        // Load sprites
+        chargeSprite = GetEnemyResourceSprite("bosscharge");
+        releaseSprite = GetEnemyResourceSprite("bossrelease");
+        healSprite = GetEnemyResourceSprite("bossheal");
+        exhaustSprite = GetEnemyResourceSprite("bossexhausted");
+        defeatedSprite = GetEnemyResourceSprite("bossdefeated");
     }
 
     public override RollResult ApplyRollResultMods(RollResult initial)
@@ -66,7 +68,7 @@ public class BossBattleController : EnemyBattleController
         }
         else if (status.currentHealth <= 0)
         {
-            bossSprite.sprite = defeatedSprite;
+            enemySprite.sprite = defeatedSprite;
         }
     }
 
@@ -82,7 +84,7 @@ public class BossBattleController : EnemyBattleController
                     if (UnityEngine.Random.value < 0.5f)
                     {
                         currentPhase = BossPhase.HEAL;
-                        bossSprite.sprite = healSprite;
+                        enemySprite.sprite = healSprite;
                         healing = true;
                     }
                 }
@@ -90,7 +92,7 @@ public class BossBattleController : EnemyBattleController
                 if (!healing)
                 {
                     currentPhase = BossPhase.CHARGE;
-                    bossSprite.sprite = chargeSprite;
+                    enemySprite.sprite = chargeSprite;
                     chargeBuff = 0;
                 }
                 phaseRollsRemaining = healOrChargeRolls;
@@ -100,14 +102,14 @@ public class BossBattleController : EnemyBattleController
             case BossPhase.CHARGE: // Charge moves to release
                 currentPhase = BossPhase.RELEASE;
                 phaseRollsRemaining = 1;
-                bossSprite.sprite = releaseSprite;
+                enemySprite.sprite = releaseSprite;
                 minRoll = defaultPhaseMinRoll + chargeBuff;
                 maxRoll = defaultPhaseMaxRoll + chargeBuff;
                 break;
             case BossPhase.RELEASE: // Release moves to exhaustion
                 currentPhase = BossPhase.EXHAUSTED;
                 phaseRollsRemaining = exhaustRolls;
-                bossSprite.sprite = exhaustSprite;
+                enemySprite.sprite = exhaustSprite;
                 minRoll = defaultPhaseMinRoll - exhaustDebuff;
                 maxRoll = defaultPhaseMaxRoll - exhaustDebuff;
                 break;
@@ -116,7 +118,7 @@ public class BossBattleController : EnemyBattleController
                 currentPhase = BossPhase.DEFAULT;
                 phaseRollsRemaining = UnityEngine.Random.Range(
                     minDefaultPhaseRolls, maxDefaultPhaseRolls + 1);
-                bossSprite.sprite = defaultSprite;
+                enemySprite.sprite = defaultSprite;
                 minRoll = defaultPhaseMinRoll;
                 maxRoll = defaultPhaseMaxRoll;
                 break;

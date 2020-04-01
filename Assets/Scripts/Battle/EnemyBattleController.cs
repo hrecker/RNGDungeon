@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyBattleController : RollGenerator
 {
     protected EnemyBattleStatus status;
-    private Image enemySprite;
-    private Enemy enemy;
+    protected Image enemySprite;
+    protected Enemy enemy;
+
+    protected const string enemySpriteResourcePath = @"Enemies/sprites/";
 
     void Awake()
     {
@@ -20,6 +20,19 @@ public class EnemyBattleController : RollGenerator
         status.currentHealth = status.maxHealth;
         minRoll = enemy.baseMinRoll;
         maxRoll = enemy.baseMaxRoll;
+
+        // Set initial sprite
+        SetSprite(GetEnemyResourceSprite(enemy.name));
+    }
+
+    protected Sprite GetEnemyResourceSprite(string spriteName)
+    {
+        return Resources.Load<Sprite>(enemySpriteResourcePath + spriteName);
+    }
+
+    protected void SetSprite(Sprite sprite)
+    {
+        enemySprite.sprite = sprite;
     }
 
     public override int GenerateInitialRoll()

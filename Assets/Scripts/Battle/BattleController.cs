@@ -11,6 +11,7 @@ public class BattleController : MonoBehaviour
     private float timer = 0.0f;
     private bool completed;
 
+    public GameObject enemy;
     public Text resultText;
     public TechButtonController techUI;
     public GameObject exitToMenuButton;
@@ -45,18 +46,15 @@ public class BattleController : MonoBehaviour
     private List<string> playerStatusMessagesToShow;
     private List<string> enemyStatusMessagesToShow;
 
-    private const string enemyPrefabResourcePath = @"Enemies/battleprefabs/";
-
     private void Awake()
     {
-        // Instantiate enemy prefab
+        // Add enemycontroller for the given enemy
         string enemyName = CurrentLevel.currentEnemyName;
-        GameObject newEnemy = (GameObject) Instantiate(
-            Resources.Load(enemyPrefabResourcePath + enemyName), enemyParent);
-        enemyController = newEnemy.GetComponent<EnemyBattleController>();
-        enemyBattleStatus = newEnemy.GetComponent<EnemyBattleStatus>();
-        enemyHealthChangeUI = newEnemy.gameObject.transform.Find("RollDamage").gameObject;
-        newEnemy.transform.SetSiblingIndex(0);
+        Type controllerType = Cache.GetEnemy(enemyName).GetEnemyControllerType();
+        enemy.AddComponent(controllerType);
+        enemyController = enemy.GetComponent<EnemyBattleController>();
+        enemyBattleStatus = enemy.GetComponent<EnemyBattleStatus>();
+        enemyHealthChangeUI = enemy.gameObject.transform.Find("RollDamage").gameObject;
     }
 
     private void Start()

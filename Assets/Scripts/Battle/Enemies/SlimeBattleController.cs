@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SlimeBattleController : EnemyBattleController
+﻿public class SlimeBattleController : EnemyBattleController
 {
-    public int regenRate;
+    private int regenRate = 2;
     private bool regenRoll;
 
     public override RollResult ApplyRollResultMods(RollResult initial)

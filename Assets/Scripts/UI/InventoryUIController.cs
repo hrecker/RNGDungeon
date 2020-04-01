@@ -9,8 +9,7 @@ public class InventoryUIController : MonoBehaviour
 {
     public GameObject textPrefab;
     public GameObject selectableTextPrefab;
-    public RectTransform redHealthBar;
-    public Text healthText;
+    public HealthBar healthBar;
     public Text itemUseMessage;
     public Transform statusBase;
     public Transform equipmentBase;
@@ -36,11 +35,7 @@ public class InventoryUIController : MonoBehaviour
     {
         // For testing
         PlayerStatus.InitializeIfNecessary();
-
-        healthText.text = PlayerStatus.Health + "/" + PlayerStatus.MaxHealth;
-        float redHealthPercentage = 100 *
-            (PlayerStatus.MaxHealth - PlayerStatus.Health) / PlayerStatus.MaxHealth;
-        redHealthBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, redHealthPercentage);
+        healthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
     }
 
     private void UpdateStatusUI()

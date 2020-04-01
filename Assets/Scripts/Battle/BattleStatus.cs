@@ -1,31 +1,30 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public abstract class BattleStatus : MonoBehaviour
 {
     public int maxHealth;
     public int currentHealth;
-    Text healthUIText;
+    HealthBar healthBar;
 
     private int lastRenderCurrentHealth;
 
     void Start()
     {
-        healthUIText = GetComponentInChildren<Text>();
-        UpdateHealthText();
+        healthBar = GetComponentInChildren<HealthBar>();
+        UpdateHealthBar();
     }
 
     protected virtual void Update()
     {
         if (lastRenderCurrentHealth != currentHealth)
         {
-            UpdateHealthText();
+            UpdateHealthBar();
         }
     }
 
-    private void UpdateHealthText()
+    private void UpdateHealthBar()
     {
-        healthUIText.text = currentHealth + "/" + maxHealth;
+        healthBar.UpdateHealth(currentHealth, maxHealth);
         lastRenderCurrentHealth = currentHealth;
     }
 

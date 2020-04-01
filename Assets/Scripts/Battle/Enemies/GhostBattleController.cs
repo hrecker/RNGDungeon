@@ -2,7 +2,7 @@
 
 public class GhostBattleController : EnemyBattleController
 {
-    public int rollDebuff;
+    private int rollDebuff = 2;
     private BattleController battleController;
     private bool debuffActive;
     private int debuffTurnsRemaining;

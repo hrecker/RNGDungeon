@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class MysteriousStatueBattleController : EnemyBattleController
 {
-    public Sprite phase2;
-    public Sprite phase3;
-    private Image battleSprite;
+    private Sprite phase2;
+    private Sprite phase3;
 
-    public int hitsToPhase3;
-    public int damageReduction;
+    private int hitsToPhase3 = 3;
+    private int damageReduction = 3;
     private int hitsTaken;
     private int currentPhase;
     private int finalPhaseMinRoll;
@@ -23,7 +19,10 @@ public class MysteriousStatueBattleController : EnemyBattleController
         finalPhaseMaxRoll = maxRoll;
         minRoll = 1;
         maxRoll = 1;
-        battleSprite = GetComponent<Image>();
+
+        // Load sprites
+        phase2 = GetEnemyResourceSprite("mysteriousstatue2");
+        phase3 = GetEnemyResourceSprite("mysteriousstatue3");
     }
 
     private void UpdatePhase()
@@ -36,12 +35,12 @@ public class MysteriousStatueBattleController : EnemyBattleController
         if (hitsTaken == hitsToPhase3 - 1)
         {
             currentPhase = 2;
-            battleSprite.sprite = phase2;
+            enemySprite.sprite = phase2;
         }
         else if (hitsTaken >= hitsToPhase3)
         {
             currentPhase = 3;
-            battleSprite.sprite = phase3;
+            enemySprite.sprite = phase3;
             minRoll = finalPhaseMinRoll;
             maxRoll = finalPhaseMaxRoll;
         }
