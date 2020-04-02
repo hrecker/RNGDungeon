@@ -4,6 +4,7 @@
 public class Ability
 {
     public string name;
+    public string displayName;
     public string description;
     public ModType modType;
     public ModEffect modEffect;
@@ -25,5 +26,10 @@ public class Ability
             result.triggerChance = modEffect.baseModTriggerChance;
         }
         return result;
+    }
+
+    public string GetDisplayName()
+    {
+        return string.IsNullOrEmpty(displayName) ? name : displayName;
     }
 }

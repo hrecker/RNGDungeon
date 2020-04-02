@@ -11,6 +11,7 @@
         },
         {
             "name": "HighRoller",
+            "displayName": "High Roller",
             "description": "Chance to double any roll",
             "modType": 202,
             "modEffect": {

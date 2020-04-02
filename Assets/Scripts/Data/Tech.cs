@@ -5,7 +5,8 @@
 public class Tech
 {
     public string name;
-    public string tooltip;
+    public string displayName;
+    public string description;
     public string playerStatusMessage;
     public string enemyStatusMessage;
     public int cooldownRolls;
@@ -57,5 +58,10 @@ public class Tech
     public void ResetCooldown()
     {
         currentCooldown = 0;
+    }
+
+    public string GetDisplayName()
+    {
+        return string.IsNullOrEmpty(displayName) ? name : displayName;
     }
 }

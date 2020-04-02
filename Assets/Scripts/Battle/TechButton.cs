@@ -29,7 +29,7 @@ public class TechButton : MonoBehaviour
             tech = Cache.GetTech(techName);
             gameObject.name = techName;
             techImage.sprite = Cache.GetTechIcon(techName);
-            tooltipText.text = tech.tooltip;
+            tooltipText.text = tech.GetDisplayName();
             UpdateCooldownText();
         }
     }

@@ -2,6 +2,7 @@
     "items": [
         {
             "name": "HealthPotion",
+            "displayName": "Health Potion",
             "playerHealthChange": 3,
             "tooltipText": "Heals 3 health",
             "playerStatusMessage": "+3 health",
@@ -9,6 +10,7 @@
         },
         {
             "name": "BlockingPotion",
+            "displayName": "Blocking Potion",
             "itemType": 1,
             "tooltipText": "Blocks incoming damage for 3 turns",
             "playerStatusMessage": "Block: 3 turns",
@@ -17,6 +19,7 @@
         },
         {
             "name": "RecoilPotion",
+            "displayName": "Recoil Potion",
             "itemType": 1,
             "tooltipText": "Recoils 1 damage to enemy for 3 turns",
             "playerStatusMessage": "Recoil: 3 turns",

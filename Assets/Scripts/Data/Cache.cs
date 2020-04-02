@@ -274,7 +274,7 @@ public class Cache
         techContainer.techs.Add(new Tech()
         {
             name = "HeavySwing",
-            tooltip = "Increases rolls for one roll, followed by a two roll debuff",
+            description = "Increases rolls for one roll, followed by a two roll debuff",
             cooldownRolls = 6,
             numRollsInEffect = 3,
             modType = ModType.HEAVYSWING,
@@ -282,14 +282,14 @@ public class Cache
         techContainer.techs.Add(new Tech()
         {
             name = "Rage",
-            tooltip = "Increases rolls when on low health",
+            description = "Increases rolls when on low health",
             cooldownRolls = 5,
             modType = ModType.RAGE,
         });
         techContainer.techs.Add(new Tech()
         {
             name = "Bulwark",
-            tooltip = "Raises min roll, but does not deal damage",
+            description = "Raises min roll, but does not deal damage",
             cooldownRolls = 8,
             modType = ModType.BULWARK,
             modEffect = new ModEffect()

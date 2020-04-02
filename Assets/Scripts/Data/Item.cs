@@ -4,6 +4,7 @@
 public class Item
 {
     public string name;
+    public string displayName;
     public string tooltipText;
     public int numRollsInEffect; // For in-battle items
     public int playerHealthChange; // For healing items
@@ -52,6 +53,11 @@ public class Item
         }
         PlayerStatus.Health += playerHealthChange;
         return true;
+    }
+
+    public string GetDisplayName()
+    {
+        return string.IsNullOrEmpty(displayName) ? name : displayName;
     }
 }
 

@@ -367,8 +367,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2108076845}
   m_HandleRect: {fileID: 2108076844}
   m_Direction: 0
-  m_Value: 0.50000006
-  m_Size: 0.6
+  m_Value: 0.49999985
+  m_Size: 0.59999996
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -723,7 +723,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Normal min and max rolls
+  m_Text: Basic Attack
 --- !u!222 &904725846
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2941,6 +2941,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1564339254}
     m_Modifications:
+    - target: {fileID: 694431293895038448, guid: 4a3d84cbdeb111b44a76f2fe499e9d72,
+        type: 3}
+      propertyPath: m_Text
+      value: Basic Attack
+      objectReference: {fileID: 0}
     - target: {fileID: 694431293895038449, guid: 4a3d84cbdeb111b44a76f2fe499e9d72,
         type: 3}
       propertyPath: m_AnchoredPosition.y

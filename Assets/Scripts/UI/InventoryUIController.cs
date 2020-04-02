@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,9 +8,10 @@ public class InventoryUIController : MonoBehaviour
 {
     public GameObject textPrefab;
     public GameObject selectableTextPrefab;
+    public GameObject techPrefab;
     public HealthBar healthBar;
     public Text itemUseMessage;
-    public Transform statusBase;
+    public Transform techBase;
     public Transform equipmentBase;
     public Transform abilityBase;
     public Transform inventoryBase;
@@ -25,7 +25,7 @@ public class InventoryUIController : MonoBehaviour
     {
         itemUseMessage.text = "";
         UpdateHealthUI();
-        UpdateStatusUI();
+        UpdateTechUI();
         UpdateEquipmentUI();
         UpdateAbilityUI();
         UpdateInventoryUI();
@@ -38,11 +38,19 @@ public class InventoryUIController : MonoBehaviour
         healthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
     }
 
-    private void UpdateStatusUI()
+    private void UpdateTechUI()
     {
-        //TODO get statuses from player status once they are added there
-        List<string> statuses = new List<string>() { "EXAMPLE", "++MaxRoll" };
-        UpdateListUI(statuses, statusBase);
+        for (int i = 0; i < PlayerStatus.EnabledTechs.Count; i++)
+        {
+            Tech tech = PlayerStatus.EnabledTechs[i];
+            GameObject newTech = Instantiate(techPrefab, techBase);
+            newTech.GetComponent<Text>().text = tech.GetDisplayName();
+            Transform backgroundImage = newTech.transform.Find("Background");
+            backgroundImage.Find("TechIcon").GetComponent<Image>().sprite = 
+                Cache.GetTechIcon(tech.name);
+            newTech.transform.Find("Description").GetComponent<Text>().text = tech.description;
+            newTech.GetComponent<RectTransform>().Translate(2.5f * i * lineSeparation * Vector3.down);
+        }
     }
 
     private void UpdateEquipmentUI()
@@ -59,7 +67,7 @@ public class InventoryUIController : MonoBehaviour
         List<string> equipmentNames = new List<string>();
         if (PlayerStatus.EquippedWeapon != null)
         {
-            equipmentDisplayNames.Add("Weapon: " + PlayerStatus.EquippedWeapon.name);
+            equipmentDisplayNames.Add("Weapon: " + PlayerStatus.EquippedWeapon.GetDisplayName());
             equipmentNames.Add(PlayerStatus.EquippedWeapon.name);
         }
         else
@@ -69,7 +77,7 @@ public class InventoryUIController : MonoBehaviour
         }
         foreach (Item trinket in PlayerStatus.EquippedTrinkets)
         {
-            equipmentDisplayNames.Add(trinket.name);
+            equipmentDisplayNames.Add(trinket.GetDisplayName());
             equipmentNames.Add(trinket.name);
         }
 
@@ -172,7 +180,7 @@ public class InventoryUIController : MonoBehaviour
 
     private void UpdateAbilityUI()
     {
-        UpdateListUI(PlayerStatus.GetAbilities().Select(a => a.name).ToList(), abilityBase);
+        UpdateListUI(PlayerStatus.GetAbilities().Select(a => a.GetDisplayName()).ToList(), abilityBase);
     }
 
     private void UpdateInventoryUI()
@@ -186,7 +194,7 @@ public class InventoryUIController : MonoBehaviour
         }
 
         selectableInventory = UpdateSelectableListUI(PlayerStatus.Inventory.Keys.Select(
-            i => PlayerStatus.Inventory[i] + "x " + i.name).ToList(), PlayerStatus.Inventory.Keys.Select(
+            i => PlayerStatus.Inventory[i] + "x " + i.GetDisplayName()).ToList(), PlayerStatus.Inventory.Keys.Select(
             i =>  i.name).ToList(), UseInventoryItem, DeselectOtherInventoryItems, inventoryBase);
     }
 
