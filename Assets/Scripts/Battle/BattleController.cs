@@ -10,6 +10,8 @@ public class BattleController : MonoBehaviour
     public float victoryDisplayTime = 2.0f;
     private float timer = 0.0f;
     private bool completed;
+    private bool fastforwardActive;
+    private float baseRollInterval;
 
     public GameObject enemy;
     public Text resultText;
@@ -48,6 +50,7 @@ public class BattleController : MonoBehaviour
 
     private void Awake()
     {
+        baseRollInterval = rollInterval;
         // Add enemycontroller for the given enemy
         string enemyName = CurrentLevel.currentEnemyName;
         Type controllerType = Cache.GetEnemy(enemyName).GetEnemyControllerType();
@@ -93,6 +96,21 @@ public class BattleController : MonoBehaviour
                 SceneManager.LoadScene("MapScene");
             }
         }
+    }
+
+    public void ToggleFastforward()
+    {
+        float intervalFractionCompleted = timer / rollInterval;
+        if (fastforwardActive)
+        {
+            rollInterval = baseRollInterval;
+        }
+        else
+        {
+            rollInterval = baseRollInterval / 2;
+        }
+        timer = intervalFractionCompleted * rollInterval;
+        fastforwardActive = !fastforwardActive;
     }
 
     private void Roll()
