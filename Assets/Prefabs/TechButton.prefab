@@ -357,7 +357,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aacb2c66bf6bd8546aec00a7bbb78b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltip: {fileID: 4490289981286896429}
+  tooltipPanel: {fileID: 0}
+  tooltipText: {fileID: 4490289981286896429}
+  disabled: 0
 --- !u!1 &7018192882061497755
 GameObject:
   m_ObjectHideFlags: 0

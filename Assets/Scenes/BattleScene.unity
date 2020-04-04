@@ -367,8 +367,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2108076845}
   m_HandleRect: {fileID: 2108076844}
   m_Direction: 0
-  m_Value: 0.49999985
-  m_Size: 0.59999996
+  m_Value: 0.5
+  m_Size: 0.6
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1055,7 +1055,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aacb2c66bf6bd8546aec00a7bbb78b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltip: {fileID: 904725845}
+  tooltipPanel: {fileID: 0}
+  tooltipText: {fileID: 904725845}
+  disabled: 0
 --- !u!1001 &1109365116
 PrefabInstance:
   m_ObjectHideFlags: 0

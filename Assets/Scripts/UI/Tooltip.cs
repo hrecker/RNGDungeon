@@ -5,22 +5,49 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour
 {
-    public Text tooltip;
+    public GameObject tooltipPanel;
+    public Text tooltipText;
+    public bool disabled;
 
     private void Start()
     {
-        tooltip.enabled = false;
+        HideTooltip();
+    }
+
+    public void SetTooltipText(string text)
+    {
+        tooltipText.text = text;
     }
 
     // Add an eventtrigger to the UI object that needs a tooltip,
     // then point to these two methods for PointerEnter and PointerExit, respectively
     public void ShowTooltip()
     {
-        tooltip.enabled = true;
+        if (!disabled)
+        {
+            if (tooltipPanel != null)
+            {
+                tooltipPanel.SetActive(true);
+            }
+            tooltipText.enabled = true;
+        }
     }
 
     public void HideTooltip()
     {
-        tooltip.enabled = false;
+        if (tooltipPanel != null)
+        {
+            tooltipPanel.SetActive(false);
+        }
+        tooltipText.enabled = false;
+    }
+
+    public void SetEnabled(bool enabled)
+    {
+        this.disabled = !enabled;
+        if (disabled)
+        {
+            HideTooltip();
+        }
     }
 }

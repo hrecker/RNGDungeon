@@ -48,8 +48,9 @@ public class InventoryUIController : MonoBehaviour
             Transform backgroundImage = newTech.transform.Find("Background");
             backgroundImage.Find("TechIcon").GetComponent<Image>().sprite = 
                 Cache.GetTechIcon(tech.name);
-            newTech.transform.Find("Description").GetComponent<Text>().text = tech.description;
-            newTech.GetComponent<RectTransform>().Translate(2.5f * i * lineSeparation * Vector3.down);
+            Tooltip tooltip = newTech.GetComponent<Tooltip>();
+            tooltip.SetTooltipText(tech.description);
+            newTech.GetComponent<RectTransform>().Translate(i * lineSeparation * Vector3.down);
         }
     }
 
@@ -63,27 +64,38 @@ public class InventoryUIController : MonoBehaviour
             }
         }
 
-        List<string> equipmentDisplayNames = new List<string>();
-        List<string> equipmentNames = new List<string>();
+        List<UIText> equipmentUIText = new List<UIText>();
         if (PlayerStatus.EquippedWeapon != null)
         {
-            equipmentDisplayNames.Add("Weapon: " + PlayerStatus.EquippedWeapon.GetDisplayName());
-            equipmentNames.Add(PlayerStatus.EquippedWeapon.name);
+            equipmentUIText.Add(new UIText
+            {
+                displayName = "Weapon: " + PlayerStatus.EquippedWeapon.GetDisplayName(),
+                tooltipText = PlayerStatus.EquippedWeapon.tooltipText,
+                callbackIdentifier = PlayerStatus.EquippedWeapon.name,
+                sprite = Cache.GetItemIcon(PlayerStatus.EquippedWeapon.name)
+            });
         }
         else
         {
-            equipmentDisplayNames.Add("Weapon: None");
-            equipmentNames.Add(null);
+            equipmentUIText.Add(new UIText
+            {
+                displayName = "Weapon: None"
+            });
         }
         foreach (Item trinket in PlayerStatus.EquippedTrinkets)
         {
-            equipmentDisplayNames.Add(trinket.GetDisplayName());
-            equipmentNames.Add(trinket.name);
+            equipmentUIText.Add(new UIText
+            {
+                displayName = trinket.GetDisplayName(),
+                tooltipText = trinket.tooltipText,
+                callbackIdentifier = trinket.name,
+                sprite = Cache.GetItemIcon(trinket.name)
+            });
         }
 
         selectableEquipped = UpdateSelectableListUI(
-            equipmentDisplayNames, equipmentNames, 
-            UseEquipmentItem, DeselectOtherEquipmentItems, equipmentBase);
+            equipmentUIText, UseEquipmentItem, 
+            DeselectOtherEquipmentItems, equipmentBase);
     }
 
     private void DeselectOtherInventoryItems(Selectable remainSelected)
@@ -180,7 +192,13 @@ public class InventoryUIController : MonoBehaviour
 
     private void UpdateAbilityUI()
     {
-        UpdateListUI(PlayerStatus.GetAbilities().Select(a => a.GetDisplayName()).ToList(), abilityBase);
+        UpdateListUI(PlayerStatus.GetAbilities().
+            Select(a => new UIText 
+            { 
+                displayName = a.GetDisplayName(), 
+                tooltipText = a.description,
+                sprite = Cache.GetAbilityIcon(a.name)
+            }).ToList(), abilityBase);
     }
 
     private void UpdateInventoryUI()
@@ -194,40 +212,68 @@ public class InventoryUIController : MonoBehaviour
         }
 
         selectableInventory = UpdateSelectableListUI(PlayerStatus.Inventory.Keys.Select(
-            i => PlayerStatus.Inventory[i] + "x " + i.GetDisplayName()).ToList(), PlayerStatus.Inventory.Keys.Select(
-            i =>  i.name).ToList(), UseInventoryItem, DeselectOtherInventoryItems, inventoryBase);
+            i => new UIText 
+            { 
+                displayName = PlayerStatus.Inventory[i] + "x " + i.GetDisplayName(), 
+                callbackIdentifier = i.name, 
+                tooltipText = i.tooltipText,
+                sprite = Cache.GetItemIcon(i.name)
+            }).ToList(), UseInventoryItem, DeselectOtherInventoryItems, inventoryBase);
     }
 
-    private List<Selectable> UpdateSelectableListUI(List<string> displayValues, List<string> callbackParams, 
+    private List<Selectable> UpdateSelectableListUI(List<UIText> uiTexts, 
         Action<string> confirmCallback, Action<Selectable> selectCallback, Transform uiParent)
     {
         List<Selectable> selectables = new List<Selectable>();
-        for (int i = 0; i < displayValues.Count; i++)
+        for (int i = 0; i < uiTexts.Count; i++)
         {
-            GameObject newText = InstantiateTextPrefab(selectableTextPrefab, 
-                displayValues[i], uiParent, i);
+            GameObject newText = InstantiateTextPrefab(selectableTextPrefab,
+                uiTexts[i], uiParent, i);
             Selectable selectable = newText.GetComponent<Selectable>();
-            selectable.SetConfirmCallback(callbackParams[i], confirmCallback);
+            selectable.SetConfirmCallback(uiTexts[i].callbackIdentifier, confirmCallback);
             selectable.SetSelectedCallback(selectCallback);
             selectables.Add(selectable);
         }
         return selectables;
     }
 
-    private void UpdateListUI(List<string> displayValues, Transform uiParent)
+    private void UpdateListUI(List<UIText> uiTexts, Transform uiParent)
     {
-        for (int i = 0; i < displayValues.Count; i++)
+        for (int i = 0; i < uiTexts.Count; i++)
         {
-            InstantiateTextPrefab(textPrefab, displayValues[i], uiParent, i);
+            InstantiateTextPrefab(textPrefab, uiTexts[i], uiParent, i);
         }
     }
 
     private GameObject InstantiateTextPrefab(GameObject prefab, 
-        string displayValue, Transform uiParent, int index)
+        UIText uiText, Transform uiParent, int index)
     {
         GameObject newText = Instantiate(prefab, uiParent);
-        newText.GetComponent<Text>().text = displayValue;
+        newText.GetComponent<Text>().text = uiText.displayName;
         newText.GetComponent<RectTransform>().Translate(index * lineSeparation * Vector3.down);
+        Tooltip tooltip = newText.GetComponent<Tooltip>();
+        if (tooltip != null)
+        {
+            if (uiText.tooltipText == null)
+            {
+                tooltip.SetEnabled(false);
+            }
+            else
+            {
+                tooltip.SetTooltipText(uiText.tooltipText);
+            }
+        }
+        Image iconImage = newText.transform.Find("Icon").GetComponent<Image>();
+        iconImage.enabled = uiText.sprite != null;
+        iconImage.sprite = uiText.sprite;
         return newText;
     }
+}
+
+class UIText
+{
+    public string displayName;
+    public string tooltipText;
+    public string callbackIdentifier;
+    public Sprite sprite;
 }
