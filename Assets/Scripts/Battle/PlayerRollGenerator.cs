@@ -2,6 +2,12 @@
 
 public class PlayerRollGenerator : RollGenerator
 {
+    private void Start()
+    {
+        minRoll = PlayerStatus.BaseMinRoll;
+        maxRoll = PlayerStatus.BaseMaxRoll;
+    }
+
     public override int GenerateInitialRoll()
     {
         int min = minRoll;

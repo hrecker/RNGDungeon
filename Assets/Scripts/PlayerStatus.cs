@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerStatus
 {
+    public static bool Initialized { get; set; }
     public static Vector3 MapPosition { get; set; }
     public static int MaxHealth { get; set; }
     private static int health;
@@ -20,7 +21,8 @@ public class PlayerStatus
             }
         }
     }
-    public static bool Initialized { get; set; }
+    public static int BaseMinRoll { get; set; }
+    public static int BaseMaxRoll { get; set; }
     // Dictionary of item counts in inventory
     public static Dictionary<Item, int> Inventory { get; set; }
 
@@ -61,6 +63,8 @@ public class PlayerStatus
     {
         MaxHealth = 100;
         Health = MaxHealth;
+        BaseMinRoll = 1;
+        BaseMaxRoll = 4;
         Mods = new PlayerModifiers();
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
         Inventory = new Dictionary<Item, int>();

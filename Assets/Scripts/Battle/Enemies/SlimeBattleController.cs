@@ -1,6 +1,6 @@
 ﻿public class SlimeBattleController : EnemyBattleController
 {
-    private int regenRate = 2;
+    private int regenRate = 1;
     private bool regenRoll;
 
     public override RollResult ApplyRollResultMods(RollResult initial)

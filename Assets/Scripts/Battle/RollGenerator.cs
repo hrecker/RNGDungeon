@@ -3,8 +3,8 @@ using UnityEngine;
 
 public abstract class RollGenerator : MonoBehaviour
 {
-    public int minRoll;
-    public int maxRoll;
+    protected int minRoll;
+    protected int maxRoll;
 
     // Generate an initial roll value
     public abstract int GenerateInitialRoll();

@@ -15,6 +15,7 @@ public class InventoryUIController : MonoBehaviour
     public Transform equipmentBase;
     public Transform abilityBase;
     public Transform inventoryBase;
+    public Text rollBoundsText;
 
     public int lineSeparation = 25;
 
@@ -25,6 +26,7 @@ public class InventoryUIController : MonoBehaviour
     {
         itemUseMessage.text = "";
         UpdateHealthUI();
+        UpdateRollBoundsUI();
         UpdateTechUI();
         UpdateEquipmentUI();
         UpdateAbilityUI();
@@ -36,6 +38,17 @@ public class InventoryUIController : MonoBehaviour
         // For testing
         PlayerStatus.InitializeIfNecessary();
         healthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
+    }
+
+    private void UpdateRollBoundsUI()
+    {
+        Tuple<int, int> baseRoll = new Tuple<int, int>(
+            PlayerStatus.BaseMinRoll, PlayerStatus.BaseMaxRoll);
+        foreach (IRollGenerationModifier mod in PlayerStatus.Mods.GetRollGenerationModifiers())
+        {
+            baseRoll = mod.apply(baseRoll.Item1, baseRoll.Item2);
+        }
+        rollBoundsText.text = "Roll: [" + baseRoll.Item1 + "-" + baseRoll.Item2 + "]";
     }
 
     private void UpdateTechUI()
@@ -136,6 +149,7 @@ public class InventoryUIController : MonoBehaviour
                 case ItemType.EQUIPMENT:
                     UpdateEquipmentUI();
                     UpdateInventoryUI();
+                    UpdateRollBoundsUI();
                     break;
                 case ItemType.USABLE_ANYTIME:
                     UpdateHealthUI();
@@ -180,6 +194,7 @@ public class InventoryUIController : MonoBehaviour
 
         UpdateInventoryUI();
         UpdateEquipmentUI();
+        UpdateRollBoundsUI();
     }
 
     private void DeselectAll(List<Selectable> selectables)
