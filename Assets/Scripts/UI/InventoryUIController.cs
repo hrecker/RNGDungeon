@@ -16,6 +16,7 @@ public class InventoryUIController : MonoBehaviour
     public Transform abilityBase;
     public Transform inventoryBase;
     public Text rollBoundsText;
+    public Text keyCount;
 
     public int lineSeparation = 25;
 
@@ -31,6 +32,7 @@ public class InventoryUIController : MonoBehaviour
         UpdateEquipmentUI();
         UpdateAbilityUI();
         UpdateInventoryUI();
+        keyCount.text = PlayerStatus.KeyCount.ToString();
     }
 
     private void UpdateHealthUI()

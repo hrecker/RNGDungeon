@@ -43,6 +43,7 @@ public class CurrentLevel
         generator.GenerateLevel();
         tiles = generator.GetTiles();
         playerStartingPosition = generator.GetPlayerStartingPosition();
+        tiles[(int)playerStartingPosition.x, (int)playerStartingPosition.y].playerInTile = true;
 
         if (tilemapPainter != null)
         {
@@ -65,10 +66,20 @@ public class CurrentLevel
         return tiles[(int) targetPosition.x, (int) targetPosition.y].tileType != TileType.WALL;
     }
 
-    public static MoveResult Move(Vector2 targetPosition)
+    // Check if an enemy is allowed to move to the target position
+    public static bool CheckEnemyMovement(Vector2 targetPosition)
+    {
+        Tile targetTile = tiles[(int)targetPosition.x, (int)targetPosition.y];
+        return targetTile.tileType == TileType.FLOOR && 
+            targetTile.tileContents == TileContents.NONE && !targetTile.playerInTile;
+    }
+
+    public static MoveResult Move(Vector2 originalPosition, Vector2 targetPosition)
     {
         int tileX = (int)targetPosition.x;
         int tileY = (int)targetPosition.y;
+        tiles[tileX, tileY].playerInTile = true;
+        tiles[(int)originalPosition.x, (int)originalPosition.y].playerInTile = false;
         if (tiles[tileX, tileY].tileType == TileType.STAIRS)
         {
             Level nextLevel = Cache.GetLevel(activeLevel.floor + 1);
@@ -111,8 +122,11 @@ public class CurrentLevel
                 return MoveResult.NOTHING;
             case TileContents.UNLOCKED_CHEST:
                 return MoveResult.NOTHING;
-                //TODO collectors
-
+            case TileContents.COLLECTOR:
+                currentEnemyName = "Collector";
+                tiles[tileX, tileY].tileContents = TileContents.NONE;
+                spriteController.RemoveCollector(new Vector2Int(tileX, tileY));
+                return MoveResult.BATTLE;
         }
 
         if (Random.value < activeLevel.encounterRate)
@@ -124,6 +138,12 @@ public class CurrentLevel
         {
             return MoveResult.NOTHING;
         }
+    }
+
+    public static void MoveCollector(Vector2 originalPosition, Vector2 targetPosition)
+    {
+        tiles[(int)originalPosition.x, (int)originalPosition.y].tileContents = TileContents.NONE;
+        tiles[(int)targetPosition.x, (int)targetPosition.y].tileContents = TileContents.COLLECTOR;
     }
 
     private static void SelectEnemy()

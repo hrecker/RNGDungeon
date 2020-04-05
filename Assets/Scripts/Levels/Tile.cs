@@ -3,12 +3,12 @@ public class Tile
 {
     public TileType tileType;
     public TileContents tileContents;
+    public bool playerInTile;
 }
 
 public enum TileContents
 {
     NONE,
-    PLAYER,
     ITEM,
     COLLECTOR,
     LOCKED_CHEST,

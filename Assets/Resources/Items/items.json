@@ -1,6 +1,9 @@
 {
     "items": [
         {
+            "name": "Key"
+        },
+        {
             "name": "HealthPotion",
             "displayName": "Health Potion",
             "playerHealthChange": 3,

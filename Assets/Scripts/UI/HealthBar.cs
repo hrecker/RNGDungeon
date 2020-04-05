@@ -5,11 +5,14 @@ public class HealthBar : MonoBehaviour
 {
     public int health;
     public int maxHealth;
+    public RectTransform greenBar;
+    private float maxWidth;
     public RectTransform redBar;
     public Text healthText;
 
     void Start()
     {
+        maxWidth = greenBar.rect.width;
         UpdateHealthBar();
     }
 
@@ -25,7 +28,7 @@ public class HealthBar : MonoBehaviour
         healthText.text = health + "/" + maxHealth;
         if (maxHealth != 0)
         {
-            float redHealthPercentage = 200 *
+            float redHealthPercentage = maxWidth *
                 (maxHealth - health) / maxHealth;
             redBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, redHealthPercentage);
         }

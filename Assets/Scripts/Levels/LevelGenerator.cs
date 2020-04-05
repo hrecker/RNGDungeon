@@ -117,17 +117,12 @@ public class LevelGenerator
         for (int i = 0; i < level.floorItems; i++)
         {
             // set items
-            Room itemRoom = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
-            Vector2Int itemPosition = GetRandomRoomTile(itemRoom);
-            tiles[itemPosition.x, itemPosition.y].tileContents = TileContents.ITEM;
-            allRooms.Remove(itemRoom);
+            allRooms.Remove(SetRandomRoomContents(allRooms, TileContents.ITEM));
         }
         // Set chest room
-        Room chestRoom = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
-        Vector2Int chestPosition = GetRandomRoomTile(chestRoom);
-        tiles[chestPosition.x, chestPosition.y].tileContents = TileContents.LOCKED_CHEST;
-        allRooms.Remove(chestRoom);
-        //TODO set collector room
+        allRooms.Remove(SetRandomRoomContents(allRooms, TileContents.LOCKED_CHEST));
+        // Set collector room
+        allRooms.Remove(SetRandomRoomContents(allRooms, TileContents.COLLECTOR));
 
         //Set exit
         Room exitRoom = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
@@ -136,6 +131,14 @@ public class LevelGenerator
         allRooms.Remove(exitRoom);
 
         generated = true;
+    }
+
+    private Room SetRandomRoomContents(List<Room> allRooms, TileContents contents)
+    {
+        Room selected = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
+        Vector2Int contentsPosition = GetRandomRoomTile(selected);
+        tiles[contentsPosition.x, contentsPosition.y].tileContents = contents;
+        return selected;
     }
 
     private Room GenerateRoom(int minFloorX, int minFloorY, Vector2Int roomCoords)

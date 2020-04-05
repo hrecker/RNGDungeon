@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveDelay = 0.5f;
+    public float moveDelay = 0.15f;
     public InventoryInput inventoryInput;
     public GameObject pickupPanel;
     public GameObject itemIconPrefab;
     public AbilitySelectionUI abilitySelection;
+    public Text keyCountText;
     private float timer;
     private bool moving;
     private bool selectingAbility;
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
         pickupPanel.SetActive(false);
         abilitySelection.gameObject.SetActive(false);
         this.transform.position = PlayerStatus.MapPosition;
+        UpdateKeyCount();
     }
 
     void Update()
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
             moving = false;
             PlayerStatus.MapPosition = targetPosition;
             // Check for effects after the on-screen move is done
-            MoveResult result = CurrentLevel.Move(targetPosition);
+            MoveResult result = CurrentLevel.Move(startPosition, targetPosition);
             switch (result)
             {
                 case MoveResult.BATTLE:
@@ -107,31 +110,20 @@ public class PlayerController : MonoBehaviour
                     this.transform.position = PlayerStatus.MapPosition;
 
                     // Display ability selection UI
-                    //TODO rule out abilities the player already has
                     abilitySelection.gameObject.SetActive(true);
                     List<Ability> availableAbilities = Cache.GetRandomAbilities(3, PlayerStatus.GetAbilities());
                     abilitySelection.DisplayAbilitySelection(availableAbilities[0],
                         availableAbilities[1], availableAbilities[2]);
                     selectingAbility = true;
+
+                    UpdateKeyCount();
                     break;
                 case MoveResult.CHESTOPEN: //TODO items differ depending on if normal drop or chest
+                    UpdateKeyCount();
+                    HandleItemPickup();
+                    break;
                 case MoveResult.ITEMPICKUP:
-                    Item pickedUp = Cache.GetRandomItem();
-                    PlayerStatus.AddItem(pickedUp);
-                    // Update UI
-                    pickupPanel.SetActive(true);
-                    ItemIcon currentPickupIcon = pickupPanel.GetComponentInChildren<ItemIcon>();
-                    if (currentPickupIcon != null)
-                    {
-                        Destroy(currentPickupIcon.gameObject);
-                    }
-                    GameObject newIcon = BattleItemUI.InstantiateItemIcon(pickedUp, 
-                        itemIconPrefab, pickupPanel.transform, false);
-                    newIcon.GetComponent<ItemIcon>().ItemCount = 1;
-                    pickupPanel.GetComponent<SelfDeactivate>().ResetTimer();
-                    // Re-enable input
-                    inventoryInput.SetInventoryEnabled(true);
-                    CheckInput();
+                    HandleItemPickup();
                     break;
                 default:
                     // Check input as soon as move is finished so there's no jittering
@@ -142,6 +134,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void HandleItemPickup()
+    {
+        Item pickedUp = Cache.GetRandomItem();
+        PlayerStatus.AddItem(pickedUp);
+        // Update UI
+        pickupPanel.SetActive(true);
+        ItemIcon currentPickupIcon = pickupPanel.GetComponentInChildren<ItemIcon>();
+        if (currentPickupIcon != null)
+        {
+            Destroy(currentPickupIcon.gameObject);
+        }
+        GameObject newIcon = BattleItemUI.InstantiateItemIcon(pickedUp,
+            itemIconPrefab, pickupPanel.transform, false);
+        newIcon.GetComponent<ItemIcon>().ItemCount = 1;
+        pickupPanel.GetComponent<SelfDeactivate>().ResetTimer();
+        // Re-enable input
+        inventoryInput.SetInventoryEnabled(true);
+        CheckInput();
+    }
+
     public void SelectAbility(Ability ability)
     {
         PlayerStatus.AddAbility(ability);
@@ -149,5 +161,10 @@ public class PlayerController : MonoBehaviour
         // Re-enable input
         selectingAbility = false;
         inventoryInput.SetInventoryEnabled(true);
+    }
+
+    private void UpdateKeyCount()
+    {
+        keyCountText.text = PlayerStatus.KeyCount.ToString();
     }
 }

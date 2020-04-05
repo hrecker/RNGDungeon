@@ -276,5 +276,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 0
+  greenBar: {fileID: 281043962945515694}
   redBar: {fileID: 281043963095346415}
   healthText: {fileID: 281043962143029298}

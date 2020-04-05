@@ -300,19 +300,19 @@ public class BattleController : MonoBehaviour
         string itemDrop = CurrentLevel.GetEnemyItemDrop();
         if (itemDrop != null)
         {
+            Item item = Cache.GetItem(itemDrop);
             if (itemDrop == "Key")
             {
                 PlayerStatus.KeyCount++;
             }
             else
             {
-                Item item = Cache.GetItem(itemDrop);
                 PlayerStatus.AddItem(item);
-                itemDropPanel.SetActive(true);
-                GameObject newIcon = BattleItemUI.InstantiateItemIcon(item,
-                    itemIconPrefab, itemDropPanel.transform, false);
-                newIcon.GetComponent<ItemIcon>().ItemCount = 1;
             }
+            itemDropPanel.SetActive(true);
+            GameObject newIcon = BattleItemUI.InstantiateItemIcon(item,
+                itemIconPrefab, itemDropPanel.transform, false);
+            newIcon.GetComponent<ItemIcon>().ItemCount = 1;
         }
     }
 

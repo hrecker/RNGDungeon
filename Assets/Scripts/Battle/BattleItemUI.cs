@@ -52,7 +52,10 @@ public class BattleItemUI : MonoBehaviour
         itemImage.sprite = Cache.GetItemIcon(item.name);
         tooltip.text = item.tooltipText;
         icon.ItemName = item.name;
-        icon.ItemCount = PlayerStatus.Inventory[item];
+        if (PlayerStatus.Inventory.ContainsKey(item))
+        {
+            icon.ItemCount = PlayerStatus.Inventory[item];
+        }
         icon.clickEnabled = enableClick;
         return newIcon;
     }

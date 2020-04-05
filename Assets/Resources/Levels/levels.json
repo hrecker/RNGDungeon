@@ -10,13 +10,11 @@
             "enemyItemDropRate": 0.3,
             "enemyEncounterRates": [
                 0.5,
-                0.4,
-                0.1
+                0.5
             ],
             "enemies": [
                 "Bat",
-                "Slime",
-                "Collector"
+                "Slime"
             ]
         },
         {
@@ -28,16 +26,14 @@
             "encounterRate": 0.08,
             "enemyItemDropRate": 0.4,
             "enemyEncounterRates": [
-                0.2,
-                0.4,
                 0.3,
-                0.1
+                0.4,
+                0.3
             ],
             "enemies": [
                 "Slime",
                 "Ghost",
-                "MysteriousStatue",
-                "Collector"
+                "MysteriousStatue"
             ]
         }
     ]
