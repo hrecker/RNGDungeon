@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class CustomTile : Tile
+// Represents a unity tilemap tile to be drawn
+public class CustomTile : UnityEngine.Tilemaps.Tile
 {
     private TileType type;
 
     public Sprite floor;
     public Sprite stairs;
-    public Sprite itemFloor;
     public Sprite[] wallSprites;
 
     public void Init(TileType type)
@@ -24,7 +24,6 @@ public class CustomTile : Tile
         }
         floor = (Sprite)wallSpriteObjects[17];
         stairs = (Sprite)wallSpriteObjects[18];
-        itemFloor = (Sprite)wallSpriteObjects[19];
     }
 
     public TileType GetTileType()
@@ -67,11 +66,6 @@ public class CustomTile : Tile
         if (type == TileType.STAIRS)
         {
             tileData.sprite = stairs;
-            return;
-        }
-        if (type == TileType.ITEM)
-        {
-            tileData.sprite = itemFloor;
             return;
         }
 

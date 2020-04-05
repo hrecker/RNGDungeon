@@ -165,8 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f643c3d64a9c2454ca048f0b3d98365e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10
-  height: 10
   tileMap: {fileID: 93291627}
 --- !u!483693784 &93291626
 TilemapRenderer:
@@ -394,6 +392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 264683867}
   - component: {fileID: 264683866}
+  - component: {fileID: 264683868}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -428,6 +427,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &264683868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264683865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e15643898ae34e94ba489542c0f0c2c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectorPrefab: {fileID: 0}
+  itemPrefab: {fileID: 1251154449905218277, guid: 8f9025ddfe491bf4aa5c3954c963cce3,
+    type: 3}
+  lockedChestPrefab: {fileID: 0}
+  unlockedChestSprite: {fileID: 0}
 --- !u!1 &349078385
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class CurrentLevel
 {
-    private static TileType[,] tiles;
+    private static Tile[,] tiles;
     private static Dictionary<Vector2Int, Item> floorItems;
     private static Vector3 playerStartingPosition;
     private static TilemapPainter tilemapPainter;
+    private static LevelSpriteController spriteController;
 
     public static string currentEnemyName = "Bat";
     private static Level activeLevel;
@@ -20,6 +21,15 @@ public class CurrentLevel
         if (tiles != null)
         {
             tilemapPainter.PaintLevel(tiles);
+        }
+    }
+
+    public static void SetSpriteController(LevelSpriteController controller)
+    {
+        spriteController = controller;
+        if (tiles != null)
+        {
+            spriteController.DrawSprites(tiles);
         }
     }
 
@@ -38,6 +48,10 @@ public class CurrentLevel
         {
             tilemapPainter.PaintLevel(tiles);
         }
+        if (spriteController != null)
+        {
+            spriteController.DrawSprites(tiles);
+        }
     }
 
     public static Vector3 GetPlayerStartingPosition()
@@ -45,22 +59,17 @@ public class CurrentLevel
         return playerStartingPosition;
     }
 
-    public static TileType[,] getTiles()
-    {
-        return tiles;
-    }
-
     // Check if the player is allowed to move to the target position
     public static bool CheckMovement(Vector2 targetPosition)
     {
-        return tiles[(int) targetPosition.x, (int) targetPosition.y] != TileType.WALL;
+        return tiles[(int) targetPosition.x, (int) targetPosition.y].tileType != TileType.WALL;
     }
 
     public static MoveResult Move(Vector2 targetPosition)
     {
         int tileX = (int)targetPosition.x;
         int tileY = (int)targetPosition.y;
-        if (tiles[tileX, tileY] == TileType.STAIRS)
+        if (tiles[tileX, tileY].tileType == TileType.STAIRS)
         {
             Level nextLevel = Cache.GetLevel(activeLevel.floor + 1);
             if (nextLevel != null)
@@ -82,15 +91,17 @@ public class CurrentLevel
             }
         }
 
-        if (tiles[tileX, tileY] == TileType.ITEM)
+        if (tiles[tileX, tileY].tileContents == TileContents.ITEM)
         {
-            tiles[tileX, tileY] = TileType.FLOOR;
-            if (tilemapPainter != null)
-            {
-                tilemapPainter.PaintLevel(tiles);
-            }
+            tiles[tileX, tileY].tileContents = TileContents.NONE;
+            spriteController.RemoveItem(new Vector2Int(tileX, tileY));
             return MoveResult.ITEMPICKUP;
         }
+        
+        //TODO chests - locked and unlocked
+        //TODO unlocked should just return a moveresult of nothing
+
+        //TODO collectors
 
         if (Random.value < activeLevel.encounterRate)
         {
@@ -142,6 +153,5 @@ public enum TileType
     NONE,
     FLOOR,
     WALL,
-    STAIRS,
-    ITEM
+    STAIRS
 }

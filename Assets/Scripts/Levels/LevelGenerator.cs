@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelGenerator
 {
     private Level level;
-    private TileType[,] tiles;
+    private Tile[,] tiles;
     private Vector3 playerStartingPosition;
     private float roomChance;
     private bool generated;
@@ -28,7 +28,7 @@ public class LevelGenerator
         takenRoomCoords = new List<Vector2Int>();
     }
 
-    public TileType[,] GetTiles()
+    public Tile[,] GetTiles()
     {
         return tiles;
     }
@@ -47,7 +47,18 @@ public class LevelGenerator
 
         int maxTileWidth = level.roomWidth * (int) Math.Ceiling(level.numRooms / 2.0f + 2);
         int maxTileHeight = level.roomHeight * (int)Math.Ceiling(level.numRooms / 2.0f + 2);
-        tiles = new TileType[maxTileWidth, maxTileHeight];
+        tiles = new Tile[maxTileWidth, maxTileHeight];
+        for (int x = 0; x < maxTileWidth; x++)
+        {
+            for (int y = 0; y < maxTileHeight; y++)
+            {
+                tiles[x, y] = new Tile
+                {
+                    tileType = TileType.NONE,
+                    tileContents = TileContents.NONE
+                };
+            }
+        }
 
         // Create entrance room
         playerStartingPosition = new Vector3(maxTileWidth / 2 + 0.5f, maxTileHeight / 2 + 0.5f, 0);
@@ -108,13 +119,13 @@ public class LevelGenerator
             // set items
             Room itemRoom = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
             Vector2Int itemPosition = GetRandomRoomTile(itemRoom);
-            tiles[itemPosition.x, itemPosition.y] = TileType.ITEM;
+            tiles[itemPosition.x, itemPosition.y].tileContents = TileContents.ITEM;
             allRooms.Remove(itemRoom);
         }
         //Set exit
         Room exitRoom = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
         Vector2Int exitPosition = GetRandomRoomTile(exitRoom);
-        tiles[exitPosition.x, exitPosition.y] = TileType.STAIRS;
+        tiles[exitPosition.x, exitPosition.y].tileType = TileType.STAIRS;
         allRooms.Remove(exitRoom);
 
         generated = true;
@@ -148,13 +159,13 @@ public class LevelGenerator
                 int tileX = room.minFloorX + x;
                 int tileY = room.minFloorY + y;
                 if ((x == -1 || y == -1 || x == level.roomWidth || y == level.roomHeight) && 
-                    tiles[tileX, tileY] != TileType.FLOOR)
+                    tiles[tileX, tileY].tileType != TileType.FLOOR)
                 {
-                    tiles[tileX, tileY] = TileType.WALL;
+                    tiles[tileX, tileY].tileType = TileType.WALL;
                 }
                 else
                 {
-                    tiles[tileX, tileY] = TileType.FLOOR;
+                    tiles[tileX, tileY].tileType = TileType.FLOOR;
                 }
             }
         }
@@ -172,7 +183,7 @@ public class LevelGenerator
                 baseRoom.roomCoords + Vector2Int.up);
             // Add hallway floor tile
             tiles[baseRoom.northRoom.minFloorX + (level.roomWidth / 2), 
-                baseRoom.northRoom.minFloorY - 1] = TileType.FLOOR;
+                baseRoom.northRoom.minFloorY - 1].tileType = TileType.FLOOR;
             newRooms.Add(baseRoom.northRoom);
         }
         if (IsEastSpaceFree(baseRoom) && UnityEngine.Random.value < roomChance &&
@@ -184,7 +195,7 @@ public class LevelGenerator
                 baseRoom.roomCoords + Vector2Int.right);
             // Add hallway floor tile
             tiles[baseRoom.eastRoom.minFloorX - 1,
-                baseRoom.eastRoom.minFloorY + (level.roomHeight / 2)] = TileType.FLOOR;
+                baseRoom.eastRoom.minFloorY + (level.roomHeight / 2)].tileType = TileType.FLOOR;
             newRooms.Add(baseRoom.eastRoom);
         }
         if (IsSouthSpaceFree(baseRoom) && UnityEngine.Random.value < roomChance &&
@@ -196,7 +207,7 @@ public class LevelGenerator
                 baseRoom.roomCoords + Vector2Int.down);
             // Add hallway floor tile
             tiles[baseRoom.southRoom.minFloorX + (level.roomWidth / 2),
-                baseRoom.minFloorY - 1] = TileType.FLOOR;
+                baseRoom.minFloorY - 1].tileType = TileType.FLOOR;
             newRooms.Add(baseRoom.southRoom);
         }
         if (IsWestSpaceFree(baseRoom) && UnityEngine.Random.value < roomChance &&
@@ -208,7 +219,7 @@ public class LevelGenerator
                 baseRoom.roomCoords + Vector2Int.left);
             // Add hallway floor tile
             tiles[baseRoom.minFloorX - 1,
-                baseRoom.westRoom.minFloorY + (level.roomHeight / 2)] = TileType.FLOOR;
+                baseRoom.westRoom.minFloorY + (level.roomHeight / 2)].tileType = TileType.FLOOR;
             newRooms.Add(baseRoom.westRoom);
         }
         return newRooms;

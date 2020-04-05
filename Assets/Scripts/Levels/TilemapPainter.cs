@@ -5,20 +5,14 @@ using UnityEngine.Tilemaps;
 
 public class TilemapPainter : MonoBehaviour
 {
-    //TODO these probably could go in some config file somewhere
-    public int width, height;
     public Tilemap tileMap;
 
     void Start()
     {
-        //TODO won't want to generate on awake, only when new level is needed - 
-        //ideally before loading the scene
-        //CurrentLevel.generateLevel(width, height);
-        //paintLevel(CurrentLevel.getTiles());
         CurrentLevel.SetTilemapPainter(this);
     }
 
-    public void PaintLevel(TileType[,] tiles)
+    public void PaintLevel(Tile[,] tiles)
     {
         tileMap.ClearAllTiles();
         int xLength = tiles.GetLength(0);
@@ -28,7 +22,7 @@ public class TilemapPainter : MonoBehaviour
             for (int y = 0; y < yLength; y++)
             {
                 CustomTile tile = ScriptableObject.CreateInstance<CustomTile>();
-                tile.Init(tiles[x, y]);
+                tile.Init(tiles[x, y].tileType);
                 tileMap.SetTile(new Vector3Int(x, y, 0), tile);
             }
         }
