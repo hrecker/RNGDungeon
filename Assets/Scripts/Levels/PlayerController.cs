@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviour
                         availableAbilities[1], availableAbilities[2]);
                     selectingAbility = true;
                     break;
+                case MoveResult.CHESTOPEN: //TODO items differ depending on if normal drop or chest
                 case MoveResult.ITEMPICKUP:
                     Item pickedUp = Cache.GetRandomItem();
                     PlayerStatus.AddItem(pickedUp);
@@ -132,7 +133,7 @@ public class PlayerController : MonoBehaviour
                     inventoryInput.SetInventoryEnabled(true);
                     CheckInput();
                     break;
-                case MoveResult.NOTHING:
+                default:
                     // Check input as soon as move is finished so there's no jittering
                     inventoryInput.SetInventoryEnabled(true);
                     CheckInput();

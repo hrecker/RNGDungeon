@@ -122,6 +122,13 @@ public class LevelGenerator
             tiles[itemPosition.x, itemPosition.y].tileContents = TileContents.ITEM;
             allRooms.Remove(itemRoom);
         }
+        // Set chest room
+        Room chestRoom = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
+        Vector2Int chestPosition = GetRandomRoomTile(chestRoom);
+        tiles[chestPosition.x, chestPosition.y].tileContents = TileContents.LOCKED_CHEST;
+        allRooms.Remove(chestRoom);
+        //TODO set collector room
+
         //Set exit
         Room exitRoom = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
         Vector2Int exitPosition = GetRandomRoomTile(exitRoom);

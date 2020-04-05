@@ -75,6 +75,9 @@ public class CurrentLevel
             if (nextLevel != null)
             {
                 InitLevel(nextLevel);
+                // Remove any keys the player has
+                //TODO reward for taking keys through to next level
+                PlayerStatus.KeyCount = 0;
                 return MoveResult.STAIRSDOWN;
             }
             else
@@ -91,17 +94,26 @@ public class CurrentLevel
             }
         }
 
-        if (tiles[tileX, tileY].tileContents == TileContents.ITEM)
+        switch (tiles[tileX, tileY].tileContents)
         {
-            tiles[tileX, tileY].tileContents = TileContents.NONE;
-            spriteController.RemoveItem(new Vector2Int(tileX, tileY));
-            return MoveResult.ITEMPICKUP;
-        }
-        
-        //TODO chests - locked and unlocked
-        //TODO unlocked should just return a moveresult of nothing
+            case TileContents.ITEM:
+                tiles[tileX, tileY].tileContents = TileContents.NONE;
+                spriteController.RemoveItem(new Vector2Int(tileX, tileY));
+                return MoveResult.ITEMPICKUP;
+            case TileContents.LOCKED_CHEST:
+                if (PlayerStatus.KeyCount > 0)
+                {
+                    PlayerStatus.KeyCount--;
+                    tiles[tileX, tileY].tileContents = TileContents.UNLOCKED_CHEST;
+                    spriteController.UnlockChest(new Vector2Int(tileX, tileY));
+                    return MoveResult.CHESTOPEN;
+                }
+                return MoveResult.NOTHING;
+            case TileContents.UNLOCKED_CHEST:
+                return MoveResult.NOTHING;
+                //TODO collectors
 
-        //TODO collectors
+        }
 
         if (Random.value < activeLevel.encounterRate)
         {
@@ -137,6 +149,12 @@ public class CurrentLevel
 
     public static string GetEnemyItemDrop()
     {
+        // Collectors always drop keys
+        if (currentEnemyName == "Collector")
+        {
+            return "Key";
+        }
+
         float dropRate = (maxDropsPerFloor - dropsReceivedOnActiveLevel) / 
             (float)maxDropsPerFloor * activeLevel.enemyItemDropRate;
         if (Random.value < dropRate)

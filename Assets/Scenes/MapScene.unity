@@ -442,8 +442,10 @@ MonoBehaviour:
   collectorPrefab: {fileID: 0}
   itemPrefab: {fileID: 1251154449905218277, guid: 8f9025ddfe491bf4aa5c3954c963cce3,
     type: 3}
-  lockedChestPrefab: {fileID: 0}
-  unlockedChestSprite: {fileID: 0}
+  lockedChestPrefab: {fileID: 2591916824808467188, guid: ac746f1f8df33594fb793c4fa8b5aa3f,
+    type: 3}
+  unlockedChestSprite: {fileID: 21300000, guid: ae63efd7a103c4540a66ad7d053c74b8,
+    type: 3}
 --- !u!1 &349078385
 GameObject:
   m_ObjectHideFlags: 0

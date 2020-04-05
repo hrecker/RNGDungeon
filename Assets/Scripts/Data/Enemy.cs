@@ -14,6 +14,8 @@ public class Enemy
         {
             case "Bat":
                 return typeof(EnemyBattleController);
+            case "Collector":
+                return typeof(CollectorBattleController);
             case "Slime":
                 return typeof(SlimeBattleController);
             case "Ghost":

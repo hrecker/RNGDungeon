@@ -7,7 +7,7 @@ public class LevelSpriteController : MonoBehaviour
 {
     public GameObject collectorPrefab;
     public GameObject itemPrefab;
-    public GameObject lockedChestPrefab;
+    public GameObject chestPrefab;
     public Sprite unlockedChestSprite;
 
     private List<GameObject> activeCollectors;
@@ -51,7 +51,7 @@ public class LevelSpriteController : MonoBehaviour
                 if (toInstantiate != null)
                 {
                     instantiated = ((GameObject) Instantiate(toInstantiate,
-                        new Vector3(x + 0.5f, y + 0.5f, 0), Quaternion.identity)).transform;
+                        new Vector3(x + 0.5f, y + 0.5f, 1), Quaternion.identity)).transform;
                 }
                 if (instantiated != null)
                 {
@@ -68,7 +68,8 @@ public class LevelSpriteController : MonoBehaviour
             case TileContents.ITEM:
                 return itemPrefab;
             case TileContents.LOCKED_CHEST:
-                return lockedChestPrefab;
+            case TileContents.UNLOCKED_CHEST:
+                return chestPrefab;
             case TileContents.COLLECTOR:
                 return collectorPrefab;
         }
@@ -77,19 +78,24 @@ public class LevelSpriteController : MonoBehaviour
 
     private void TrackNewTileContents(TileContents contents, Transform instantiated)
     {
+        Vector2Int pos = new Vector2Int((int)instantiated.position.x,
+                    (int)instantiated.position.y);
         switch (contents)
         {
             case TileContents.ITEM:
-                items.Add(new Vector2Int((int)instantiated.position.x,
-                    (int)instantiated.position.y), instantiated.gameObject);
+                items.Add(pos, instantiated.gameObject);
                 break;
+            case TileContents.UNLOCKED_CHEST:
             case TileContents.LOCKED_CHEST:
-                chests.Add(new Vector2Int((int)instantiated.position.x,
-                    (int)instantiated.position.y), instantiated.gameObject);
+                chests.Add(pos, instantiated.gameObject);
                 break;
             case TileContents.COLLECTOR:
                 activeCollectors.Add(instantiated.gameObject);
                 break;
+        }
+        if (contents == TileContents.UNLOCKED_CHEST)
+        {
+            UnlockChest(pos);
         }
     }
 

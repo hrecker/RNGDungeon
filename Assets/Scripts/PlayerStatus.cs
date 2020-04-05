@@ -23,6 +23,7 @@ public class PlayerStatus
     }
     public static int BaseMinRoll { get; set; }
     public static int BaseMaxRoll { get; set; }
+    public static int KeyCount { get; set; }
     // Dictionary of item counts in inventory
     public static Dictionary<Item, int> Inventory { get; set; }
 
