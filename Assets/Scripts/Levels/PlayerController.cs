@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 startPosition;
     private Vector2 targetPosition;
 
+    private Dictionary<Rarity, float> itemPickupRarityChances;
+    private Dictionary<Rarity, float> chestRarityChances;
+
     // This is just for testing individually the map scene
     private void Awake()
     {
@@ -36,6 +39,18 @@ public class PlayerController : MonoBehaviour
         abilitySelection.gameObject.SetActive(false);
         this.transform.position = PlayerStatus.MapPosition;
         UpdateKeyCount();
+
+        itemPickupRarityChances = new Dictionary<Rarity, float>()
+        {
+            { Rarity.COMMON, 0.35f },
+            { Rarity.UNCOMMON, 0.5f },
+            { Rarity.RARE, 0.15f }
+        };
+        chestRarityChances = new Dictionary<Rarity, float>()
+        {
+            { Rarity.UNCOMMON, 0.2f },
+            { Rarity.RARE, 0.8f }
+        };
     }
 
     void Update()
@@ -118,12 +133,12 @@ public class PlayerController : MonoBehaviour
 
                     UpdateKeyCount();
                     break;
-                case MoveResult.CHESTOPEN: //TODO items differ depending on if normal drop or chest
+                case MoveResult.CHESTOPEN:
                     UpdateKeyCount();
-                    HandleItemPickup();
+                    HandleItemPickup(chestRarityChances);
                     break;
                 case MoveResult.ITEMPICKUP:
-                    HandleItemPickup();
+                    HandleItemPickup(itemPickupRarityChances);
                     break;
                 default:
                     // Check input as soon as move is finished so there's no jittering
@@ -134,9 +149,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void HandleItemPickup()
+    private void HandleItemPickup(Dictionary<Rarity, float> rarityChances)
     {
-        Item pickedUp = Cache.GetRandomItem();
+        Item pickedUp = Cache.GetRandomItem(rarityChances);
         PlayerStatus.AddItem(pickedUp);
         // Update UI
         pickupPanel.SetActive(true);

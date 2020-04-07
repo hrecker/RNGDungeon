@@ -106,9 +106,25 @@ public class Cache
         return items[name];
     }
 
-    public static Item GetRandomItem()
+    // rarityChances map Rarity to a percent chance of hitting that rarity.
+    // For example 0.3 would be a 30% chance. Chances should add up to one.
+    public static Item GetRandomItem(Dictionary<Rarity, float> rarityChances)
     {
-        return items.ElementAt(UnityEngine.Random.Range(0, items.Count)).Value;
+        Rarity selected = rarityChances.Keys.First();
+        float totalChance = 0.0f;
+        float randomValue = UnityEngine.Random.value;
+        foreach (Rarity rarity in rarityChances.Keys)
+        {
+            totalChance += rarityChances[rarity];
+            if (randomValue < totalChance)
+            {
+                selected = rarity;
+                break;
+            }
+        }
+
+        IEnumerable<Item> validItems = items.Values.Where(i => i.rarity == selected);
+        return validItems.ElementAt(UnityEngine.Random.Range(0, validItems.Count()));
     }
 
     public static Sprite GetItemIcon(string name)

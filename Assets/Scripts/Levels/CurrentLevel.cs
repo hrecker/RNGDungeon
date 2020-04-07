@@ -11,7 +11,6 @@ public class CurrentLevel
 
     public static string currentEnemyName = "Bat";
     private static Level activeLevel;
-    public static string[] drops = new string[] { "HealthPotion", "BlockingPotion" };
     private static int dropsReceivedOnActiveLevel;
     private static int maxDropsPerFloor = 5;
 
@@ -167,12 +166,12 @@ public class CurrentLevel
         }
     }
 
-    public static string GetEnemyItemDrop()
+    public static Item GetEnemyItemDrop()
     {
         // Collectors always drop keys
         if (currentEnemyName == "Collector")
         {
-            return "Key";
+            return Cache.GetItem("Key");
         }
 
         float dropRate = (maxDropsPerFloor - dropsReceivedOnActiveLevel) / 
@@ -180,7 +179,13 @@ public class CurrentLevel
         if (Random.value < dropRate)
         {
             dropsReceivedOnActiveLevel++;
-            return drops[Random.Range(0, drops.Length)];
+            Dictionary<Rarity, float> rarityChances = new Dictionary<Rarity, float>()
+            {
+                { Rarity.COMMON, 0.8f },
+                { Rarity.UNCOMMON, 0.15f },
+                { Rarity.RARE, 0.05f }
+            };
+            return Cache.GetRandomItem(rarityChances);
         }
         return null;
     }

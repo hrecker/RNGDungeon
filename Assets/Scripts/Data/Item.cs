@@ -12,6 +12,7 @@ public class Item
     public string enemyStatusMessage;
     public string failedUseMessage;
     public ItemType itemType;
+    public Rarity rarity;
     public EquipSlot equipSlot;
     public ModType modType;
     public ModEffect modEffect;
@@ -75,4 +76,13 @@ public enum ItemType
     USABLE_ANYTIME = 0, //Stuff like health potions - doesn't generally create modifier
     USABLE_ONLY_IN_BATTLE = 1, // Battle items will always be temporary modifiers
     EQUIPMENT = 2
+}
+
+[Serializable]
+public enum Rarity
+{
+    COMMON = 0,
+    UNCOMMON = 1,
+    RARE = 2,
+    NEVER = 3 // Items that are never dropped randomly
 }
