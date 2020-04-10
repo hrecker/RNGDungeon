@@ -14,7 +14,7 @@ public class BattleController : MonoBehaviour
     private float baseRollInterval;
 
     public GameObject enemy;
-    public Text resultText;
+    public GameObject resultTextPanel;
     public TechButtonController techUI;
     public GameObject exitToMenuButton;
     public GameObject itemIconPrefab;
@@ -71,6 +71,7 @@ public class BattleController : MonoBehaviour
     {
         exitToMenuButton.SetActive(false);
         itemDropPanel.SetActive(false);
+        resultTextPanel.SetActive(false);
         itemModsToAdd = new List<Item>();
         currentRollBoundedMods = new List<Modifier>();
         techMods = new Dictionary<string, Modifier>();
@@ -221,22 +222,27 @@ public class BattleController : MonoBehaviour
             {
                 if (CurrentLevel.currentEnemyName == "Boss")
                 {
-                    resultText.text = "Dungeon Defeated!";
-                    exitToMenuButton.SetActive(true);
+                    ShowResult("Dungeon Defeated!", true);
                 }
                 else
                 {
-                    resultText.text = "Victory";
+                    ShowResult("Victory", false);
                     GenerateItemDrop();
                 }
             }
             else
             {
-                resultText.text = "Defeat";
-                exitToMenuButton.SetActive(true);
+                ShowResult("Defeat", true);
             }
             completed = true;
         }
+    }
+
+    private void ShowResult(string resultText, bool showExitButton)
+    {
+        resultTextPanel.SetActive(true);
+        resultTextPanel.GetComponentInChildren<Text>().text = resultText;
+        exitToMenuButton.SetActive(showExitButton);
     }
 
     private void UpdateRollUI(int playerRoll, int enemyRoll, bool fade)

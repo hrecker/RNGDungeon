@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public AbilitySelectionUI abilitySelection;
     public Text keyCountText;
     public HealthBar playerHealthBar;
+    public Text currentFloorText;
     private float timer;
     private bool moving;
     private bool selectingAbility;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         abilitySelection.gameObject.SetActive(false);
         this.transform.position = PlayerStatus.MapPosition;
         UpdateKeyCount();
+        UpdateCurrentFloor();
         playerHealthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
 
         itemPickupRarityChances = new Dictionary<Rarity, float>()
@@ -134,6 +136,7 @@ public class PlayerController : MonoBehaviour
                     selectingAbility = true;
 
                     UpdateKeyCount();
+                    UpdateCurrentFloor();
                     break;
                 case MoveResult.CHESTOPEN:
                     UpdateKeyCount();
@@ -183,5 +186,10 @@ public class PlayerController : MonoBehaviour
     private void UpdateKeyCount()
     {
         keyCountText.text = PlayerStatus.KeyCount.ToString();
+    }
+
+    private void UpdateCurrentFloor()
+    {
+        currentFloorText.text = "Floor " + CurrentLevel.GetCurrentFloorNumber();
     }
 }

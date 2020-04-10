@@ -14,6 +14,15 @@ public class CurrentLevel
     private static int dropsReceivedOnActiveLevel;
     private static int maxDropsPerFloor = 5;
 
+    public static int GetCurrentFloorNumber()
+    {
+        if (activeLevel != null)
+        {
+            return activeLevel.floor;
+        }
+        return 1;
+    }
+
     public static void SetTilemapPainter(TilemapPainter painter)
     {
         tilemapPainter = painter;

@@ -27,9 +27,9 @@ public class AbilitySelectionUI : MonoBehaviour
         ability1Image.sprite = Cache.GetAbilityIcon(ability1.name);
         ability2Image.sprite = Cache.GetAbilityIcon(ability2.name);
         ability3Image.sprite = Cache.GetAbilityIcon(ability3.name);
-        ability1Name.text = ability1.name;
-        ability2Name.text = ability2.name;
-        ability3Name.text = ability3.name;
+        ability1Name.text = ability1.GetDisplayName();
+        ability2Name.text = ability2.GetDisplayName();
+        ability3Name.text = ability3.GetDisplayName();
     }
 
     public void ShowDescription(int abilityIndex)

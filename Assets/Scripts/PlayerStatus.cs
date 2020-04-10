@@ -62,7 +62,7 @@ public class PlayerStatus
 
     public static void Restart()
     {
-        MaxHealth = 100;
+        MaxHealth = 10;
         Health = MaxHealth;
         BaseMinRoll = 1;
         BaseMaxRoll = 4;
