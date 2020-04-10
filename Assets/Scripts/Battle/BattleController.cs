@@ -39,6 +39,8 @@ public class BattleController : MonoBehaviour
 
     public RectTransform playerStatusMessagesParent;
     public RectTransform enemyStatusMessagesParent;
+    public RectTransform playerModMessagesParent;
+    public RectTransform enemyModMessagesParent;
     public GameObject statusMessagePrefab;
     public float statusMessageSpacing = 40.0f;
 
@@ -47,6 +49,8 @@ public class BattleController : MonoBehaviour
     private Dictionary<string, Modifier> techMods;
     private List<string> playerStatusMessagesToShow;
     private List<string> enemyStatusMessagesToShow;
+    private static List<string> playerModMessagesToShow;
+    private static List<string> enemyModMessagesToShow;
 
     private void Awake()
     {
@@ -59,6 +63,8 @@ public class BattleController : MonoBehaviour
         enemyBattleStatus = enemy.GetComponent<EnemyBattleStatus>();
         enemyRollDamageUI = enemy.gameObject.transform.Find("RollDamage").gameObject;
         enemyRollHealUI = enemy.gameObject.transform.Find("RollHeal").gameObject;
+        playerModMessagesToShow = new List<string>();
+        enemyModMessagesToShow = new List<string>();
     }
 
     private void Start()
@@ -126,6 +132,9 @@ public class BattleController : MonoBehaviour
             return;
         }
 
+        playerModMessagesToShow.Clear();
+        enemyModMessagesToShow.Clear();
+
         // If there are modifiers to add, add before the roll starts
         // First, add mods for and used items
         foreach (Item itemMod in itemModsToAdd)
@@ -187,6 +196,7 @@ public class BattleController : MonoBehaviour
 
         // Battle status messages
         CreateStatusMessages(playerStatusMessagesToShow, enemyStatusMessagesToShow);
+        CreateModMessages();
         playerStatusMessagesToShow.Clear();
         enemyStatusMessagesToShow.Clear();
 
@@ -332,6 +342,28 @@ public class BattleController : MonoBehaviour
         currentRollBoundedMods.Add(mod);
         playerStatusMessagesToShow.Add(playerUiMessage);
         enemyStatusMessagesToShow.Add(enemyUiMessage);
+    }
+
+    public static void AddPlayerModMessage(string message)
+    {
+        playerModMessagesToShow.Add(message);
+    }
+
+    public static void AddEnemyModMessage(string message)
+    {
+        enemyModMessagesToShow.Add(message);
+    }
+
+    private void CreateModMessages()
+    {
+        for (int i = 0; i < playerModMessagesToShow.Count; i++)
+        {
+            CreateStatusMessage(playerModMessagesToShow[i], playerModMessagesParent, i);
+        }
+        for (int i = 0; i < enemyModMessagesToShow.Count; i++)
+        {
+            CreateStatusMessage(enemyModMessagesToShow[i], enemyModMessagesParent, i);
+        }
     }
 
     private void CreateStatusMessages(List<string> playerMessages, List<string> enemyMessages)

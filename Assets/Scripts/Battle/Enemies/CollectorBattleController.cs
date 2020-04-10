@@ -21,6 +21,7 @@
         {
             healthSapActive = true;
             healthSapTurnsRemaining = 1;
+            BattleController.AddEnemyModMessage("Health Sap!");
         }
         if (healthSapTurnsRemaining <= 0)
         {

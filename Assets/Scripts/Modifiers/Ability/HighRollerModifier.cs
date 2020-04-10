@@ -6,6 +6,7 @@ public class HighRollerModifier : Modifier, IRollValueModifier
         if (RollTrigger())
         {
             playerRoll *= 2;
+            BattleController.AddPlayerModMessage("High Roller!");
         }
         return new Tuple<int, int>(playerRoll, enemyRoll);
     }

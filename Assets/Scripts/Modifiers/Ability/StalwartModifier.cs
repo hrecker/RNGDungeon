@@ -6,6 +6,7 @@
         {
             int damageReduction = (-initial.GetTotalPlayerHealthChange()) - PlayerStatus.Health + 1;
             initial.PlayerDamage -= damageReduction;
+            BattleController.AddPlayerModMessage("Stalwart!");
         }
         return initial;
     }

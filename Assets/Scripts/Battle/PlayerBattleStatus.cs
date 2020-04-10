@@ -15,7 +15,7 @@ public class PlayerBattleStatus : BattleStatus
 
     public override void ApplyResult(RollResult rollResult)
     {
-        ApplyHealthChange(-rollResult.PlayerDamage + rollResult.PlayerHeal);
+        ApplyHealthChange(rollResult.GetTotalPlayerHealthChange());
     }
 
     public override void ApplyHealthChange(int diff)

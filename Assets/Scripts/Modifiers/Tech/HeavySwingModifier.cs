@@ -15,6 +15,7 @@ public class HeavySwingModifier : Modifier, IRollGenerationModifier
         // Heavy swing hits hard on first turn, then debuffs the next two turns
         if (rollCount == 0)
         {
+            BattleController.AddPlayerModMessage("Heavy Swing!");
             initialMinRoll += rollBuff;
             initialMaxRoll += rollBuff;
         }

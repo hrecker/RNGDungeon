@@ -8,6 +8,7 @@
         // Slimes regen every other roll
         if (regenRoll)
         {
+            BattleController.AddEnemyModMessage("Regen!");
             initial.EnemyHeal += regenRate;
         }
         regenRoll = !regenRoll;

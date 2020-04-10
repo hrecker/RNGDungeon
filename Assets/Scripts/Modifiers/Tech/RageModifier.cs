@@ -9,6 +9,7 @@ public class RageModifier : Modifier, IRollGenerationModifier
 
     public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll)
     {
+        BattleController.AddPlayerModMessage("Rage!");
         if ((float) PlayerStatus.Health / PlayerStatus.MaxHealth < playerHealthThreshold)
         {
             int buff = (int) Math.Max(1, rollBuffFraction * initialMaxRoll);

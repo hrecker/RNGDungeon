@@ -23,6 +23,7 @@ public class GhostBattleController : EnemyBattleController
             battleController.AddRollBoundedMod(mod, 1, "-2 Roll: 2 turns", null);
             debuffTurnsRemaining = 2;
             debuffActive = true;
+            BattleController.AddEnemyModMessage("Fear!");
         }
         else if (debuffActive)
         {

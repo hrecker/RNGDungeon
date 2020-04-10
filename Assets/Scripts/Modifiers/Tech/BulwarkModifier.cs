@@ -13,6 +13,7 @@ public class BulwarkModifier : Modifier, IRollGenerationModifier, IRollResultMod
     public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll)
     {
         // Do not allow the buff to raise the min roll above the max
+        BattleController.AddPlayerModMessage("Bulwark!");
         return new Tuple<int, int>(
             Math.Min(initialMaxRoll, initialMinRoll + minRollBuff), initialMaxRoll);
     }
