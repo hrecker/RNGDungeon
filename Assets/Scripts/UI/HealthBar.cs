@@ -23,7 +23,7 @@ public class HealthBar : MonoBehaviour
         UpdateHealthBar();
     }
 
-    public void UpdateHealthBar()
+    private void UpdateHealthBar()
     {
         healthText.text = health + "/" + maxHealth;
         if (maxHealth != 0)

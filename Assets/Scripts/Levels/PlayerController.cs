@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public GameObject itemIconPrefab;
     public AbilitySelectionUI abilitySelection;
     public Text keyCountText;
+    public HealthBar playerHealthBar;
     private float timer;
     private bool moving;
     private bool selectingAbility;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         abilitySelection.gameObject.SetActive(false);
         this.transform.position = PlayerStatus.MapPosition;
         UpdateKeyCount();
+        playerHealthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
 
         itemPickupRarityChances = new Dictionary<Rarity, float>()
         {
