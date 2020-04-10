@@ -4,7 +4,7 @@ public class EnemyBattleStatus : BattleStatus
 {
     public override void ApplyResult(RollResult rollResult)
     {
-        currentHealth -= rollResult.EnemyDamage;
+        currentHealth += rollResult.GetTotalEnemyHealthChange();
         if (currentHealth < 0)
         {
             currentHealth = 0;

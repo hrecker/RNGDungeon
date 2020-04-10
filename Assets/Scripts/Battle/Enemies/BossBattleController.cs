@@ -44,7 +44,7 @@ public class BossBattleController : EnemyBattleController
     {
         if (currentPhase == BossPhase.HEAL)
         {
-            initial.EnemyDamage -= healRate;
+            initial.EnemyHeal += healRate;
         }
         return initial;
     }

@@ -9,7 +9,7 @@
         if (healthSapActive)
         {
             initial.PlayerDamage += healthSapRate;
-            initial.EnemyDamage -= healthSapRate;
+            initial.EnemyHeal += healthSapRate;
             healthSapTurnsRemaining--;
         }
         return initial;

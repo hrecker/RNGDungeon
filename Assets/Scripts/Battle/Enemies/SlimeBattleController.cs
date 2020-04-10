@@ -8,7 +8,7 @@
         // Slimes regen every other roll
         if (regenRoll)
         {
-            initial.EnemyDamage -= regenRate;
+            initial.EnemyHeal += regenRate;
         }
         regenRoll = !regenRoll;
         return initial;

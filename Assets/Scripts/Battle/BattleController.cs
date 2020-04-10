@@ -22,14 +22,14 @@ public class BattleController : MonoBehaviour
 
     public Text playerRollUI;
     public Text enemyRollUI;
-    public Color healthLossColor;
-    public Color healthGainColor;
-    public GameObject playerHealthChangeUI;
-    private GameObject enemyHealthChangeUI;
-    private Image playerHealthChangeBackground;
-    private Image enemyHealthChangeBackground;
-    private Text playerHealthChangeText;
-    private Text enemyHealthChangeText;
+    public GameObject playerRollDamageUI;
+    public GameObject playerRollHealUI;
+    private GameObject enemyRollDamageUI;
+    private GameObject enemyRollHealUI;
+    private Text playerRollDamageText;
+    private Text playerRollHealText;
+    private Text enemyRollDamageText;
+    private Text enemyRollHealText;
 
     public RollGenerator playerRollGenerator;
     public Transform enemyParent;
@@ -57,7 +57,8 @@ public class BattleController : MonoBehaviour
         enemy.AddComponent(controllerType);
         enemyController = enemy.GetComponent<EnemyBattleController>();
         enemyBattleStatus = enemy.GetComponent<EnemyBattleStatus>();
-        enemyHealthChangeUI = enemy.gameObject.transform.Find("RollDamage").gameObject;
+        enemyRollDamageUI = enemy.gameObject.transform.Find("RollDamage").gameObject;
+        enemyRollHealUI = enemy.gameObject.transform.Find("RollHeal").gameObject;
     }
 
     private void Start()
@@ -67,14 +68,16 @@ public class BattleController : MonoBehaviour
         itemModsToAdd = new List<Item>();
         currentRollBoundedMods = new List<Modifier>();
         techMods = new Dictionary<string, Modifier>();
-        playerHealthChangeBackground = playerHealthChangeUI.GetComponent<Image>();
-        playerHealthChangeText = playerHealthChangeUI.GetComponentInChildren<Text>();
-        enemyHealthChangeBackground = enemyHealthChangeUI.GetComponent<Image>();
-        enemyHealthChangeText = enemyHealthChangeUI.GetComponentInChildren<Text>();
+        playerRollDamageText = playerRollDamageUI.GetComponentInChildren<Text>();
+        playerRollHealText = playerRollHealUI.GetComponentInChildren<Text>();
+        enemyRollDamageText = enemyRollDamageUI.GetComponentInChildren<Text>();
+        enemyRollHealText = enemyRollHealUI.GetComponentInChildren<Text>();
         playerStatusMessagesToShow = new List<string>();
         enemyStatusMessagesToShow = new List<string>();
-        playerHealthChangeUI.SetActive(false);
-        enemyHealthChangeUI.SetActive(false);
+        playerRollDamageUI.SetActive(false);
+        playerRollHealUI.SetActive(false);
+        enemyRollDamageUI.SetActive(false);
+        enemyRollHealUI.SetActive(false);
         CheckBattleComplete();
     }
 
@@ -190,7 +193,7 @@ public class BattleController : MonoBehaviour
         CheckBattleComplete();
 
         UpdateRollUI(rollValues.Item1, rollValues.Item2, !completed);
-        UpdateHealthUI(-rollResult.PlayerDamage, -rollResult.EnemyDamage, !completed);
+        UpdateHealthUI(rollResult, !completed);
     }
 
     private void CheckBattleComplete()
@@ -242,15 +245,19 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    private void UpdateHealthUI(int playerHealthDiff, int enemyHealthDiff, bool fade)
+    private void UpdateHealthUI(RollResult rollResult, bool fade)
     {
-        UpdateHealthUI(playerHealthDiff, playerHealthChangeUI,
-            playerHealthChangeBackground, playerHealthChangeText, fade);
-        UpdateHealthUI(enemyHealthDiff, enemyHealthChangeUI, 
-            enemyHealthChangeBackground, enemyHealthChangeText, fade);
+        UpdateHealthUI(rollResult.PlayerDamage, playerRollDamageUI,
+            playerRollDamageText, fade);
+        UpdateHealthUI(rollResult.PlayerHeal, playerRollHealUI,
+            playerRollHealText, fade);
+        UpdateHealthUI(rollResult.EnemyDamage, enemyRollDamageUI,
+            enemyRollDamageText, fade);
+        UpdateHealthUI(rollResult.EnemyHeal, enemyRollHealUI,
+            enemyRollHealText, fade);
     }
 
-    private void UpdateHealthUI(int healthDiff, GameObject uiParent, Image background, Text text, bool fade)
+    private void UpdateHealthUI(int healthDiff, GameObject uiParent, Text text, bool fade)
     {
         if (healthDiff == 0)
         {
@@ -258,15 +265,13 @@ public class BattleController : MonoBehaviour
         }
         else
         {
-            background.CrossFadeAlpha(1, 0, false);
+            uiParent.GetComponent<Image>().CrossFadeAlpha(1, 0, false);
             text.CrossFadeAlpha(1, 0, false);
             uiParent.SetActive(true);
-            background.color =
-                healthDiff > 0 ? healthGainColor : healthLossColor;
-            text.text = Math.Abs(healthDiff).ToString();
+            text.text = healthDiff.ToString();
             if (fade)
             {
-                background.CrossFadeAlpha(0, rollInterval, false);
+                uiParent.GetComponent<Image>().CrossFadeAlpha(0, rollInterval, false);
                 text.CrossFadeAlpha(0, rollInterval, false);
             }
         }

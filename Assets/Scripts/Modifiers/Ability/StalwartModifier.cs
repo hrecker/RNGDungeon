@@ -2,9 +2,10 @@
 {
     public RollResult apply(RollResult initial)
     {
-        if (initial.PlayerDamage >= PlayerStatus.Health && RollTrigger())
+        if (-initial.GetTotalPlayerHealthChange() >= PlayerStatus.Health && RollTrigger())
         {
-            initial.PlayerDamage--;
+            int damageReduction = (-initial.GetTotalPlayerHealthChange()) - PlayerStatus.Health + 1;
+            initial.PlayerDamage -= damageReduction;
         }
         return initial;
     }
