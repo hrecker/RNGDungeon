@@ -1,4 +1,6 @@
 ﻿using UnityEngine.SceneManagement;
+using Levels;
+using Data;
 
 public class GameInitialization
 {

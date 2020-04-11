@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ExitToMenuButton : MonoBehaviour
+namespace UI
 {
-    public void ExitToMainMenu()
+    public class ExitToMenuButton : MonoBehaviour
     {
-        SceneManager.LoadScene("MainMenuScene");
+        public void ExitToMainMenu()
+        {
+            SceneManager.LoadScene("MainMenuScene");
+        }
     }
 }

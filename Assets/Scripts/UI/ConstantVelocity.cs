@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ConstantVelocity : MonoBehaviour
+namespace UI
 {
-    public Vector2 velocity;
-
-    void Update()
+    public class ConstantVelocity : MonoBehaviour
     {
-        transform.Translate(velocity * Time.deltaTime);
+        public Vector2 velocity;
+
+        void Update()
+        {
+            transform.Translate(velocity * Time.deltaTime);
+        }
     }
 }

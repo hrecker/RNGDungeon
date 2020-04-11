@@ -1,24 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SelfDeactivate : MonoBehaviour
+namespace UI
 {
-    public float lifetime;
-    private float timer;
-
-    void Update()
+    public class SelfDeactivate : MonoBehaviour
     {
-        timer += Time.deltaTime;
-        if (timer >= lifetime)
+        public float lifetime;
+        private float timer;
+
+        void Update()
         {
-            gameObject.SetActive(false);
-            ResetTimer();
+            timer += Time.deltaTime;
+            if (timer >= lifetime)
+            {
+                gameObject.SetActive(false);
+                ResetTimer();
+            }
         }
-    }
 
-    public void ResetTimer()
-    {
-        timer = 0.0f;
+        public void ResetTimer()
+        {
+            timer = 0.0f;
+        }
     }
 }

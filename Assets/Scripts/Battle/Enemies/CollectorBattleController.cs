@@ -1,20 +1,24 @@
-﻿public class CollectorBattleController : EnemyBattleController
+﻿
+namespace Battle.Enemies
 {
-    private int healthSapRate = 1;
-
-    private void Start()
+    public class CollectorBattleController : EnemyBattleController
     {
-        // TODO constants representing what priorities should be used
-        rollResultModPriority = 5;
-    }
+        private int healthSapRate = 1;
 
-    public override RollResult ApplyRollResultMods(RollResult initial)
-    {
-        if (initial.PlayerDamage > 0)
+        private void Start()
         {
-            initial.EnemyHeal += healthSapRate;
-            BattleController.AddEnemyModMessage("Health Sap!");
+            // TODO constants representing what priorities should be used
+            rollResultModPriority = 5;
         }
-        return initial;
+
+        public override RollResult ApplyRollResultMods(RollResult initial)
+        {
+            if (initial.PlayerDamage > 0)
+            {
+                initial.EnemyHeal += healthSapRate;
+                BattleController.AddEnemyModMessage("Health Sap!");
+            }
+            return initial;
+        }
     }
 }

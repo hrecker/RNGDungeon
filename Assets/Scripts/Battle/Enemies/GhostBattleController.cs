@@ -1,36 +1,41 @@
 ﻿using UnityEngine;
+using Modifiers;
+using Modifiers.Generic;
 
-public class GhostBattleController : EnemyBattleController
+namespace Battle.Enemies
 {
-    private int rollDebuff = 2;
-    private BattleController battleController;
-    private bool debuffActive;
-    private int debuffTurnsRemaining;
-
-    private void Start()
+    public class GhostBattleController : EnemyBattleController
     {
-        battleController = GameObject.Find("BattleController").
-            gameObject.GetComponent<BattleController>();
-    }
+        private int rollDebuff = 2;
+        private BattleController battleController;
+        private bool debuffActive;
+        private int debuffTurnsRemaining;
 
-    public override void ApplyPostDamageEffects(RollResult initial)
-    {
-        if (initial.PlayerDamage > 0 && !debuffActive)
+        private void Start()
         {
-            Modifier mod = new RollBuffModifier(-rollDebuff, -rollDebuff);
-            mod.isRollBounded = true;
-            mod.numRollsRemaining = 2;
-            battleController.AddRollBoundedMod(mod, "-2 Roll: 2 turns", null);
-            debuffTurnsRemaining = 2;
-            debuffActive = true;
-            BattleController.AddEnemyModMessage("Fear!");
+            battleController = GameObject.Find("BattleController").
+                gameObject.GetComponent<BattleController>();
         }
-        else if (debuffActive)
+
+        public override void ApplyPostDamageEffects(RollResult initial)
         {
-            debuffTurnsRemaining--;
-            if (debuffTurnsRemaining <= 0)
+            if (initial.PlayerDamage > 0 && !debuffActive)
             {
-                debuffActive = false;
+                Modifier mod = new RollBuffModifier(-rollDebuff, -rollDebuff);
+                mod.isRollBounded = true;
+                mod.numRollsRemaining = 2;
+                battleController.AddRollBoundedMod(mod, "-2 Roll: 2 turns", null);
+                debuffTurnsRemaining = 2;
+                debuffActive = true;
+                BattleController.AddEnemyModMessage("Fear!");
+            }
+            else if (debuffActive)
+            {
+                debuffTurnsRemaining--;
+                if (debuffTurnsRemaining <= 0)
+                {
+                    debuffActive = false;
+                }
             }
         }
     }

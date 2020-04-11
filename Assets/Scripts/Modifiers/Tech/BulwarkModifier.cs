@@ -1,28 +1,32 @@
 ﻿using System;
+using Battle;
 
-public class BulwarkModifier : Modifier, IRollGenerationModifier, IRollResultModifier
+namespace Modifiers.Tech
 {
-    private int minRollBuff;
-
-    public BulwarkModifier(int minRollBuff)
+    public class BulwarkModifier : Modifier, IRollGenerationModifier, IRollResultModifier
     {
-        this.minRollBuff = minRollBuff;
-    }
+        private int minRollBuff;
 
-    // Roll generation
-    public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
-    {
-        // Do not allow the buff to raise the min roll above the max
-        BattleController.AddPlayerModMessage("Bulwark!");
-        return new Tuple<int, int>(
-            Math.Min(initialMaxRoll, initialMinRoll + minRollBuff), initialMaxRoll);
-    }
+        public BulwarkModifier(int minRollBuff)
+        {
+            this.minRollBuff = minRollBuff;
+        }
 
-    // Roll result
-    public RollResult ApplyRollResultMod(RollResult initial)
-    {
-        // Bulwark cannot damage the enemy
-        initial.EnemyDamage = 0;
-        return initial;
+        // Roll generation
+        public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
+        {
+            // Do not allow the buff to raise the min roll above the max
+            BattleController.AddPlayerModMessage("Bulwark!");
+            return new Tuple<int, int>(
+                Math.Min(initialMaxRoll, initialMinRoll + minRollBuff), initialMaxRoll);
+        }
+
+        // Roll result
+        public RollResult ApplyRollResultMod(RollResult initial)
+        {
+            // Bulwark cannot damage the enemy
+            initial.EnemyDamage = 0;
+            return initial;
+        }
     }
 }

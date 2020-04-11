@@ -1,32 +1,33 @@
-﻿using UnityEngine;
-
-public class PlayerBattleStatus : BattleStatus
+﻿namespace Battle
 {
-    void Awake()
+    public class PlayerBattleStatus : BattleStatus
     {
-        UpdateBattleStatusHealth();
-    }
+        void Awake()
+        {
+            UpdateBattleStatusHealth();
+        }
 
-    protected override void Update()
-    {
-        UpdateBattleStatusHealth();
-        base.Update();
-    }
+        protected override void Update()
+        {
+            UpdateBattleStatusHealth();
+            base.Update();
+        }
 
-    public override void ApplyResult(RollResult rollResult)
-    {
-        ApplyHealthChange(rollResult.GetTotalPlayerHealthChange());
-    }
+        public override void ApplyResult(RollResult rollResult)
+        {
+            ApplyHealthChange(rollResult.GetTotalPlayerHealthChange());
+        }
 
-    public override void ApplyHealthChange(int diff)
-    {
-        PlayerStatus.Health += diff;
-        UpdateBattleStatusHealth();
-    }
+        public override void ApplyHealthChange(int diff)
+        {
+            PlayerStatus.Health += diff;
+            UpdateBattleStatusHealth();
+        }
 
-    private void UpdateBattleStatusHealth()
-    {
-        currentHealth = PlayerStatus.Health;
-        maxHealth = PlayerStatus.MaxHealth;
+        private void UpdateBattleStatusHealth()
+        {
+            currentHealth = PlayerStatus.Health;
+            maxHealth = PlayerStatus.MaxHealth;
+        }
     }
 }

@@ -1,16 +1,18 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class RollGenerator : MonoBehaviour
+namespace Battle
 {
-    protected int minRoll;
-    protected int maxRoll;
-
-    // Generate an initial roll value
-    public abstract int GenerateInitialRoll();
-
-    protected int GenerateBasicRoll(int min, int max)
+    public abstract class RollGenerator : MonoBehaviour
     {
-        return UnityEngine.Random.Range(min, max + 1);
+        protected int minRoll;
+        protected int maxRoll;
+
+        // Generate an initial roll value
+        public abstract int GenerateInitialRoll();
+
+        protected int GenerateBasicRoll(int min, int max)
+        {
+            return UnityEngine.Random.Range(min, max + 1);
+        }
     }
 }

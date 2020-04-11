@@ -1,13 +1,18 @@
-﻿public class StalwartModifier : Modifier, IRollResultModifier
+﻿using Battle;
+
+namespace Modifiers.Ability
 {
-    public RollResult ApplyRollResultMod(RollResult initial)
+    public class StalwartModifier : Modifier, IRollResultModifier
     {
-        if (-initial.GetTotalPlayerHealthChange() >= PlayerStatus.Health && RollTrigger())
+        public RollResult ApplyRollResultMod(RollResult initial)
         {
-            int damageReduction = (-initial.GetTotalPlayerHealthChange()) - PlayerStatus.Health + 1;
-            initial.PlayerDamage -= damageReduction;
-            BattleController.AddPlayerModMessage("Stalwart!");
+            if (-initial.GetTotalPlayerHealthChange() >= PlayerStatus.Health && RollTrigger())
+            {
+                int damageReduction = (-initial.GetTotalPlayerHealthChange()) - PlayerStatus.Health + 1;
+                initial.PlayerDamage -= damageReduction;
+                BattleController.AddPlayerModMessage("Stalwart!");
+            }
+            return initial;
         }
-        return initial;
     }
 }

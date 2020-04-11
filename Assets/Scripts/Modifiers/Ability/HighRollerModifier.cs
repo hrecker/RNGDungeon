@@ -1,13 +1,18 @@
 ﻿using System;
-public class HighRollerModifier : Modifier, IRollValueModifier
+using Battle;
+
+namespace Modifiers.Ability
 {
-    public Tuple<int, int> ApplyRollValueMod(int playerRoll, int enemyRoll)
+    public class HighRollerModifier : Modifier, IRollValueModifier
     {
-        if (RollTrigger())
+        public Tuple<int, int> ApplyRollValueMod(int playerRoll, int enemyRoll)
         {
-            playerRoll *= 2;
-            BattleController.AddPlayerModMessage("High Roller!");
+            if (RollTrigger())
+            {
+                playerRoll *= 2;
+                BattleController.AddPlayerModMessage("High Roller!");
+            }
+            return new Tuple<int, int>(playerRoll, enemyRoll);
         }
-        return new Tuple<int, int>(playerRoll, enemyRoll);
     }
 }

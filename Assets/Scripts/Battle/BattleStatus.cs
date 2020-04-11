@@ -1,45 +1,49 @@
 ﻿using UnityEngine;
+using UI;
 
-public abstract class BattleStatus : MonoBehaviour
+namespace Battle
 {
-    public int maxHealth;
-    public int currentHealth;
-    HealthBar healthBar;
-
-    private int lastRenderCurrentHealth;
-
-    void Start()
+    public abstract class BattleStatus : MonoBehaviour
     {
-        healthBar = GetComponentInChildren<HealthBar>();
-        UpdateHealthBar();
-    }
+        public int maxHealth;
+        public int currentHealth;
+        HealthBar healthBar;
 
-    protected virtual void Update()
-    {
-        if (lastRenderCurrentHealth != currentHealth)
+        private int lastRenderCurrentHealth;
+
+        void Start()
         {
+            healthBar = GetComponentInChildren<HealthBar>();
             UpdateHealthBar();
         }
-    }
 
-    private void UpdateHealthBar()
-    {
-        healthBar.UpdateHealth(currentHealth, maxHealth);
-        lastRenderCurrentHealth = currentHealth;
-    }
-
-    public abstract void ApplyResult(RollResult rollResult);
-
-    public virtual void ApplyHealthChange(int diff)
-    {
-        currentHealth += diff;
-        if (currentHealth < 0)
+        protected virtual void Update()
         {
-            currentHealth = 0;
+            if (lastRenderCurrentHealth != currentHealth)
+            {
+                UpdateHealthBar();
+            }
         }
-        else if (currentHealth > maxHealth)
+
+        private void UpdateHealthBar()
         {
-            currentHealth = maxHealth;
+            healthBar.UpdateHealth(currentHealth, maxHealth);
+            lastRenderCurrentHealth = currentHealth;
+        }
+
+        public abstract void ApplyResult(RollResult rollResult);
+
+        public virtual void ApplyHealthChange(int diff)
+        {
+            currentHealth += diff;
+            if (currentHealth < 0)
+            {
+                currentHealth = 0;
+            }
+            else if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
         }
     }
 }

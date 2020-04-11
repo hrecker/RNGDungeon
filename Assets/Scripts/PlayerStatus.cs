@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Data;
+using Modifiers;
+using Levels;
 
 public class PlayerStatus
 {
@@ -69,16 +72,16 @@ public class PlayerStatus
         Mods = new PlayerModifiers();
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
         Inventory = new Dictionary<Item, int>();
-        Inventory.Add(Cache.GetItem("HealthPotion"), 3);
-        Inventory.Add(Cache.GetItem("BlockingPotion"), 1);
-        Inventory.Add(Cache.GetItem("RecoilPotion"), 1);
-        Inventory.Add(Cache.GetItem("Shortsword"), 1);
+        Inventory.Add(Data.Cache.GetItem("HealthPotion"), 3);
+        Inventory.Add(Data.Cache.GetItem("BlockingPotion"), 1);
+        Inventory.Add(Data.Cache.GetItem("RecoilPotion"), 1);
+        Inventory.Add(Data.Cache.GetItem("Shortsword"), 1);
         abilities = new List<Ability>();
         EquippedTrinkets = new List<Item>();
-        EquippedWeapon = Cache.GetItem("Shortsword");
+        EquippedWeapon = Data.Cache.GetItem("Shortsword");
         EnabledTechs = new List<Tech>();
-        EnabledTechs.Add(Cache.GetTech("HeavySwing"));
-        EnabledTechs.Add(Cache.GetTech("Bulwark"));
+        EnabledTechs.Add(Data.Cache.GetTech("HeavySwing"));
+        EnabledTechs.Add(Data.Cache.GetTech("Bulwark"));
         Initialized = true;
     }
 

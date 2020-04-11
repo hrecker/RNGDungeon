@@ -1,79 +1,80 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Selectable : MonoBehaviour
+namespace UI
 {
-    public Image selectBackground;
-    public Color hoverColor;
-    public Color selectedColor;
-    public Color hoverSelectedColor;
-    private bool selected;
-
-    private Action<Selectable> selectCallback;
-    private Action<string> confirmCallback;
-    private string confirmCallbackParam;
-
-    private void Start()
+    public class Selectable : MonoBehaviour
     {
-        selectBackground.color = Color.clear;
-    }
+        public Image selectBackground;
+        public Color hoverColor;
+        public Color selectedColor;
+        public Color hoverSelectedColor;
+        private bool selected;
 
-    public void SetConfirmCallback(string param, Action<string> callback)
-    {
-        this.confirmCallback = callback;
-        this.confirmCallbackParam = param;
-    }
+        private Action<Selectable> selectCallback;
+        private Action<string> confirmCallback;
+        private string confirmCallbackParam;
 
-    public void SetSelectedCallback(Action<Selectable> callback)
-    {
-        this.selectCallback = callback;
-    }
-
-    public void PointerEnter()
-    {
-        if (selected)
-        {
-            selectBackground.color = hoverSelectedColor;
-        }
-        else
-        {
-            selectBackground.color = hoverColor;
-        }
-    }
-
-    public void PointerExit()
-    {
-        if (selected)
-        {
-            selectBackground.color = selectedColor;
-        }
-        else
+        private void Start()
         {
             selectBackground.color = Color.clear;
         }
-    }
 
-    public void Deselect()
-    {
-        selected = false;
-        selectBackground.color = Color.clear;
-    }
-
-    public void OnClick()
-    {
-        if (!selected)
+        public void SetConfirmCallback(string param, Action<string> callback)
         {
-            selected = true;
-            selectBackground.color = hoverSelectedColor;
-            selectCallback?.Invoke(this);
+            this.confirmCallback = callback;
+            this.confirmCallbackParam = param;
         }
-        else
+
+        public void SetSelectedCallback(Action<Selectable> callback)
         {
-            confirmCallback?.Invoke(confirmCallbackParam);
-            Deselect();
+            this.selectCallback = callback;
+        }
+
+        public void PointerEnter()
+        {
+            if (selected)
+            {
+                selectBackground.color = hoverSelectedColor;
+            }
+            else
+            {
+                selectBackground.color = hoverColor;
+            }
+        }
+
+        public void PointerExit()
+        {
+            if (selected)
+            {
+                selectBackground.color = selectedColor;
+            }
+            else
+            {
+                selectBackground.color = Color.clear;
+            }
+        }
+
+        public void Deselect()
+        {
+            selected = false;
+            selectBackground.color = Color.clear;
+        }
+
+        public void OnClick()
+        {
+            if (!selected)
+            {
+                selected = true;
+                selectBackground.color = hoverSelectedColor;
+                selectCallback?.Invoke(this);
+            }
+            else
+            {
+                confirmCallback?.Invoke(confirmCallbackParam);
+                Deselect();
+            }
         }
     }
 }

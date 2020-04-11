@@ -1,36 +1,41 @@
 ﻿using System;
+using Modifiers;
+using Modifiers.Ability;
 
-[Serializable]
-public class Ability
+namespace Data
 {
-    public string name;
-    public string displayName;
-    public string description;
-    public ModType modType;
-    public ModEffect modEffect;
-
-    public Modifier CreateAbilityModifier()
+    [Serializable]
+    public class Ability
     {
-        Modifier result = null;
-        switch (modType)
-        {
-            case ModType.HIGHROLLER:
-                result = new HighRollerModifier();
-                break;
-            case ModType.STALWART:
-                result = new StalwartModifier();
-                break;
-        }
-        if (result != null)
-        {
-            result.triggerChance = modEffect.baseModTriggerChance;
-            result.priority = modEffect.modPriority;
-        }
-        return result;
-    }
+        public string name;
+        public string displayName;
+        public string description;
+        public ModType modType;
+        public ModEffect modEffect;
 
-    public string GetDisplayName()
-    {
-        return string.IsNullOrEmpty(displayName) ? name : displayName;
+        public Modifier CreateAbilityModifier()
+        {
+            Modifier result = null;
+            switch (modType)
+            {
+                case ModType.HIGHROLLER:
+                    result = new HighRollerModifier();
+                    break;
+                case ModType.STALWART:
+                    result = new StalwartModifier();
+                    break;
+            }
+            if (result != null)
+            {
+                result.triggerChance = modEffect.baseModTriggerChance;
+                result.priority = modEffect.modPriority;
+            }
+            return result;
+        }
+
+        public string GetDisplayName()
+        {
+            return string.IsNullOrEmpty(displayName) ? name : displayName;
+        }
     }
 }

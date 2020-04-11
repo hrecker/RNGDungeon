@@ -1,68 +1,73 @@
 ﻿using System;
+using Modifiers;
+using Modifiers.Tech;
 
-// Player battle techniques
-[Serializable]
-public class Tech
+namespace Data
 {
-    public string name;
-    public string displayName;
-    public string description;
-    public string playerStatusMessage;
-    public string enemyStatusMessage;
-    public int cooldownRolls;
-    public int numRollsInEffect;
-    public ModType modType;
-    public ModEffect modEffect;
-
-    public Modifier CreateTechModifier()
+    // Player battle techniques
+    [Serializable]
+    public class Tech
     {
-        Modifier result = null;
-        switch (modType)
+        public string name;
+        public string displayName;
+        public string description;
+        public string playerStatusMessage;
+        public string enemyStatusMessage;
+        public int cooldownRolls;
+        public int numRollsInEffect;
+        public ModType modType;
+        public ModEffect modEffect;
+
+        public Modifier CreateTechModifier()
         {
-            case ModType.HEAVYSWING:
-                result = new HeavySwingModifier();
-                break;
-            case ModType.RAGE:
-                result = new RageModifier();
-                break;
-            case ModType.BULWARK:
-                result = new BulwarkModifier(modEffect.playerMinRollChange);
-                break;
+            Modifier result = null;
+            switch (modType)
+            {
+                case ModType.HEAVYSWING:
+                    result = new HeavySwingModifier();
+                    break;
+                case ModType.RAGE:
+                    result = new RageModifier();
+                    break;
+                case ModType.BULWARK:
+                    result = new BulwarkModifier(modEffect.playerMinRollChange);
+                    break;
+            }
+            if (result != null)
+            {
+                result.isRollBounded = true;
+                result.numRollsRemaining = numRollsInEffect;
+                result.triggerChance = modEffect.baseModTriggerChance;
+                result.priority = modEffect.modPriority;
+            }
+            return result;
         }
-        if (result != null)
+
+        private int currentCooldown;
+
+        public int GetCurrentCooldown()
         {
-            result.isRollBounded = true;
-            result.numRollsRemaining = numRollsInEffect;
-            result.triggerChance = modEffect.baseModTriggerChance;
-            result.priority = modEffect.modPriority;
+            return currentCooldown;
         }
-        return result;
-    }
 
-    private int currentCooldown;
+        public void ActivateCooldown()
+        {
+            currentCooldown = cooldownRolls;
+        }
 
-    public int GetCurrentCooldown()
-    {
-        return currentCooldown;
-    }
+        public void DecrementCooldown()
+        {
+            currentCooldown--;
+        }
 
-    public void ActivateCooldown()
-    {
-        currentCooldown = cooldownRolls;
-    }
+        public void ResetCooldown()
+        {
+            currentCooldown = 0;
+        }
 
-    public void DecrementCooldown()
-    {
-        currentCooldown--;
-    }
-
-    public void ResetCooldown()
-    {
-        currentCooldown = 0;
-    }
-
-    public string GetDisplayName()
-    {
-        return string.IsNullOrEmpty(displayName) ? name : displayName;
+        public string GetDisplayName()
+        {
+            return string.IsNullOrEmpty(displayName) ? name : displayName;
+        }
     }
 }

@@ -1,10 +1,15 @@
-﻿public class RecoilModifer : Modifier, IRollResultModifier
+﻿using Battle;
+
+namespace Modifiers.Generic
 {
-    public RollResult ApplyRollResultMod(RollResult initial)
+    public class RecoilModifer : Modifier, IRollResultModifier
     {
-        int damageReceived = initial.PlayerDamage;
-        int recoilDamage = damageReceived > 0 ? 1 : 0;
-        initial.EnemyDamage += recoilDamage;
-        return initial;
+        public RollResult ApplyRollResultMod(RollResult initial)
+        {
+            int damageReceived = initial.PlayerDamage;
+            int recoilDamage = damageReceived > 0 ? 1 : 0;
+            initial.EnemyDamage += recoilDamage;
+            return initial;
+        }
     }
 }

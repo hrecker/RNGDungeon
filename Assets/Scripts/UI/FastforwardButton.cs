@@ -1,34 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using Battle;
 
-public class FastforwardButton : MonoBehaviour
+namespace UI
 {
-    private Sprite fastforwardSprite;
-    public Sprite playSprite;
-    private Image uiImage;
-
-    public BattleController battleController;
-    private bool isPlaySpriteActive;
-
-    void Start()
+    public class FastforwardButton : MonoBehaviour
     {
-        uiImage = GetComponent<Image>();
-        fastforwardSprite = uiImage.sprite;
-    }
+        private Sprite fastforwardSprite;
+        public Sprite playSprite;
+        private Image uiImage;
 
-    public void Toggle()
-    {
-        battleController.ToggleFastforward();
-        if (isPlaySpriteActive)
+        public BattleController battleController;
+        private bool isPlaySpriteActive;
+
+        void Start()
         {
-            uiImage.sprite = fastforwardSprite;
+            uiImage = GetComponent<Image>();
+            fastforwardSprite = uiImage.sprite;
         }
-        else
+
+        public void Toggle()
         {
-            uiImage.sprite = playSprite;
+            battleController.ToggleFastforward();
+            if (isPlaySpriteActive)
+            {
+                uiImage.sprite = fastforwardSprite;
+            }
+            else
+            {
+                uiImage.sprite = playSprite;
+            }
+            isPlaySpriteActive = !isPlaySpriteActive;
         }
-        isPlaySpriteActive = !isPlaySpriteActive;
     }
 }

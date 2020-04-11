@@ -1,82 +1,87 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Data;
+using UI;
 
-public class TechButton : MonoBehaviour
+namespace Battle
 {
-    public string techName;
-    public Text tooltipText;
-    public Image techImage;
-    public bool isDefaultTech;
-    public GameObject cooldownPanel;
-    public Text cooldownText;
-    private Tech tech;
-
-    private TechButtonController buttonController;
-    private PauseMenu pauseMenu;
-
-    void Start()
+    public class TechButton : MonoBehaviour
     {
-        pauseMenu = FindObjectOfType<PauseMenu>();
-        buttonController = GetComponentInParent<TechButtonController>();
-        buttonController.RegisterTechButton(this);
+        public string techName;
+        public Text tooltipText;
+        public Image techImage;
+        public bool isDefaultTech;
+        public GameObject cooldownPanel;
+        public Text cooldownText;
+        private Tech tech;
 
-        if (isDefaultTech)
+        private TechButtonController buttonController;
+        private PauseMenu pauseMenu;
+
+        void Start()
         {
-            buttonController.SelectTech(this);
+            pauseMenu = FindObjectOfType<PauseMenu>();
+            buttonController = GetComponentInParent<TechButtonController>();
+            buttonController.RegisterTechButton(this);
+
+            if (isDefaultTech)
+            {
+                buttonController.SelectTech(this);
+            }
+            else
+            {
+                tech = Data.Cache.GetTech(techName);
+                gameObject.name = techName;
+                techImage.sprite = Data.Cache.GetTechIcon(techName);
+                tooltipText.text = tech.GetDisplayName();
+                UpdateCooldownText();
+            }
         }
-        else
+
+        public void OnSelected()
         {
-            tech = Cache.GetTech(techName);
-            gameObject.name = techName;
-            techImage.sprite = Cache.GetTechIcon(techName);
-            tooltipText.text = tech.GetDisplayName();
+            if (!pauseMenu.IsPaused() && tech.GetCurrentCooldown() <= 0)
+            {
+                buttonController.SelectTech(this);
+            }
+        }
+
+        public void DecrementCooldownIfNecessary()
+        {
+            if (tech != null && tech.GetCurrentCooldown() > 0)
+            {
+                tech.DecrementCooldown();
+            }
+            else
+            {
+                return;
+            }
+
             UpdateCooldownText();
         }
-    }
 
-    public void OnSelected()
-    {
-        if (!pauseMenu.IsPaused() && tech.GetCurrentCooldown() <= 0)
+        public void ActivateCooldown()
         {
-            buttonController.SelectTech(this);
-        }
-    }
+            // Default tech has no cooldown
+            if (isDefaultTech)
+            {
+                return;
+            }
 
-    public void DecrementCooldownIfNecessary()
-    {
-        if (tech != null && tech.GetCurrentCooldown() > 0)
-        {
-            tech.DecrementCooldown();
-        }
-        else
-        {
-            return;
+            tech.ActivateCooldown();
+            UpdateCooldownText();
         }
 
-        UpdateCooldownText();
-    }
-
-    public void ActivateCooldown()
-    {
-        // Default tech has no cooldown
-        if (isDefaultTech)
+        private void UpdateCooldownText()
         {
-            return;
+            if (isDefaultTech)
+            {
+                return;
+            }
+
+            int cooldown = tech.GetCurrentCooldown();
+            cooldownPanel.SetActive(cooldown > 0);
+            cooldownText.text = cooldown.ToString();
         }
-
-        tech.ActivateCooldown();
-        UpdateCooldownText();
-    }
-
-    private void UpdateCooldownText()
-    {
-        if (isDefaultTech)
-        {
-            return;
-        }
-
-        int cooldown = tech.GetCurrentCooldown();
-        cooldownPanel.SetActive(cooldown > 0);
-        cooldownText.text = cooldown.ToString();
     }
 }

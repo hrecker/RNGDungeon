@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 
-public class MainMenuController : MonoBehaviour
+namespace UI
 {
-    public void StartGame()
+    public class MainMenuController : MonoBehaviour
     {
-        // Load in enemy, level, item, etc. data before starting
-        Cache.Load();
-        GameInitialization.StartNewGame();
-    }
+        public void StartGame()
+        {
+            // Load in enemy, level, item, etc. data before starting
+            Data.Cache.Load();
+            GameInitialization.StartNewGame();
+        }
 
-    public void ExitGame()
-    {
-        Application.Quit();
+        public void ExitGame()
+        {
+            Application.Quit();
+        }
     }
 }

@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Battle;
 
-public class BlockingModifier : Modifier, IRollResultModifier
+namespace Modifiers.Generic
 {
-    public RollResult ApplyRollResultMod(RollResult initial)
+    public class BlockingModifier : Modifier, IRollResultModifier
     {
-        initial.PlayerDamage = 0;
-        return initial;
+        public RollResult ApplyRollResultMod(RollResult initial)
+        {
+            initial.PlayerDamage = 0;
+            return initial;
+        }
     }
 }

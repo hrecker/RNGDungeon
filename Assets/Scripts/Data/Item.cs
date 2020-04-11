@@ -1,89 +1,94 @@
 ﻿using System;
+using Modifiers;
+using Modifiers.Generic;
 
-[Serializable]
-public class Item
+namespace Data
 {
-    public string name;
-    public string displayName;
-    public string tooltipText;
-    public int numRollsInEffect; // For in-battle items
-    public int playerHealthChange; // For healing items
-    public string playerStatusMessage;
-    public string enemyStatusMessage;
-    public string failedUseMessage;
-    public ItemType itemType;
-    public Rarity rarity;
-    public EquipSlot equipSlot;
-    public ModType modType;
-    public ModEffect modEffect;
-
-    // For items that represent modifiers
-    public Modifier CreateItemModifier()
+    [Serializable]
+    public class Item
     {
-        Modifier result = null;
-        switch (modType)
+        public string name;
+        public string displayName;
+        public string tooltipText;
+        public int numRollsInEffect; // For in-battle items
+        public int playerHealthChange; // For healing items
+        public string playerStatusMessage;
+        public string enemyStatusMessage;
+        public string failedUseMessage;
+        public ItemType itemType;
+        public Rarity rarity;
+        public EquipSlot equipSlot;
+        public ModType modType;
+        public ModEffect modEffect;
+
+        // For items that represent modifiers
+        public Modifier CreateItemModifier()
         {
-            case ModType.BLOCK:
-                result = new BlockingModifier();
-                break;
-            case ModType.RECOIL:
-                result = new RecoilModifer();
-                break;
-            case ModType.WEAPON:
-                result = new RollBuffModifier(
-                    modEffect.playerMinRollChange, modEffect.playerMaxRollChange);
-                break;
+            Modifier result = null;
+            switch (modType)
+            {
+                case ModType.BLOCK:
+                    result = new BlockingModifier();
+                    break;
+                case ModType.RECOIL:
+                    result = new RecoilModifer();
+                    break;
+                case ModType.WEAPON:
+                    result = new RollBuffModifier(
+                        modEffect.playerMinRollChange, modEffect.playerMaxRollChange);
+                    break;
+            }
+            if (result != null)
+            {
+                //TODO allow effects that just last until the battle ends?
+                result.isRollBounded = numRollsInEffect > 0;
+                result.numRollsRemaining = numRollsInEffect;
+                result.triggerChance = modEffect.baseModTriggerChance;
+                result.priority = modEffect.modPriority;
+            }
+            return result;
         }
-        if (result != null)
+
+        // For items like health potions that represent single use effects
+        public bool ApplyEffect()
         {
-            //TODO allow effects that just last until the battle ends?
-            result.isRollBounded = numRollsInEffect > 0;
-            result.numRollsRemaining = numRollsInEffect;
-            result.triggerChance = modEffect.baseModTriggerChance;
-            result.priority = modEffect.modPriority;
+            //TODO implementation for things besides health potions
+            if (PlayerStatus.Health >= PlayerStatus.MaxHealth)
+            {
+                return false;
+            }
+            PlayerStatus.Health += playerHealthChange;
+            return true;
         }
-        return result;
+
+        public string GetDisplayName()
+        {
+            return string.IsNullOrEmpty(displayName) ? name : displayName;
+        }
     }
 
-    // For items like health potions that represent single use effects
-    public bool ApplyEffect()
+    [Serializable]
+    public enum EquipSlot
     {
-        //TODO implementation for things besides health potions
-        if (PlayerStatus.Health >= PlayerStatus.MaxHealth)
-        {
-            return false;
-        }
-        PlayerStatus.Health += playerHealthChange;
-        return true;
+        NONE = 0,
+        WEAPON = 1,
+        TRINKET = 2 // Any number of trinkets can be equipped
     }
 
-    public string GetDisplayName()
+    [Serializable]
+    public enum ItemType
     {
-        return string.IsNullOrEmpty(displayName) ? name : displayName;
+        USABLE_ANYTIME = 0, //Stuff like health potions - doesn't generally create modifier
+        USABLE_ONLY_IN_BATTLE = 1, // Battle items will always be temporary modifiers
+        EQUIPMENT = 2
     }
-}
 
-[Serializable]
-public enum EquipSlot
-{
-    NONE = 0,
-    WEAPON = 1,
-    TRINKET = 2 // Any number of trinkets can be equipped
-}
-
-[Serializable]
-public enum ItemType
-{
-    USABLE_ANYTIME = 0, //Stuff like health potions - doesn't generally create modifier
-    USABLE_ONLY_IN_BATTLE = 1, // Battle items will always be temporary modifiers
-    EQUIPMENT = 2
-}
-
-[Serializable]
-public enum Rarity
-{
-    COMMON = 0,
-    UNCOMMON = 1,
-    RARE = 2,
-    NEVER = 3 // Items that are never dropped randomly
+    [Serializable]
+    public enum Rarity
+    {
+        COMMON = 0,
+        UNCOMMON = 1,
+        RARE = 2,
+        NEVER = 3 // Items that are never dropped randomly
+    }
 }

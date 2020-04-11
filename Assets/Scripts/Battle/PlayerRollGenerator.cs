@@ -1,23 +1,27 @@
 ﻿using System;
+using Modifiers;
 
-public class PlayerRollGenerator : RollGenerator
+namespace Battle
 {
-    private void Start()
+    public class PlayerRollGenerator : RollGenerator
     {
-        minRoll = PlayerStatus.BaseMinRoll;
-        maxRoll = PlayerStatus.BaseMaxRoll;
-    }
-
-    public override int GenerateInitialRoll()
-    {
-        int min = minRoll;
-        int max = maxRoll;
-        foreach (IRollGenerationModifier mod in PlayerStatus.Mods.GetRollGenerationModifiers())
+        private void Start()
         {
-            Tuple<int, int> modified = mod.ApplyRollGenerationMod(min, max);
-            min = modified.Item1;
-            max = modified.Item2;
+            minRoll = PlayerStatus.BaseMinRoll;
+            maxRoll = PlayerStatus.BaseMaxRoll;
         }
-        return GenerateBasicRoll(min, max);
+
+        public override int GenerateInitialRoll()
+        {
+            int min = minRoll;
+            int max = maxRoll;
+            foreach (IRollGenerationModifier mod in PlayerStatus.Mods.GetRollGenerationModifiers())
+            {
+                Tuple<int, int> modified = mod.ApplyRollGenerationMod(min, max);
+                min = modified.Item1;
+                max = modified.Item2;
+            }
+            return GenerateBasicRoll(min, max);
+        }
     }
 }
