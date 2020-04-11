@@ -34,6 +34,7 @@ public class Tech
             result.isRollBounded = true;
             result.numRollsRemaining = numRollsInEffect;
             result.triggerChance = modEffect.baseModTriggerChance;
+            result.priority = modEffect.modPriority;
         }
         return result;
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 public class HighRollerModifier : Modifier, IRollValueModifier
 {
-    public Tuple<int, int> apply(int playerRoll, int enemyRoll)
+    public Tuple<int, int> ApplyRollValueMod(int playerRoll, int enemyRoll)
     {
         if (RollTrigger())
         {

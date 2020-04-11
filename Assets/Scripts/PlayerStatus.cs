@@ -42,7 +42,7 @@ public class PlayerStatus
             if (equippedWeapon != null)
             {
                 weaponMod = equippedWeapon.CreateItemModifier();
-                Mods.RegisterModifier(weaponMod, equippedWeapon.modEffect.modPriority);
+                Mods.RegisterModifier(weaponMod);
             }
         }
     }
@@ -62,7 +62,7 @@ public class PlayerStatus
 
     public static void Restart()
     {
-        MaxHealth = 10;
+        MaxHealth = 100;
         Health = MaxHealth;
         BaseMinRoll = 1;
         BaseMaxRoll = 4;
@@ -151,7 +151,6 @@ public class PlayerStatus
     public static void AddAbility(Ability ability)
     {
         abilities.Add(ability);
-        Mods.RegisterModifier(ability.CreateAbilityModifier(), 
-            ability.modEffect.modPriority);
+        Mods.RegisterModifier(ability.CreateAbilityModifier());
     }
 }

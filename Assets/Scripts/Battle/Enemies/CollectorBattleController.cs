@@ -1,31 +1,20 @@
 ﻿public class CollectorBattleController : EnemyBattleController
 {
     private int healthSapRate = 1;
-    private int healthSapTurnsRemaining;
-    private bool healthSapActive;
+
+    private void Start()
+    {
+        // TODO constants representing what priorities should be used
+        rollResultModPriority = 5;
+    }
 
     public override RollResult ApplyRollResultMods(RollResult initial)
     {
-        if (healthSapActive)
+        if (initial.PlayerDamage > 0)
         {
-            initial.PlayerDamage += healthSapRate;
             initial.EnemyHeal += healthSapRate;
-            healthSapTurnsRemaining--;
-        }
-        return initial;
-    }
-
-    public override void ApplyPostDamageEffects(RollResult rollResult)
-    {
-        if (rollResult.PlayerDamage > 0 && !healthSapActive)
-        {
-            healthSapActive = true;
-            healthSapTurnsRemaining = 1;
             BattleController.AddEnemyModMessage("Health Sap!");
         }
-        if (healthSapTurnsRemaining <= 0)
-        {
-            healthSapActive = false;
-        }
+        return initial;
     }
 }

@@ -14,7 +14,7 @@ public class PlayerRollGenerator : RollGenerator
         int max = maxRoll;
         foreach (IRollGenerationModifier mod in PlayerStatus.Mods.GetRollGenerationModifiers())
         {
-            Tuple<int, int> modified = mod.apply(min, max);
+            Tuple<int, int> modified = mod.ApplyRollGenerationMod(min, max);
             min = modified.Item1;
             max = modified.Item2;
         }

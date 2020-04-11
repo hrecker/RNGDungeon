@@ -48,7 +48,7 @@ public class InventoryUIController : MonoBehaviour
             PlayerStatus.BaseMinRoll, PlayerStatus.BaseMaxRoll);
         foreach (IRollGenerationModifier mod in PlayerStatus.Mods.GetRollGenerationModifiers())
         {
-            baseRoll = mod.apply(baseRoll.Item1, baseRoll.Item2);
+            baseRoll = mod.ApplyRollGenerationMod(baseRoll.Item1, baseRoll.Item2);
         }
         rollBoundsText.text = "Roll: [" + baseRoll.Item1 + "-" + baseRoll.Item2 + "]";
     }

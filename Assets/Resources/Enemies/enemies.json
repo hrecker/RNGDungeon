@@ -8,7 +8,7 @@
         },
         {
             "name": "Collector",
-            "baseMinRoll": 3,
+            "baseMinRoll": 2,
             "baseMaxRoll": 4,
             "maxHealth": 6
         },

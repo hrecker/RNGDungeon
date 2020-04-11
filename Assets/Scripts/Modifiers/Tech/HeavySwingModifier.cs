@@ -10,7 +10,7 @@ public class HeavySwingModifier : Modifier, IRollGenerationModifier
     private const int rollDebuff = 1; // Debuff min and max by one after
     private const int debuffRolls = 2; // Debuff lasts two turns
 
-    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll)
+    public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
     {
         // Heavy swing hits hard on first turn, then debuffs the next two turns
         if (rollCount == 0)

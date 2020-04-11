@@ -11,7 +11,7 @@ public class RollBuffModifier : Modifier, IRollGenerationModifier
         this.maxRollDiff = maxRollDiff;
     }
 
-    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll)
+    public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
     {
         initialMinRoll += minRollDiff;
         initialMaxRoll += maxRollDiff;

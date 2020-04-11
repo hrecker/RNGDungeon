@@ -40,6 +40,7 @@ public class Item
             result.isRollBounded = numRollsInEffect > 0;
             result.numRollsRemaining = numRollsInEffect;
             result.triggerChance = modEffect.baseModTriggerChance;
+            result.priority = modEffect.modPriority;
         }
         return result;
     }

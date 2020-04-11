@@ -10,7 +10,7 @@ public class BulwarkModifier : Modifier, IRollGenerationModifier, IRollResultMod
     }
 
     // Roll generation
-    public Tuple<int, int> apply(int initialMinRoll, int initialMaxRoll)
+    public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
     {
         // Do not allow the buff to raise the min roll above the max
         BattleController.AddPlayerModMessage("Bulwark!");
@@ -19,7 +19,7 @@ public class BulwarkModifier : Modifier, IRollGenerationModifier, IRollResultMod
     }
 
     // Roll result
-    public RollResult apply(RollResult initial)
+    public RollResult ApplyRollResultMod(RollResult initial)
     {
         // Bulwark cannot damage the enemy
         initial.EnemyDamage = 0;

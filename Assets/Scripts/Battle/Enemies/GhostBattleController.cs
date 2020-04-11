@@ -20,7 +20,7 @@ public class GhostBattleController : EnemyBattleController
             Modifier mod = new RollBuffModifier(-rollDebuff, -rollDebuff);
             mod.isRollBounded = true;
             mod.numRollsRemaining = 2;
-            battleController.AddRollBoundedMod(mod, 1, "-2 Roll: 2 turns", null);
+            battleController.AddRollBoundedMod(mod, "-2 Roll: 2 turns", null);
             debuffTurnsRemaining = 2;
             debuffActive = true;
             BattleController.AddEnemyModMessage("Fear!");

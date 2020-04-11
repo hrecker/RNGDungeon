@@ -24,6 +24,7 @@ public class Ability
         if (result != null)
         {
             result.triggerChance = modEffect.baseModTriggerChance;
+            result.priority = modEffect.modPriority;
         }
         return result;
     }

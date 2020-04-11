@@ -8,12 +8,14 @@ public class PlayerModifiers
     private SortedDictionary<int, List<IRollGenerationModifier>> rollGenMods;
     private SortedDictionary<int, List<IRollResultModifier>> rollResultMods;
     private SortedDictionary<int, List<IRollValueModifier>> rollValueMods;
+    private SortedDictionary<int, List<IPostDamageModifier>> postDamageMods;
 
     public PlayerModifiers()
     {
         rollGenMods = new SortedDictionary<int, List<IRollGenerationModifier>>();
         rollResultMods = new SortedDictionary<int, List<IRollResultModifier>>();
         rollValueMods = new SortedDictionary<int, List<IRollValueModifier>>();
+        postDamageMods = new SortedDictionary<int, List<IPostDamageModifier>>();
     }
 
     public List<IRollGenerationModifier> GetRollGenerationModifiers()
@@ -31,23 +33,33 @@ public class PlayerModifiers
         return GetModifiers(rollValueMods);
     }
 
-    public void RegisterModifier(Modifier mod, int priority)
+    public List<IPostDamageModifier> GetPostDamageModifiers()
+    {
+        return GetModifiers(postDamageMods);
+    }
+
+    public void RegisterModifier(Modifier mod)
     {
         bool registered = false;
         if (mod is IRollGenerationModifier)
         {
             registered = true;
-            RegisterModifier((IRollGenerationModifier)mod, priority);
+            RegisterModifier((IRollGenerationModifier)mod, mod.priority);
         }
         if (mod is IRollResultModifier)
         {
             registered = true;
-            RegisterModifier((IRollResultModifier)mod, priority);
+            RegisterModifier((IRollResultModifier)mod, mod.priority);
         }
         if (mod is IRollValueModifier)
         {
             registered = true;
-            RegisterModifier((IRollValueModifier)mod, priority);
+            RegisterModifier((IRollValueModifier)mod, mod.priority);
+        }
+        if (mod is IPostDamageModifier)
+        {
+            registered = true;
+            RegisterModifier((IPostDamageModifier)mod, mod.priority);
         }
         if (!registered)
         {
@@ -70,6 +82,11 @@ public class PlayerModifiers
         RegisterModifier(rollValueMods, mod, priority);
     }
 
+    private void RegisterModifier(IPostDamageModifier mod, int priority)
+    {
+        RegisterModifier(postDamageMods, mod, priority);
+    }
+
     public bool DeregisterModifier(Modifier mod)
     {
         bool deregistered = false;
@@ -84,6 +101,10 @@ public class PlayerModifiers
         if (mod is IRollValueModifier)
         {
             deregistered |= DeregisterModifier((IRollValueModifier)mod);
+        }
+        if (mod is IPostDamageModifier)
+        {
+            deregistered |= DeregisterModifier((IPostDamageModifier)mod);
         }
         return deregistered;
     }
@@ -101,6 +122,11 @@ public class PlayerModifiers
     private bool DeregisterModifier(IRollValueModifier mod)
     {
         return DeregisterModifier(rollValueMods, mod);
+    }
+
+    private bool DeregisterModifier(IPostDamageModifier mod)
+    {
+        return DeregisterModifier(postDamageMods, mod);
     }
 
     public void DecrementAndDeregisterModsIfNecessary()
@@ -129,6 +155,14 @@ public class PlayerModifiers
         foreach (IRollValueModifier rollValueMod in GetRollValueModifiers())
         {
             Modifier mod = (Modifier)rollValueMod;
+            if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
+            {
+                decremented.Add(mod);
+            }
+        }
+        foreach (IPostDamageModifier postDamageMod in GetPostDamageModifiers())
+        {
+            Modifier mod = (Modifier)postDamageMod;
             if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
             {
                 decremented.Add(mod);

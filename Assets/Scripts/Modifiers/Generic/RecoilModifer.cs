@@ -1,6 +1,6 @@
 ﻿public class RecoilModifer : Modifier, IRollResultModifier
 {
-    public RollResult apply(RollResult initial)
+    public RollResult ApplyRollResultMod(RollResult initial)
     {
         int damageReceived = initial.PlayerDamage;
         int recoilDamage = damageReceived > 0 ? 1 : 0;

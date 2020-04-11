@@ -141,7 +141,7 @@ public class BattleController : MonoBehaviour
         foreach (Item itemMod in itemModsToAdd)
         {
             Modifier mod = itemMod.CreateItemModifier();
-            PlayerStatus.Mods.RegisterModifier(mod, itemMod.modEffect.modPriority);
+            PlayerStatus.Mods.RegisterModifier(mod);
             currentRollBoundedMods.Add(mod);
         }
         // Add mods for selected techs
@@ -155,42 +155,86 @@ public class BattleController : MonoBehaviour
             // Add UI messages if necessary
             playerStatusMessagesToShow.Add(selected.playerStatusMessage);
             enemyStatusMessagesToShow.Add(selected.enemyStatusMessage);
-            PlayerStatus.Mods.RegisterModifier(techMods[selected.name],
-                selected.modEffect.modPriority);
+            PlayerStatus.Mods.RegisterModifier(techMods[selected.name]);
             currentRollBoundedMods.Add(techMods[selected.name]);
         }
         techUI.Roll();
         itemModsToAdd.Clear();
 
         // Generate roll numeric values
+        bool enemyModApplied = false;
         int playerInitial = playerRollGenerator.GenerateInitialRoll();
         int enemyInitial = enemyController.GenerateInitialRoll();
         Tuple<int, int> rollValues = new Tuple<int, int>(playerInitial, enemyInitial);
-        // Apply enemy mods first, then player mods to get final roll values
-        rollValues = enemyController.ApplyRollValueMods(playerInitial, enemyInitial);
+        // Apply enemy and player mods to get final roll values
         foreach (IRollValueModifier mod in PlayerStatus.Mods.GetRollValueModifiers())
         {
-            rollValues = mod.apply(rollValues.Item1, rollValues.Item2);
+            if (!enemyModApplied)
+            {
+                int priority = ((Modifier)mod).priority;
+                if (enemyController.GetRollValuePriority() <= priority)
+                {
+                    rollValues = enemyController.ApplyRollValueMods(
+                        rollValues.Item1, rollValues.Item2);
+                    enemyModApplied = true;
+                }
+            }
+            rollValues = mod.ApplyRollValueMod(rollValues.Item1, rollValues.Item2);
+        }
+        if (!enemyModApplied)
+        {
+            rollValues = enemyController.ApplyRollValueMods(
+                rollValues.Item1, rollValues.Item2);
         }
 
         // Generate roll results
+        enemyModApplied = false;
         int playerDamage = Math.Max(0, rollValues.Item2 - rollValues.Item1);
         int enemyDamage = Math.Max(0, rollValues.Item1 - rollValues.Item2);
         RollResult rollResult = new RollResult 
         { PlayerDamage = playerDamage, EnemyDamage = enemyDamage };
-        // Again apply enemy result mods forst, then player
-        rollResult = enemyController.ApplyRollResultMods(rollResult);
+        // Again apply enemy and player mods
         foreach (IRollResultModifier mod in PlayerStatus.Mods.GetRollResultModifiers())
         {
-            rollResult = mod.apply(rollResult);
+            if (!enemyModApplied)
+            {
+                int priority = ((Modifier)mod).priority;
+                if (enemyController.GetRollResultPriority() <= priority)
+                {
+                    rollResult = enemyController.ApplyRollResultMods(rollResult);
+                    enemyModApplied = true;
+                }
+            }
+            rollResult = mod.ApplyRollResultMod(rollResult);
+        }
+        if (!enemyModApplied)
+        {
+            rollResult = enemyController.ApplyRollResultMods(rollResult);
         }
 
         // Apply roll results
         playerBattleStatus.ApplyResult(rollResult);
         enemyBattleStatus.ApplyResult(rollResult);
 
-        // Post damage effects
-        enemyController.ApplyPostDamageEffects(rollResult);
+        // Apply enemy and player post damage effects
+        enemyModApplied = false;
+        foreach (IPostDamageModifier mod in PlayerStatus.Mods.GetPostDamageModifiers())
+        {
+            if (!enemyModApplied)
+            {
+                int priority = ((Modifier)mod).priority;
+                if (enemyController.GetPostDamagePriority() <= priority)
+                {
+                    enemyController.ApplyPostDamageEffects(rollResult);
+                    enemyModApplied = true;
+                }
+            }
+            mod.ApplyPostDamageMod(rollResult);
+        }
+        if (!enemyModApplied)
+        {
+            enemyController.ApplyPostDamageEffects(rollResult);
+        }
 
         // Decrement roll-bounded mods
         PlayerStatus.Mods.DecrementAndDeregisterModsIfNecessary();
@@ -338,13 +382,13 @@ public class BattleController : MonoBehaviour
 
     public void AddRollBoundedMod(Modifier mod, int priority)
     {
-        AddRollBoundedMod(mod, priority, null, null);
+        AddRollBoundedMod(mod, null, null);
     }
 
     // Used when something else (an enemy) needs to add a mod that ends when the battle ends
-    public void AddRollBoundedMod(Modifier mod, int priority, string playerUiMessage, string enemyUiMessage)
+    public void AddRollBoundedMod(Modifier mod, string playerUiMessage, string enemyUiMessage)
     {
-        PlayerStatus.Mods.RegisterModifier(mod, priority);
+        PlayerStatus.Mods.RegisterModifier(mod);
         currentRollBoundedMods.Add(mod);
         playerStatusMessagesToShow.Add(playerUiMessage);
         enemyStatusMessagesToShow.Add(enemyUiMessage);

@@ -1,6 +1,6 @@
 ﻿public class StalwartModifier : Modifier, IRollResultModifier
 {
-    public RollResult apply(RollResult initial)
+    public RollResult ApplyRollResultMod(RollResult initial)
     {
         if (-initial.GetTotalPlayerHealthChange() >= PlayerStatus.Health && RollTrigger())
         {

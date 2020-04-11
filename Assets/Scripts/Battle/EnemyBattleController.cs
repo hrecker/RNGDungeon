@@ -10,6 +10,10 @@ public class EnemyBattleController : RollGenerator
 
     protected const string enemySpriteResourcePath = @"Enemies/sprites/";
 
+    protected int rollValueModPriority = 1;
+    protected int rollResultModPriority = 1;
+    protected int postDamageModPriority = 1;
+
     void Awake()
     {
         status = GetComponent<EnemyBattleStatus>();
@@ -54,5 +58,20 @@ public class EnemyBattleController : RollGenerator
     public virtual void ApplyPostDamageEffects(RollResult rollResult)
     {
         // Implemented by individual enemies
+    }
+
+    public int GetRollValuePriority()
+    {
+        return rollValueModPriority;
+    }
+
+    public int GetRollResultPriority()
+    {
+        return rollResultModPriority;
+    }
+
+    public int GetPostDamagePriority()
+    {
+        return postDamageModPriority;
     }
 }
