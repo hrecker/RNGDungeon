@@ -28,7 +28,7 @@ public class CurrentLevel
         tilemapPainter = painter;
         if (tiles != null)
         {
-            tilemapPainter.PaintLevel(tiles);
+            tilemapPainter.PaintLevel(tiles, GetCurrentFloorNumber());
         }
     }
 
@@ -55,7 +55,7 @@ public class CurrentLevel
 
         if (tilemapPainter != null)
         {
-            tilemapPainter.PaintLevel(tiles);
+            tilemapPainter.PaintLevel(tiles, GetCurrentFloorNumber());
         }
         if (spriteController != null)
         {
@@ -94,9 +94,7 @@ public class CurrentLevel
             if (nextLevel != null)
             {
                 InitLevel(nextLevel);
-                // Remove any keys the player has
-                //TODO reward for taking keys through to next level
-                PlayerStatus.KeyCount = 0;
+                // TODO may want to remove keys player has with some reward
                 return MoveResult.STAIRSDOWN;
             }
             else
