@@ -24,6 +24,13 @@ namespace Data
                 case ModType.STALWART:
                     result = new StalwartModifier();
                     break;
+                case ModType.VAMPIRISM:
+                    result = new VampirismModifier();
+                    break;
+                case ModType.HEROIC:
+                    result = new HeroicModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange);
+                    break;
             }
             if (result != null)
             {

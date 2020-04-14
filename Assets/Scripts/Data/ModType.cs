@@ -18,6 +18,8 @@ namespace Data
         // Abilities: 201 - 300
         STALWART = 201,
         HIGHROLLER = 202,
+        VAMPIRISM = 203,
+        HEROIC = 204,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

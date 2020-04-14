@@ -17,6 +17,24 @@
             "modEffect": {
                 "baseModTriggerChance": 0.1
             }
+        },
+        {
+            "name": "Vampirism",
+            "displayName": "Vampirism",
+            "description": "Chance to sap health on hit",
+            "modType": 203,
+            "modEffect": {
+                "baseModTriggerChance": 0.15
+            }
+        },
+        {
+            "name": "Heroic",
+            "displayName": "Heroic",
+            "description": "Increases roll when on low health",
+            "modType": 204,
+            "modEffect": {
+                "playerMaxRollChange": 2
+            }
         }
     ]
 }

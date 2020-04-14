@@ -21,6 +21,10 @@ namespace Battle
                 min = modified.Item1;
                 max = modified.Item2;
             }
+            if (min > max)
+            {
+                min = max;
+            }
             return GenerateBasicRoll(min, max);
         }
     }

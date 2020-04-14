@@ -66,7 +66,7 @@ public class PlayerStatus
     public static void Restart()
     {
         MaxHealth = 100;
-        Health = MaxHealth;
+        Health = 25;
         BaseMinRoll = 1;
         BaseMaxRoll = 4;
         Mods = new PlayerModifiers();
@@ -77,6 +77,7 @@ public class PlayerStatus
         Inventory.Add(Data.Cache.GetItem("RecoilPotion"), 1);
         Inventory.Add(Data.Cache.GetItem("Shortsword"), 1);
         abilities = new List<Ability>();
+        AddAbility(Data.Cache.GetAbility("Heroic"));
         EquippedTrinkets = new List<Item>();
         EquippedWeapon = Data.Cache.GetItem("Shortsword");
         EnabledTechs = new List<Tech>();
