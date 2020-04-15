@@ -11,6 +11,7 @@ namespace Data
         // Generic (could be used by multiple types): 1 - 100
         BLOCK = 1,
         RECOIL = 2,
+        HEALTHCHANGE = 3,
 
         // Weapons: 101 - 200
         WEAPON = 101,
@@ -20,6 +21,7 @@ namespace Data
         HIGHROLLER = 202,
         VAMPIRISM = 203,
         HEROIC = 204,
+        LUCKYHORSESHOE = 205,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

@@ -7,10 +7,13 @@
         {
             "name": "HealthPotion",
             "displayName": "Health Potion",
-            "playerHealthChange": 3,
             "tooltipText": "Heals 3 health",
             "playerStatusMessage": "+3 health",
-            "failedUseMessage": "Already at maximum health"
+            "failedUseMessage": "Already at maximum health",
+            "modType": 3,
+            "modEffect": {
+                "playerHealthChange": 3
+            }
         },
         {
             "name": "BlockingPotion",

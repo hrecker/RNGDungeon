@@ -10,12 +10,15 @@ namespace Modifiers
         private SortedDictionary<int, List<IRollValueModifier>> rollValueMods;
         private SortedDictionary<int, List<IPostDamageModifier>> postDamageMods;
 
+        private List<Modifier> uniqueRegisteredModifiers;
+
         public PlayerModifiers()
         {
             rollGenMods = new SortedDictionary<int, List<IRollGenerationModifier>>();
             rollResultMods = new SortedDictionary<int, List<IRollResultModifier>>();
             rollValueMods = new SortedDictionary<int, List<IRollValueModifier>>();
             postDamageMods = new SortedDictionary<int, List<IPostDamageModifier>>();
+            uniqueRegisteredModifiers = new List<Modifier>();
         }
 
         public List<IRollGenerationModifier> GetRollGenerationModifiers()
@@ -61,6 +64,18 @@ namespace Modifiers
                 registered = true;
                 RegisterModifier((IPostDamageModifier)mod, mod.priority);
             }
+
+            // One shot modifiers are just instantly applied and don't need to be registered
+            if (mod is IOneTimeEffectModifier)
+            {
+                registered = true;
+                ((IOneTimeEffectModifier)mod).ApplyOneTimeEffectMod();
+            }
+            else
+            {
+                uniqueRegisteredModifiers.Add(mod);
+            }
+
             if (!registered)
             {
                 throw new System.Exception("Invalid modification type?");
@@ -106,6 +121,7 @@ namespace Modifiers
             {
                 deregistered |= DeregisterModifier((IPostDamageModifier)mod);
             }
+            uniqueRegisteredModifiers.Remove(mod);
             return deregistered;
         }
 
@@ -183,6 +199,17 @@ namespace Modifiers
                 }
             }
             return false;
+        }
+
+        public void DeregisterAllRollBoundedMods()
+        {
+            for (int i = uniqueRegisteredModifiers.Count - 1; i >= 0; i--)
+            {
+                if (uniqueRegisteredModifiers[i].isRollBounded)
+                {
+                    DeregisterModifier(uniqueRegisteredModifiers[i]);
+                }
+            }
         }
 
         private static List<T> GetModifiers<T>(SortedDictionary<int, List<T>> registered)

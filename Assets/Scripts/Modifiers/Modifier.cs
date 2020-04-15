@@ -19,7 +19,7 @@ namespace Modifiers
         // Randomly determine if this modifier should be triggered
         protected bool RollTrigger()
         {
-            return Random.value < triggerChance;
+            return Random.value < PlayerStatus.GetTriggerChanceWithLuck(triggerChance);
         }
 
         public void DeregisterSelf()

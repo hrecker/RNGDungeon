@@ -11,7 +11,6 @@ namespace Data
         public string displayName;
         public string tooltipText;
         public int numRollsInEffect; // For in-battle items
-        public int playerHealthChange; // For healing items
         public string playerStatusMessage;
         public string enemyStatusMessage;
         public string failedUseMessage;
@@ -37,6 +36,10 @@ namespace Data
                     result = new RollBuffModifier(
                         modEffect.playerMinRollChange, modEffect.playerMaxRollChange);
                     break;
+                case ModType.HEALTHCHANGE:
+                    result = new HealthChangeModifier(modEffect.playerHealthChange,
+                        modEffect.playerMaxHealthChange);
+                    break;
             }
             if (result != null)
             {
@@ -47,18 +50,6 @@ namespace Data
                 result.priority = modEffect.modPriority;
             }
             return result;
-        }
-
-        // For items like health potions that represent single use effects
-        public bool ApplyEffect()
-        {
-            //TODO implementation for things besides health potions
-            if (PlayerStatus.Health >= PlayerStatus.MaxHealth)
-            {
-                return false;
-            }
-            PlayerStatus.Health += playerHealthChange;
-            return true;
         }
 
         public string GetDisplayName()

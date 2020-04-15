@@ -234,7 +234,11 @@ namespace Data
             itemContainer.items.Add(new Item()
             {
                 name = "HealthPotion",
-                playerHealthChange = 3,
+                modType = ModType.HEALTHCHANGE,
+                modEffect = new ModEffect()
+                {
+                    playerHealthChange = 3
+                },
                 itemType = ItemType.USABLE_ANYTIME,
             });
             itemContainer.items.Add(new Item()

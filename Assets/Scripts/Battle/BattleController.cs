@@ -50,8 +50,6 @@ namespace Battle
         public GameObject statusMessagePrefab;
         public float statusMessageSpacing = 40.0f;
 
-        private List<Item> itemModsToAdd;
-        private List<Modifier> currentRollBoundedMods;
         private Dictionary<string, Modifier> techMods;
         private List<string> playerStatusMessagesToShow;
         private List<string> enemyStatusMessagesToShow;
@@ -78,8 +76,6 @@ namespace Battle
             exitToMenuButton.SetActive(false);
             itemDropPanel.SetActive(false);
             resultTextPanel.SetActive(false);
-            itemModsToAdd = new List<Item>();
-            currentRollBoundedMods = new List<Modifier>();
             techMods = new Dictionary<string, Modifier>();
             playerRollDamageText = playerRollDamageUI.GetComponentInChildren<Text>();
             playerRollHealText = playerRollHealUI.GetComponentInChildren<Text>();
@@ -143,13 +139,6 @@ namespace Battle
             enemyModMessagesToShow.Clear();
 
             // If there are modifiers to add, add before the roll starts
-            // First, add mods for and used items
-            foreach (Item itemMod in itemModsToAdd)
-            {
-                Modifier mod = itemMod.CreateItemModifier();
-                PlayerStatus.Mods.RegisterModifier(mod);
-                currentRollBoundedMods.Add(mod);
-            }
             // Add mods for selected techs
             if (techUI.GetSelectedTech() != null)
             {
@@ -162,10 +151,8 @@ namespace Battle
                 playerStatusMessagesToShow.Add(selected.playerStatusMessage);
                 enemyStatusMessagesToShow.Add(selected.enemyStatusMessage);
                 PlayerStatus.Mods.RegisterModifier(techMods[selected.name]);
-                currentRollBoundedMods.Add(techMods[selected.name]);
             }
             techUI.Roll();
-            itemModsToAdd.Clear();
 
             // Generate roll numeric values
             bool enemyModApplied = false;
@@ -263,10 +250,7 @@ namespace Battle
             if (playerBattleStatus.currentHealth <= 0 || enemyBattleStatus.currentHealth <= 0)
             {
                 // End any roll-bounded modifiers
-                foreach (Modifier mod in currentRollBoundedMods)
-                {
-                    mod.DeregisterSelf();
-                }
+                PlayerStatus.Mods.DeregisterAllRollBoundedMods();
 
                 if (playerBattleStatus.currentHealth > 0)
                 {
@@ -353,11 +337,6 @@ namespace Battle
             // Update PlayerStatus
             if (PlayerStatus.UseItem(item, true))
             {
-                // Add battle mod if necessary
-                if (item.modType != ModType.NONE)
-                {
-                    itemModsToAdd.Add(item);
-                }
                 // Add status messages if there are any
                 CreateStatusMessages(new List<string>() { item.playerStatusMessage },
                     new List<string>() { item.enemyStatusMessage });
@@ -395,7 +374,6 @@ namespace Battle
         public void AddRollBoundedMod(Modifier mod, string playerUiMessage, string enemyUiMessage)
         {
             PlayerStatus.Mods.RegisterModifier(mod);
-            currentRollBoundedMods.Add(mod);
             playerStatusMessagesToShow.Add(playerUiMessage);
             enemyStatusMessagesToShow.Add(enemyUiMessage);
         }

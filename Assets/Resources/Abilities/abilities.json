@@ -35,6 +35,12 @@
             "modEffect": {
                 "playerMaxRollChange": 2
             }
+        },
+        {
+            "name": "LuckyHorseshoe",
+            "displayName": "Lucky Horseshoe",
+            "description": "Increases luck",
+            "modType": 205
         }
     ]
 }

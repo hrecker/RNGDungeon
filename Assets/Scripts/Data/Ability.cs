@@ -31,6 +31,9 @@ namespace Data
                     result = new HeroicModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange);
                     break;
+                case ModType.LUCKYHORSESHOE:
+                    result = new LuckyHorseshoeModifier();
+                    break;
             }
             if (result != null)
             {

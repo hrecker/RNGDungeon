@@ -26,6 +26,7 @@ public class PlayerStatus
     }
     public static int BaseMinRoll { get; set; }
     public static int BaseMaxRoll { get; set; }
+    public static int Luck { get; set; }
     public static int KeyCount { get; set; }
     // Dictionary of item counts in inventory
     public static Dictionary<Item, int> Inventory { get; set; }
@@ -66,9 +67,10 @@ public class PlayerStatus
     public static void Restart()
     {
         MaxHealth = 100;
-        Health = 25;
+        Health = MaxHealth;
         BaseMinRoll = 1;
         BaseMaxRoll = 4;
+        Luck = 0;
         Mods = new PlayerModifiers();
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
         Inventory = new Dictionary<Item, int>();
@@ -77,7 +79,10 @@ public class PlayerStatus
         Inventory.Add(Data.Cache.GetItem("RecoilPotion"), 1);
         Inventory.Add(Data.Cache.GetItem("Shortsword"), 1);
         abilities = new List<Ability>();
-        AddAbility(Data.Cache.GetAbility("Heroic"));
+        AddAbility(Data.Cache.GetAbility("LuckyHorseshoe"));
+        AddAbility(Data.Cache.GetAbility("LuckyHorseshoe"));
+        AddAbility(Data.Cache.GetAbility("LuckyHorseshoe"));
+        AddAbility(Data.Cache.GetAbility("HighRoller"));
         EquippedTrinkets = new List<Item>();
         EquippedWeapon = Data.Cache.GetItem("Shortsword");
         EnabledTechs = new List<Tech>();
@@ -102,6 +107,7 @@ public class PlayerStatus
     // Returns true if the item was successfully used
     public static bool UseItem(Item item, bool isInBattle)
     {
+        Modifier itemMod = null;
         switch (item.itemType)
         {
             case ItemType.EQUIPMENT:
@@ -122,17 +128,29 @@ public class PlayerStatus
                 }
                 break;
             case ItemType.USABLE_ANYTIME:
-                if (!item.ApplyEffect())
-                {
-                    return false;
-                }
+                itemMod = item.CreateItemModifier();
                 break;
             case ItemType.USABLE_ONLY_IN_BATTLE:
-                if (!isInBattle)
+                if (isInBattle)
+                {
+                    itemMod = item.CreateItemModifier();
+                }
+                else
                 {
                     return false;
                 }
                 break;
+        }
+
+        if (itemMod != null)
+        {
+            // If this is a one time mod and it can't be applied, return false
+            if (itemMod is IOneTimeEffectModifier && 
+                !((IOneTimeEffectModifier)itemMod).CanApply())
+            {
+                    return false;
+            }
+            Mods.RegisterModifier(itemMod);
         }
 
         if (Inventory.ContainsKey(item))
@@ -156,5 +174,13 @@ public class PlayerStatus
     {
         abilities.Add(ability);
         Mods.RegisterModifier(ability.CreateAbilityModifier());
+    }
+
+    // Get trigger chance from base with luck counted in.
+    // Each positive luck point gives +5% (i.e. 3 luck is +15%,
+    // -4 luck is -20%, etc.)
+    public static float GetTriggerChanceWithLuck(float baseTriggerChance)
+    {
+        return baseTriggerChance + (0.05f * Luck);
     }
 }
