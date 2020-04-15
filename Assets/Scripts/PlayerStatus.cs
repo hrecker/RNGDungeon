@@ -79,10 +79,6 @@ public class PlayerStatus
         Inventory.Add(Data.Cache.GetItem("RecoilPotion"), 1);
         Inventory.Add(Data.Cache.GetItem("Shortsword"), 1);
         abilities = new List<Ability>();
-        AddAbility(Data.Cache.GetAbility("LuckyHorseshoe"));
-        AddAbility(Data.Cache.GetAbility("LuckyHorseshoe"));
-        AddAbility(Data.Cache.GetAbility("LuckyHorseshoe"));
-        AddAbility(Data.Cache.GetAbility("HighRoller"));
         EquippedTrinkets = new List<Item>();
         EquippedWeapon = Data.Cache.GetItem("Shortsword");
         EnabledTechs = new List<Tech>();
