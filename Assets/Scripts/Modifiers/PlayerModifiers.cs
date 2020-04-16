@@ -9,6 +9,7 @@ namespace Modifiers
         private SortedDictionary<int, List<IRollResultModifier>> rollResultMods;
         private SortedDictionary<int, List<IRollValueModifier>> rollValueMods;
         private SortedDictionary<int, List<IPostDamageModifier>> postDamageMods;
+        private SortedDictionary<int, List<IPostBattleModifier>> postBattleMods;
 
         private List<Modifier> uniqueRegisteredModifiers;
 
@@ -18,6 +19,7 @@ namespace Modifiers
             rollResultMods = new SortedDictionary<int, List<IRollResultModifier>>();
             rollValueMods = new SortedDictionary<int, List<IRollValueModifier>>();
             postDamageMods = new SortedDictionary<int, List<IPostDamageModifier>>();
+            postBattleMods = new SortedDictionary<int, List<IPostBattleModifier>>();
             uniqueRegisteredModifiers = new List<Modifier>();
         }
 
@@ -39,6 +41,11 @@ namespace Modifiers
         public List<IPostDamageModifier> GetPostDamageModifiers()
         {
             return GetModifiers(postDamageMods);
+        }
+
+        public List<IPostBattleModifier> GetPostBattleModifiers()
+        {
+            return GetModifiers(postBattleMods);
         }
 
         public void RegisterModifier(Modifier mod)
@@ -63,6 +70,11 @@ namespace Modifiers
             {
                 registered = true;
                 RegisterModifier((IPostDamageModifier)mod, mod.priority);
+            }
+            if (mod is IPostBattleModifier)
+            {
+                registered = true;
+                RegisterModifier((IPostBattleModifier)mod, mod.priority);
             }
 
             // One shot modifiers are just instantly applied and don't need to be registered
@@ -102,6 +114,11 @@ namespace Modifiers
             RegisterModifier(postDamageMods, mod, priority);
         }
 
+        private void RegisterModifier(IPostBattleModifier mod, int priority)
+        {
+            RegisterModifier(postBattleMods, mod, priority);
+        }
+
         public bool DeregisterModifier(Modifier mod)
         {
             bool deregistered = false;
@@ -120,6 +137,10 @@ namespace Modifiers
             if (mod is IPostDamageModifier)
             {
                 deregistered |= DeregisterModifier((IPostDamageModifier)mod);
+            }
+            if (mod is IPostBattleModifier)
+            {
+                deregistered |= DeregisterModifier((IPostBattleModifier)mod);
             }
             uniqueRegisteredModifiers.Remove(mod);
             return deregistered;
@@ -145,13 +166,18 @@ namespace Modifiers
             return DeregisterModifier(postDamageMods, mod);
         }
 
+        private bool DeregisterModifier(IPostBattleModifier mod)
+        {
+            return DeregisterModifier(postBattleMods, mod);
+        }
+
         public void DecrementAndDeregisterModsIfNecessary()
         {
             // Keep track of mods that have already been decremented so that
             // modifiers that implement multiple types don't get
             // decremented more than once.
             List<Modifier> decremented = new List<Modifier>();
-            // Iterate over all mod lists to decrement them
+            // Iterate over all battle-relevant mod lists to decrement them
             foreach (IRollGenerationModifier rollGenMod in GetRollGenerationModifiers())
             {
                 Modifier mod = (Modifier)rollGenMod;

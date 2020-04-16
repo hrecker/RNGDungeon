@@ -23,6 +23,8 @@ namespace Data
         HEROIC = 204,
         LUCKYHORSESHOE = 205,
         PROCRASTINATION = 206,
+        SPIKY = 207,
+        RECOVERY = 208,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

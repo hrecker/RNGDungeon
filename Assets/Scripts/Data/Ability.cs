@@ -43,6 +43,12 @@ namespace Data
                     result = new ProcrastinationModifier(modEffect.playerMinRollChange, 
                         modEffect.playerMaxRollChange);
                     break;
+                case ModType.SPIKY:
+                    result = new SpikyModifier();
+                    break;
+                case ModType.RECOVERY:
+                    result = new RecoveryModifier(modEffect.playerHealthChange);
+                    break;
             }
             if (result != null)
             {

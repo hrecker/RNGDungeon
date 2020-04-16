@@ -61,6 +61,24 @@
                 "playerMinRollChange": 2,
                 "playerMaxRollChange": 2
             }
+        },
+        {
+            "name": "Spiky",
+            "displayName": "Spiky",
+            "description": "Chance to deal recoil damage when hit by an enemy",
+            "modType": 207,
+            "modEffect": {
+                "baseModTriggerChance": 0.33
+            }
+        },
+        {
+            "name": "Recovery",
+            "displayName": "Recovery",
+            "description": "Heal after battles",
+            "modType": 208,
+            "modEffect": {
+                "playerHealthChange": 2
+            }
         }
     ]
 }

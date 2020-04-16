@@ -237,13 +237,13 @@ namespace Battle
             PlayerStatus.Mods.DecrementAndDeregisterModsIfNecessary();
             currentRoll++;
 
+            CheckBattleComplete();
+
             // Battle status messages
             CreateStatusMessages(playerStatusMessagesToShow, enemyStatusMessagesToShow);
             CreateModMessages();
             playerStatusMessagesToShow.Clear();
             enemyStatusMessagesToShow.Clear();
-
-            CheckBattleComplete();
 
             if (!completed)
             {
@@ -274,6 +274,11 @@ namespace Battle
                     {
                         ShowResult("Victory", false);
                         GenerateItemDrop();
+                        // Apply any post battle mods when player defeats enemy
+                        foreach (IPostBattleModifier mod in PlayerStatus.Mods.GetPostBattleModifiers())
+                        {
+                            mod.ApplyPostBattleMod();
+                        }
                     }
                 }
                 else
