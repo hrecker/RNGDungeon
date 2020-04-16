@@ -42,23 +42,30 @@ namespace Levels
         {
             pauseMenu = FindObjectOfType<PauseMenu>();
             pickupPanel.SetActive(false);
-            abilitySelection.gameObject.SetActive(false);
-            this.transform.position = PlayerStatus.MapPosition;
+            if (!CurrentLevel.HasSelectedLevelAbility())
+            {
+                ShowAbilitySelectionUI();
+            }
+            else
+            {
+                abilitySelection.gameObject.SetActive(false);
+            }
+            transform.position = PlayerStatus.MapPosition;
             UpdateKeyCount();
             UpdateCurrentFloor();
             playerHealthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
 
             itemPickupRarityChances = new Dictionary<Rarity, float>()
-        {
-            { Rarity.COMMON, 0.35f },
-            { Rarity.UNCOMMON, 0.5f },
-            { Rarity.RARE, 0.15f }
-        };
+            {
+                { Rarity.COMMON, 0.35f },
+                { Rarity.UNCOMMON, 0.5f },
+                { Rarity.RARE, 0.15f }
+            };
             chestRarityChances = new Dictionary<Rarity, float>()
-        {
-            { Rarity.UNCOMMON, 0.2f },
-            { Rarity.RARE, 0.8f }
-        };
+            {
+                { Rarity.UNCOMMON, 0.2f },
+                { Rarity.RARE, 0.8f }
+            };
         }
 
         void Update()
@@ -130,15 +137,9 @@ namespace Levels
                     case MoveResult.STAIRSDOWN:
                         // Update player position to new level map position
                         PlayerStatus.MapPosition = CurrentLevel.GetPlayerStartingPosition();
-                        this.transform.position = PlayerStatus.MapPosition;
+                        transform.position = PlayerStatus.MapPosition;
 
-                        // Display ability selection UI
-                        abilitySelection.gameObject.SetActive(true);
-                        List<Ability> availableAbilities = Data.Cache.GetRandomAbilities(3, PlayerStatus.GetAbilities());
-                        abilitySelection.DisplayAbilitySelection(availableAbilities[0],
-                            availableAbilities[1], availableAbilities[2]);
-                        selectingAbility = true;
-
+                        ShowAbilitySelectionUI();
                         UpdateKeyCount();
                         UpdateCurrentFloor();
                         break;
@@ -178,13 +179,21 @@ namespace Levels
             CheckInput();
         }
 
+        public void ShowAbilitySelectionUI()
+        {
+            abilitySelection.gameObject.SetActive(true);
+            List<Ability> availableAbilities = Data.Cache.GetRandomAbilities(3, PlayerStatus.GetAbilities());
+            abilitySelection.DisplayAbilitySelection(availableAbilities[0],
+                availableAbilities[1], availableAbilities[2]);
+            selectingAbility = true;
+        }
+
         public void SelectAbility(Ability ability)
         {
             PlayerStatus.AddAbility(ability);
+            CurrentLevel.SetHasSelectedLevelAbility(true);
             abilitySelection.gameObject.SetActive(false);
-            // Re-enable input
             selectingAbility = false;
-            inventoryInput.SetInventoryEnabled(true);
         }
 
         private void UpdateKeyCount()

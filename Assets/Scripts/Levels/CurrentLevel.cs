@@ -16,6 +16,7 @@ namespace Levels
         private static Level activeLevel;
         private static int dropsReceivedOnActiveLevel;
         private static int maxDropsPerFloor = 5;
+        private static bool levelAbilitySelected;
 
         public static int GetCurrentFloorNumber()
         {
@@ -49,6 +50,7 @@ namespace Levels
             dropsReceivedOnActiveLevel = 0;
             floorItems = new Dictionary<Vector2Int, Item>();
             activeLevel = level;
+            levelAbilitySelected = false;
 
             LevelGenerator generator = new LevelGenerator(activeLevel);
             generator.GenerateLevel();
@@ -198,6 +200,16 @@ namespace Levels
                 return Data.Cache.GetRandomItem(rarityChances);
             }
             return null;
+        }
+
+        public static bool HasSelectedLevelAbility()
+        {
+            return levelAbilitySelected;
+        }
+
+        public static void SetHasSelectedLevelAbility(bool hasSelected)
+        {
+            levelAbilitySelected = hasSelected;
         }
     }
 
