@@ -1,6 +1,7 @@
 ﻿using System;
 using Modifiers;
 using Modifiers.Ability;
+using Modifiers.Generic;
 
 namespace Data
 {
@@ -33,6 +34,14 @@ namespace Data
                     break;
                 case ModType.LUCKYHORSESHOE:
                     result = new LuckyHorseshoeModifier();
+                    break;
+                case ModType.HEALTHCHANGE:
+                    result = new HealthChangeModifier(modEffect.playerHealthChange,
+                        modEffect.playerMaxHealthChange);
+                    break;
+                case ModType.PROCRASTINATION:
+                    result = new ProcrastinationModifier(modEffect.playerMinRollChange, 
+                        modEffect.playerMaxRollChange);
                     break;
             }
             if (result != null)

@@ -22,6 +22,7 @@ namespace Data
         VAMPIRISM = 203,
         HEROIC = 204,
         LUCKYHORSESHOE = 205,
+        PROCRASTINATION = 206,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

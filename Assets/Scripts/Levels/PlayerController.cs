@@ -181,6 +181,8 @@ namespace Levels
 
         public void ShowAbilitySelectionUI()
         {
+            // Allow viewing inventory during ability selection
+            inventoryInput.SetInventoryEnabled(true);
             abilitySelection.gameObject.SetActive(true);
             List<Ability> availableAbilities = Data.Cache.GetRandomAbilities(3, PlayerStatus.GetAbilities());
             abilitySelection.DisplayAbilitySelection(availableAbilities[0],
@@ -194,6 +196,8 @@ namespace Levels
             CurrentLevel.SetHasSelectedLevelAbility(true);
             abilitySelection.gameObject.SetActive(false);
             selectingAbility = false;
+            // Update health UI in case the ability affected player health
+            playerHealthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
         }
 
         private void UpdateKeyCount()

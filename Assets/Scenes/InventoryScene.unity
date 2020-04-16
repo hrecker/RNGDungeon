@@ -970,7 +970,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Press I to return to map
+  m_Text: Press I to exit inventory
 --- !u!222 &1221406474
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1450,6 +1450,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_MinSize
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 281043962143029298, guid: ab07ac001ee4f834abf8fcea5388e0e8,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 281043962143029298, guid: ab07ac001ee4f834abf8fcea5388e0e8,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 281043962143029298, guid: ab07ac001ee4f834abf8fcea5388e0e8,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 281043963204656840, guid: ab07ac001ee4f834abf8fcea5388e0e8,
         type: 3}

@@ -55,6 +55,7 @@ namespace Battle
         private List<string> enemyStatusMessagesToShow;
         private static List<string> playerModMessagesToShow;
         private static List<string> enemyModMessagesToShow;
+        private static int currentRoll;
 
         private void Awake()
         {
@@ -73,6 +74,7 @@ namespace Battle
 
         private void Start()
         {
+            currentRoll = 1;
             exitToMenuButton.SetActive(false);
             itemDropPanel.SetActive(false);
             resultTextPanel.SetActive(false);
@@ -231,6 +233,7 @@ namespace Battle
 
             // Decrement roll-bounded mods
             PlayerStatus.Mods.DecrementAndDeregisterModsIfNecessary();
+            currentRoll++;
 
             // Battle status messages
             CreateStatusMessages(playerStatusMessagesToShow, enemyStatusMessagesToShow);
@@ -251,6 +254,9 @@ namespace Battle
             {
                 // End any roll-bounded modifiers
                 PlayerStatus.Mods.DeregisterAllRollBoundedMods();
+
+                // Reset roll count
+                currentRoll = 0;
 
                 if (playerBattleStatus.currentHealth > 0)
                 {
@@ -433,6 +439,11 @@ namespace Battle
                 newMessage.GetComponent<RectTransform>().anchoredPosition +=
                     (statusMessageSpacing * index * Vector2.down);
             }
+        }
+
+        public static int GetCurrentRoll()
+        {
+            return currentRoll;
         }
     }
 }

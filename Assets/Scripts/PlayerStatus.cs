@@ -8,9 +8,27 @@ public class PlayerStatus
 {
     public static bool Initialized { get; set; }
     public static Vector3 MapPosition { get; set; }
-    public static int MaxHealth { get; set; }
+    private static int maxHealth;
+    public static int MaxHealth
+    {
+        get { return maxHealth; }
+        set
+        {
+            maxHealth = value;
+            if (maxHealth < 0)
+            {
+                maxHealth = 0;
+            }
+            if (health > maxHealth)
+            {
+                health = maxHealth;
+            }
+        }
+    }
     private static int health;
-    public static int Health { get { return health; } 
+    public static int Health 
+    {
+        get { return health; } 
         set
         {
             health = value;

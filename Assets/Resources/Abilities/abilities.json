@@ -41,6 +41,26 @@
             "displayName": "Lucky Horseshoe",
             "description": "Increases luck",
             "modType": 205
+        },
+        {
+            "name": "HealthyDiet",
+            "displayName": "Healthy Diet",
+            "description": "Increases max health",
+            "modType": 3,
+            "modEffect": {
+                "playerHealthChange": 5,
+                "playerMaxHealthChange": 5
+            }
+        },
+        {
+            "name": "Procrastination",
+            "displayName": "Procrastination",
+            "description": "Alternate between high and low rolls",
+            "modType": 206,
+            "modEffect": {
+                "playerMinRollChange": 2,
+                "playerMaxRollChange": 2
+            }
         }
     ]
 }
