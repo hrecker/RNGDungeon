@@ -26,6 +26,7 @@ namespace Battle
         public GameObject itemIconPrefab;
         public GameObject itemDropPanel;
 
+        public Text rollCountText;
         public Text playerRollUI;
         public Text enemyRollUI;
         public GameObject playerRollDamageUI;
@@ -75,6 +76,7 @@ namespace Battle
         private void Start()
         {
             currentRoll = 1;
+            UpdateRollCountUI();
             exitToMenuButton.SetActive(false);
             itemDropPanel.SetActive(false);
             resultTextPanel.SetActive(false);
@@ -243,6 +245,10 @@ namespace Battle
 
             CheckBattleComplete();
 
+            if (!completed)
+            {
+                UpdateRollCountUI();
+            }
             UpdateRollUI(rollValues.Item1, rollValues.Item2, !completed);
             UpdateHealthUI(rollResult, !completed);
         }
@@ -444,6 +450,11 @@ namespace Battle
         public static int GetCurrentRoll()
         {
             return currentRoll;
+        }
+
+        private void UpdateRollCountUI()
+        {
+            rollCountText.text = "Roll " + currentRoll;
         }
     }
 }
