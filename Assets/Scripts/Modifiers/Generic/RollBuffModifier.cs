@@ -2,6 +2,7 @@
 
 namespace Modifiers.Generic
 {
+    // Apply a buff/debuff to min and/or max roll
     public class RollBuffModifier : Modifier, IRollGenerationModifier
     {
         private int minRollDiff;

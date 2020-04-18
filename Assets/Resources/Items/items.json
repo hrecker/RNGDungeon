@@ -33,7 +33,10 @@
             "tooltipText": "Recoils 1 damage to enemy for 3 turns",
             "playerStatusMessage": "Recoil: 3 turns",
             "numRollsInEffect": 3,
-            "modType": 2
+            "modType": 2,
+            "modEffect": {
+                "baseModTriggerChance": 1
+            }
         },
         {
             "name": "Shortsword",

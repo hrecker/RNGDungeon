@@ -3,48 +3,13 @@ using UnityEngine;
 using Data;
 using Modifiers;
 using Levels;
+using Battle;
 
 public class PlayerStatus
 {
     public static bool Initialized { get; set; }
     public static Vector3 MapPosition { get; set; }
-    private static int maxHealth;
-    public static int MaxHealth
-    {
-        get { return maxHealth; }
-        set
-        {
-            maxHealth = value;
-            if (maxHealth < 0)
-            {
-                maxHealth = 0;
-            }
-            if (health > maxHealth)
-            {
-                health = maxHealth;
-            }
-        }
-    }
-    private static int health;
-    public static int Health 
-    {
-        get { return health; } 
-        set
-        {
-            health = value;
-            if (health < 0)
-            {
-                health = 0;
-            }
-            else if (health > MaxHealth)
-            {
-                health = MaxHealth;
-            }
-        }
-    }
-    public static int BaseMinRoll { get; set; }
-    public static int BaseMaxRoll { get; set; }
-    public static int Luck { get; set; }
+    public static BattleStatus Status { get; set; }
     public static int KeyCount { get; set; }
     // Dictionary of item counts in inventory
     public static Dictionary<Item, int> Inventory { get; set; }
@@ -59,20 +24,18 @@ public class PlayerStatus
             //TODO this will potentially be pretty inefficient in the inventory screen
             if (weaponMod != null)
             {
-                Mods.DeregisterModifier(weaponMod);
+                Status.Mods.DeregisterModifier(weaponMod);
             }
             if (equippedWeapon != null)
             {
                 weaponMod = equippedWeapon.CreateItemModifier();
-                Mods.RegisterModifier(weaponMod);
+                Status.Mods.RegisterModifier(weaponMod);
             }
         }
     }
     public static List<Item> EquippedTrinkets { get; set; }
     private static List<Ability> abilities;
     public static List<Tech> EnabledTechs { get; set; }
-
-    public static PlayerModifiers Mods { get; private set; }
 
     public static void InitializeIfNecessary()
     {
@@ -84,12 +47,8 @@ public class PlayerStatus
 
     public static void Restart()
     {
-        MaxHealth = 100;
-        Health = MaxHealth;
-        BaseMinRoll = 1;
-        BaseMaxRoll = 4;
-        Luck = 0;
-        Mods = new PlayerModifiers();
+        Status = new BattleStatus(100, 1, 4);
+        Status.Actor = BattleActor.PLAYER;
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
         Inventory = new Dictionary<Item, int>();
         Inventory.Add(Data.Cache.GetItem("HealthPotion"), 3);
@@ -164,7 +123,7 @@ public class PlayerStatus
             {
                     return false;
             }
-            Mods.RegisterModifier(itemMod);
+            Status.Mods.RegisterModifier(itemMod);
         }
 
         if (Inventory.ContainsKey(item))
@@ -187,14 +146,6 @@ public class PlayerStatus
     public static void AddAbility(Ability ability)
     {
         abilities.Add(ability);
-        Mods.RegisterModifier(ability.CreateAbilityModifier());
-    }
-
-    // Get trigger chance from base with luck counted in.
-    // Each positive luck point gives +5% (i.e. 3 luck is +15%,
-    // -4 luck is -20%, etc.)
-    public static float GetTriggerChanceWithLuck(float baseTriggerChance)
-    {
-        return baseTriggerChance + (0.05f * Luck);
+        Status.Mods.RegisterModifier(ability.CreateAbilityModifier());
     }
 }

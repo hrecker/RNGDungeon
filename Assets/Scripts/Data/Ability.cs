@@ -44,7 +44,7 @@ namespace Data
                         modEffect.playerMaxRollChange);
                     break;
                 case ModType.SPIKY:
-                    result = new SpikyModifier();
+                    result = new RecoilModifer("Spiky!");
                     break;
                 case ModType.RECOVERY:
                     result = new RecoveryModifier(modEffect.playerHealthChange);
@@ -54,6 +54,7 @@ namespace Data
             {
                 result.triggerChance = modEffect.baseModTriggerChance;
                 result.priority = modEffect.modPriority;
+                result.actor = BattleActor.PLAYER;
             }
             return result;
         }

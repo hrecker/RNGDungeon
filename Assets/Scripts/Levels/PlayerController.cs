@@ -53,7 +53,7 @@ namespace Levels
             transform.position = PlayerStatus.MapPosition;
             UpdateKeyCount();
             UpdateCurrentFloor();
-            playerHealthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
+            playerHealthBar.UpdateHealth(PlayerStatus.Status.Health, PlayerStatus.Status.MaxHealth);
 
             itemPickupRarityChances = new Dictionary<Rarity, float>()
             {
@@ -197,7 +197,7 @@ namespace Levels
             abilitySelection.gameObject.SetActive(false);
             selectingAbility = false;
             // Update health UI in case the ability affected player health
-            playerHealthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
+            playerHealthBar.UpdateHealth(PlayerStatus.Status.Health, PlayerStatus.Status.MaxHealth);
         }
 
         private void UpdateKeyCount()

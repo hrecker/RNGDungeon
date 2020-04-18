@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Modifiers;
 
 namespace Battle.Enemies
 {
@@ -17,14 +18,17 @@ namespace Battle.Enemies
         private void Start()
         {
             currentPhase = 1;
-            finalPhaseMinRoll = minRoll;
-            finalPhaseMaxRoll = maxRoll;
-            minRoll = 1;
-            maxRoll = 1;
+            finalPhaseMinRoll = EnemyStatus.Status.BaseMinRoll;
+            finalPhaseMaxRoll = EnemyStatus.Status.BaseMaxRoll;
+            EnemyStatus.Status.BaseMinRoll = 1;
+            EnemyStatus.Status.BaseMaxRoll = 1;
 
             // Load sprites
             phase2 = GetEnemyResourceSprite("mysteriousstatue2");
             phase3 = GetEnemyResourceSprite("mysteriousstatue3");
+
+            MysteriousStatueModifier mod = new MysteriousStatueModifier(this);
+            EnemyStatus.Status.Mods.RegisterModifier(mod);
         }
 
         private void UpdatePhase()
@@ -43,33 +47,44 @@ namespace Battle.Enemies
             {
                 currentPhase = 3;
                 enemySprite.sprite = phase3;
-                minRoll = finalPhaseMinRoll;
-                maxRoll = finalPhaseMaxRoll;
+                EnemyStatus.Status.BaseMinRoll = finalPhaseMinRoll;
+                EnemyStatus.Status.BaseMaxRoll = finalPhaseMaxRoll;
             }
         }
 
-        public override RollResult ApplyRollResultMods(RollResult initial)
+        private class MysteriousStatueModifier : Modifier, IRollResultModifier, IPostDamageModifier
         {
-            if (currentPhase < 3)
+            private MysteriousStatueBattleController controller;
+
+            public MysteriousStatueModifier(MysteriousStatueBattleController controller)
             {
-                if (initial.EnemyDamage >= 1)
+                this.controller = controller;
+                actor = BattleActor.ENEMY;
+            }
+
+            public RollResult ApplyRollResultMod(RollResult initial)
+            {
+                if (controller.currentPhase < 3)
                 {
-                    initial.EnemyDamage -= damageReduction;
-                    if (initial.EnemyDamage < 1)
+                    if (initial.EnemyDamage >= 1)
                     {
-                        initial.EnemyDamage = 1;
+                        initial.EnemyDamage -= controller.damageReduction;
+                        if (initial.EnemyDamage < 1)
+                        {
+                            initial.EnemyDamage = 1;
+                        }
                     }
                 }
+                return initial;
             }
-            return initial;
-        }
 
-        public override void ApplyPostDamageEffects(RollResult rollResult)
-        {
-            if (rollResult.EnemyDamage > 0)
+            public void ApplyPostDamageMod(RollResult rollResult)
             {
-                hitsTaken++;
-                UpdatePhase();
+                if (rollResult.EnemyDamage > 0 && EnemyStatus.Status.Health > 0)
+                {
+                    controller.hitsTaken++;
+                    controller.UpdatePhase();
+                }
             }
         }
     }

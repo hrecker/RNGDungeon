@@ -2,6 +2,7 @@
 
 namespace Modifiers.Ability
 {
+    // Adds a chance to sap health on hit
     public class VampirismModifier : Modifier, IRollResultModifier
     {
         int healthSapRate = 1;
@@ -13,10 +14,10 @@ namespace Modifiers.Ability
 
         public RollResult ApplyRollResultMod(RollResult initial)
         {
-            if (initial.EnemyDamage > 0 && RollTrigger())
+            if (initial.GetDamage(actor.Opponent()) > 0 && RollTrigger())
             {
-                initial.PlayerHeal += healthSapRate;
-                BattleController.AddPlayerModMessage("Vampirism!");
+                initial.SetHeal(actor, initial.GetHeal(actor) + healthSapRate);
+                BattleController.AddModMessage(actor, "Vampirism!");
             }
             return initial;
         }

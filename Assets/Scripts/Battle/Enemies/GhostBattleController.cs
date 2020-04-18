@@ -15,26 +15,40 @@ namespace Battle.Enemies
         {
             battleController = GameObject.Find("BattleController").
                 gameObject.GetComponent<BattleController>();
+
+            GhostModifier mod = new GhostModifier(this);
+            EnemyStatus.Status.Mods.RegisterModifier(mod);
         }
 
-        public override void ApplyPostDamageEffects(RollResult initial)
+        private class GhostModifier : Modifier, IPostDamageModifier
         {
-            if (initial.PlayerDamage > 0 && !debuffActive)
+            GhostBattleController controller;
+
+            public GhostModifier(GhostBattleController controller)
             {
-                Modifier mod = new RollBuffModifier(-rollDebuff, -rollDebuff);
-                mod.isRollBounded = true;
-                mod.numRollsRemaining = 2;
-                battleController.AddRollBoundedMod(mod, "-2 Roll: 2 turns", null);
-                debuffTurnsRemaining = 2;
-                debuffActive = true;
-                BattleController.AddEnemyModMessage("Fear!");
+                this.controller = controller;
+                actor = BattleActor.ENEMY;
             }
-            else if (debuffActive)
+
+            public void ApplyPostDamageMod(RollResult initial)
             {
-                debuffTurnsRemaining--;
-                if (debuffTurnsRemaining <= 0)
+                if (initial.PlayerDamage > 0 && !controller.debuffActive)
                 {
-                    debuffActive = false;
+                    Modifier mod = new RollBuffModifier(-controller.rollDebuff, -controller.rollDebuff);
+                    mod.isRollBounded = true;
+                    mod.numRollsRemaining = 2;
+                    controller.battleController.AddPlayerRollBoundedMod(mod, "-2 Roll: 2 turns", null);
+                    controller.debuffTurnsRemaining = 2;
+                    controller.debuffActive = true;
+                    BattleController.AddEnemyModMessage("Fear!");
+                }
+                else if (controller.debuffActive)
+                {
+                    controller.debuffTurnsRemaining--;
+                    if (controller.debuffTurnsRemaining <= 0)
+                    {
+                        controller.debuffActive = false;
+                    }
                 }
             }
         }

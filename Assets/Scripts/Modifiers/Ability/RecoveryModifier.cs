@@ -2,6 +2,7 @@
 
 namespace Modifiers.Ability
 {
+    // Recover some health after each battle won
     public class RecoveryModifier : Modifier, IPostBattleModifier
     {
         private int healthRecovered;
@@ -13,10 +14,10 @@ namespace Modifiers.Ability
 
         public void ApplyPostBattleMod()
         {
-            if (PlayerStatus.Health < PlayerStatus.MaxHealth)
+            if (Status().Health < Status().MaxHealth)
             {
-                PlayerStatus.Health += healthRecovered;
-                BattleController.AddPlayerModMessage("Recovery!");
+                Status().Health += healthRecovered;
+                BattleController.AddModMessage(actor, "Recovery!");
             }
         }
     }

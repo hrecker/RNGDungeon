@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using Battle;
 
 namespace Modifiers
 {
     // base class of all modifiers
     public abstract class Modifier
     {
+        // Who this modifier applies to (player or enemy)
+        public BattleActor actor = BattleActor.PLAYER;
         // Priority when applying all modifiers - lower numbers occur first, higher numbers later
         // Most modifiers should have priority 0. RollResult mods that reduce damage or have effects based
         // on damage done may need higher (later) priorities
@@ -19,12 +22,26 @@ namespace Modifiers
         // Randomly determine if this modifier should be triggered
         protected bool RollTrigger()
         {
-            return Random.value < PlayerStatus.GetTriggerChanceWithLuck(triggerChance);
+            float chance = Status().GetTriggerChanceWithLuck(triggerChance);
+            if (chance <= 0)
+            {
+                return false;
+            }
+            if (chance >= 1)
+            {
+                return true;
+            }
+            return Random.value < chance;
         }
 
         public void DeregisterSelf()
         {
-            PlayerStatus.Mods.DeregisterModifier(this);
+            Status().Mods.DeregisterModifier(this);
+        }
+
+        protected BattleStatus Status()
+        {
+            return actor.Status();
         }
     }
 }

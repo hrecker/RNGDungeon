@@ -48,6 +48,7 @@ namespace Data
                 result.numRollsRemaining = numRollsInEffect;
                 result.triggerChance = modEffect.baseModTriggerChance;
                 result.priority = modEffect.modPriority;
+                result.actor = BattleActor.PLAYER;
             }
             return result;
         }

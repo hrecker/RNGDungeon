@@ -43,14 +43,14 @@ namespace UI
         {
             // For testing
             PlayerStatus.InitializeIfNecessary();
-            healthBar.UpdateHealth(PlayerStatus.Health, PlayerStatus.MaxHealth);
+            healthBar.UpdateHealth(PlayerStatus.Status.Health, PlayerStatus.Status.MaxHealth);
         }
 
         private void UpdateRollBoundsUI()
         {
             Tuple<int, int> baseRoll = new Tuple<int, int>(
-                PlayerStatus.BaseMinRoll, PlayerStatus.BaseMaxRoll);
-            foreach (IRollGenerationModifier mod in PlayerStatus.Mods.GetRollGenerationModifiers())
+                PlayerStatus.Status.BaseMinRoll, PlayerStatus.Status.BaseMaxRoll);
+            foreach (IRollGenerationModifier mod in PlayerStatus.Status.Mods.GetRollGenerationModifiers())
             {
                 baseRoll = mod.ApplyRollGenerationMod(baseRoll.Item1, baseRoll.Item2);
             }

@@ -1,5 +1,6 @@
 ﻿namespace Modifiers.Generic
 {
+    // Applies a one time health change effect
     public class HealthChangeModifier : Modifier, IOneTimeEffectModifier
     {
         private int healthChange, maxHealthChange;
@@ -12,14 +13,14 @@
 
         public void ApplyOneTimeEffectMod()
         {
-            PlayerStatus.MaxHealth += maxHealthChange;
-            PlayerStatus.Health += healthChange;
+            Status().MaxHealth += maxHealthChange;
+            Status().Health += healthChange;
         }
 
         public bool CanApply()
         {
-            return PlayerStatus.Health > 0 && (maxHealthChange != 0 || 
-                (healthChange > 0 && PlayerStatus.Health < PlayerStatus.MaxHealth) || 
+            return Status().Health > 0 && (maxHealthChange != 0 || 
+                (healthChange > 0 && Status().Health < Status().MaxHealth) || 
                 healthChange < 0);
         }
     }

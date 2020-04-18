@@ -2,7 +2,7 @@
 
 namespace Modifiers
 {
-    public class PlayerModifiers
+    public class ActiveModifiers
     {
         // Registered modifiers by priority
         private SortedDictionary<int, List<IRollGenerationModifier>> rollGenMods;
@@ -13,7 +13,7 @@ namespace Modifiers
 
         private List<Modifier> uniqueRegisteredModifiers;
 
-        public PlayerModifiers()
+        public ActiveModifiers()
         {
             rollGenMods = new SortedDictionary<int, List<IRollGenerationModifier>>();
             rollResultMods = new SortedDictionary<int, List<IRollResultModifier>>();

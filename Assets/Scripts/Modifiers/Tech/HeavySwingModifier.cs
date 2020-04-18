@@ -3,19 +3,19 @@ using Battle;
 
 namespace Modifiers.Tech
 {
+    // Buff on the first roll, followed by two rolls of debuff
     public class HeavySwingModifier : Modifier, IRollGenerationModifier
     {
         private int rollCount;
-        private const int rollBuff = 2; // Buff min and max by two during heavy swing
-        private const int rollDebuff = 1; // Debuff min and max by one after
-        private const int debuffRolls = 2; // Debuff lasts two turns
+        private const int rollBuff = 2;
+        private const int rollDebuff = 1;
+        private const int debuffRolls = 2;
 
         public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
         {
-            // Heavy swing hits hard on first turn, then debuffs the next two turns
             if (rollCount == 0)
             {
-                BattleController.AddPlayerModMessage("Heavy Swing!");
+                BattleController.AddModMessage(actor, "Heavy Swing!");
                 initialMinRoll += rollBuff;
                 initialMaxRoll += rollBuff;
             }

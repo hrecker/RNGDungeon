@@ -7,6 +7,7 @@ using Battle.Enemies;
 using Data;
 using Modifiers;
 using Levels;
+using System.Linq;
 
 namespace Battle
 {
@@ -19,7 +20,7 @@ namespace Battle
         private bool fastforwardActive;
         private float baseRollInterval;
 
-        public GameObject enemy;
+        public GameObject enemyGameObject;
         public GameObject resultTextPanel;
         public TechButtonController techUI;
         public GameObject exitToMenuButton;
@@ -41,8 +42,9 @@ namespace Battle
         public RollGenerator playerRollGenerator;
         public Transform enemyParent;
         private EnemyBattleController enemyController;
-        public BattleStatus playerBattleStatus;
-        private BattleStatus enemyBattleStatus;
+        private RollGenerator enemyRollGenerator;
+        public BattleHealthBar playerHealthBar;
+        private BattleHealthBar enemyHealthBar;
 
         public RectTransform playerStatusMessagesParent;
         public RectTransform enemyStatusMessagesParent;
@@ -63,14 +65,19 @@ namespace Battle
             baseRollInterval = rollInterval;
             // Add enemycontroller for the given enemy
             string enemyName = CurrentLevel.currentEnemyName;
-            Type controllerType = Data.Cache.GetEnemy(enemyName).GetEnemyControllerType();
-            enemy.AddComponent(controllerType);
-            enemyController = enemy.GetComponent<EnemyBattleController>();
-            enemyBattleStatus = enemy.GetComponent<EnemyBattleStatus>();
-            enemyRollDamageUI = enemy.gameObject.transform.Find("RollDamage").gameObject;
-            enemyRollHealUI = enemy.gameObject.transform.Find("RollHeal").gameObject;
+            Enemy enemy = Data.Cache.GetEnemy(enemyName);
+            EnemyStatus.Initialize(enemy);
+            Type controllerType = enemy.GetEnemyControllerType();
+            enemyGameObject.AddComponent(controllerType);
+            enemyController = enemyGameObject.GetComponent<EnemyBattleController>();
+            enemyRollGenerator = enemyGameObject.GetComponent<RollGenerator>();
+            enemyHealthBar = enemyGameObject.GetComponent<BattleHealthBar>();
+            enemyRollDamageUI = enemyGameObject.gameObject.transform.Find("RollDamage").gameObject;
+            enemyRollHealUI = enemyGameObject.gameObject.transform.Find("RollHeal").gameObject;
             playerModMessagesToShow = new List<string>();
             enemyModMessagesToShow = new List<string>();
+            enemyHealthBar.status = EnemyStatus.Status;
+            playerHealthBar.status = PlayerStatus.Status;
         }
 
         private void Start()
@@ -107,7 +114,7 @@ namespace Battle
             {
                 enabled = false;
                 // If player wins and it's not the boss fight, return to map. Otherwise just stop here.
-                if (playerBattleStatus.currentHealth > 0 && CurrentLevel.currentEnemyName != "Boss")
+                if (PlayerStatus.Status.Health > 0 && CurrentLevel.currentEnemyName != "Boss")
                 {
                     SceneManager.LoadScene("MapScene");
                 }
@@ -131,14 +138,6 @@ namespace Battle
 
         private void Roll()
         {
-            if (playerRollGenerator == null || enemyController == null ||
-                playerBattleStatus == null || enemyBattleStatus == null)
-            {
-                Debug.LogWarning("Skipping roll - one or more rollgenerators " +
-                    "or battlestatuses are null");
-                return;
-            }
-
             playerModMessagesToShow.Clear();
             enemyModMessagesToShow.Clear();
 
@@ -154,87 +153,56 @@ namespace Battle
                 // Add UI messages if necessary
                 playerStatusMessagesToShow.Add(selected.playerStatusMessage);
                 enemyStatusMessagesToShow.Add(selected.enemyStatusMessage);
-                PlayerStatus.Mods.RegisterModifier(techMods[selected.name]);
+                PlayerStatus.Status.Mods.RegisterModifier(techMods[selected.name]);
             }
             techUI.Roll();
 
             // Generate roll numeric values
-            bool enemyModApplied = false;
             int playerInitial = playerRollGenerator.GenerateInitialRoll();
-            int enemyInitial = enemyController.GenerateInitialRoll();
+            int enemyInitial = enemyRollGenerator.GenerateInitialRoll();
             Tuple<int, int> rollValues = new Tuple<int, int>(playerInitial, enemyInitial);
             // Apply enemy and player mods to get final roll values
-            foreach (IRollValueModifier mod in PlayerStatus.Mods.GetRollValueModifiers())
+            IEnumerable<IRollValueModifier> rvMods = 
+                PlayerStatus.Status.Mods.GetRollValueModifiers().Union(
+                EnemyStatus.Status.Mods.GetRollValueModifiers()).
+                OrderBy(m => ((Modifier)m).priority);
+            foreach (IRollValueModifier mod in rvMods)
             {
-                if (!enemyModApplied)
-                {
-                    int priority = ((Modifier)mod).priority;
-                    if (enemyController.GetRollValuePriority() <= priority)
-                    {
-                        rollValues = enemyController.ApplyRollValueMods(
-                            rollValues.Item1, rollValues.Item2);
-                        enemyModApplied = true;
-                    }
-                }
                 rollValues = mod.ApplyRollValueMod(rollValues.Item1, rollValues.Item2);
-            }
-            if (!enemyModApplied)
-            {
-                rollValues = enemyController.ApplyRollValueMods(
-                    rollValues.Item1, rollValues.Item2);
             }
 
             // Generate roll results
-            enemyModApplied = false;
             int playerDamage = Math.Max(0, rollValues.Item2 - rollValues.Item1);
             int enemyDamage = Math.Max(0, rollValues.Item1 - rollValues.Item2);
             RollResult rollResult = new RollResult
             { PlayerDamage = playerDamage, EnemyDamage = enemyDamage };
             // Again apply enemy and player mods
-            foreach (IRollResultModifier mod in PlayerStatus.Mods.GetRollResultModifiers())
+            IEnumerable<IRollResultModifier> rrMods =
+                PlayerStatus.Status.Mods.GetRollResultModifiers().Union(
+                EnemyStatus.Status.Mods.GetRollResultModifiers()).
+                OrderBy(m => ((Modifier)m).priority);
+            foreach (IRollResultModifier mod in rrMods)
             {
-                if (!enemyModApplied)
-                {
-                    int priority = ((Modifier)mod).priority;
-                    if (enemyController.GetRollResultPriority() <= priority)
-                    {
-                        rollResult = enemyController.ApplyRollResultMods(rollResult);
-                        enemyModApplied = true;
-                    }
-                }
                 rollResult = mod.ApplyRollResultMod(rollResult);
-            }
-            if (!enemyModApplied)
-            {
-                rollResult = enemyController.ApplyRollResultMods(rollResult);
             }
 
             // Apply roll results
-            playerBattleStatus.ApplyResult(rollResult);
-            enemyBattleStatus.ApplyResult(rollResult);
+            playerHealthBar.ApplyResult(rollResult);
+            enemyHealthBar.ApplyResult(rollResult);
 
             // Apply enemy and player post damage effects
-            enemyModApplied = false;
-            foreach (IPostDamageModifier mod in PlayerStatus.Mods.GetPostDamageModifiers())
+            IEnumerable<IPostDamageModifier> pdMods =
+                PlayerStatus.Status.Mods.GetPostDamageModifiers().Union(
+                EnemyStatus.Status.Mods.GetPostDamageModifiers()).
+                OrderBy(m => ((Modifier)m).priority);
+            foreach (IPostDamageModifier mod in pdMods)
             {
-                if (!enemyModApplied)
-                {
-                    int priority = ((Modifier)mod).priority;
-                    if (enemyController.GetPostDamagePriority() <= priority)
-                    {
-                        enemyController.ApplyPostDamageEffects(rollResult);
-                        enemyModApplied = true;
-                    }
-                }
                 mod.ApplyPostDamageMod(rollResult);
-            }
-            if (!enemyModApplied)
-            {
-                enemyController.ApplyPostDamageEffects(rollResult);
             }
 
             // Decrement roll-bounded mods
-            PlayerStatus.Mods.DecrementAndDeregisterModsIfNecessary();
+            PlayerStatus.Status.Mods.DecrementAndDeregisterModsIfNecessary();
+            EnemyStatus.Status.Mods.DecrementAndDeregisterModsIfNecessary();
             currentRoll++;
 
             CheckBattleComplete();
@@ -256,15 +224,15 @@ namespace Battle
         private void CheckBattleComplete()
         {
             // Disable when the battle is over, and display result
-            if (playerBattleStatus.currentHealth <= 0 || enemyBattleStatus.currentHealth <= 0)
+            if (PlayerStatus.Status.Health <= 0 || EnemyStatus.Status.Health <= 0)
             {
                 // End any roll-bounded modifiers
-                PlayerStatus.Mods.DeregisterAllRollBoundedMods();
+                PlayerStatus.Status.Mods.DeregisterAllRollBoundedMods();
 
                 // Reset roll count
                 currentRoll = 0;
 
-                if (playerBattleStatus.currentHealth > 0)
+                if (PlayerStatus.Status.Health > 0)
                 {
                     if (CurrentLevel.currentEnemyName == "Boss")
                     {
@@ -275,7 +243,11 @@ namespace Battle
                         ShowResult("Victory", false);
                         GenerateItemDrop();
                         // Apply any post battle mods when player defeats enemy
-                        foreach (IPostBattleModifier mod in PlayerStatus.Mods.GetPostBattleModifiers())
+                        IEnumerable<IPostBattleModifier> pbMods =
+                            PlayerStatus.Status.Mods.GetPostBattleModifiers().Union(
+                            EnemyStatus.Status.Mods.GetPostBattleModifiers()).
+                            OrderBy(m => ((Modifier)m).priority);
+                        foreach (IPostBattleModifier mod in pbMods)
                         {
                             mod.ApplyPostBattleMod();
                         }
@@ -382,17 +354,30 @@ namespace Battle
             }
         }
 
-        public void AddRollBoundedMod(Modifier mod, int priority)
+        public void AddPlayerRollBoundedMod(Modifier mod, int priority)
         {
-            AddRollBoundedMod(mod, null, null);
+            AddPlayerRollBoundedMod(mod, null, null);
         }
 
         // Used when something else (an enemy) needs to add a mod that ends when the battle ends
-        public void AddRollBoundedMod(Modifier mod, string playerUiMessage, string enemyUiMessage)
+        public void AddPlayerRollBoundedMod(Modifier mod, string playerUiMessage, string enemyUiMessage)
         {
-            PlayerStatus.Mods.RegisterModifier(mod);
+            PlayerStatus.Status.Mods.RegisterModifier(mod);
             playerStatusMessagesToShow.Add(playerUiMessage);
             enemyStatusMessagesToShow.Add(enemyUiMessage);
+        }
+
+        public static void AddModMessage(BattleActor actor, string message)
+        {
+            switch (actor)
+            {
+                case BattleActor.PLAYER:
+                    AddPlayerModMessage(message);
+                    break;
+                case BattleActor.ENEMY:
+                    AddEnemyModMessage(message);
+                    break;
+            }
         }
 
         public static void AddPlayerModMessage(string message)

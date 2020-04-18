@@ -2,6 +2,7 @@
 
 namespace Modifiers.Ability
 {
+    // Buffs when at or below 50% health. Below 25% health, the buff is doubled.
     public class HeroicModifier : Modifier, IRollGenerationModifier
     {
         private int baseMinRollBuff;
@@ -15,7 +16,7 @@ namespace Modifiers.Ability
 
         public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
         {
-            float healthPercent = (float)PlayerStatus.Health / PlayerStatus.MaxHealth;
+            float healthPercent = (float)Status().Health / Status().MaxHealth;
             // Under 25% health, the buff is doubled
             if (healthPercent <= 0.25f)
             {

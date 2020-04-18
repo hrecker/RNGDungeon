@@ -1,8 +1,10 @@
 ﻿using System;
 using UnityEngine;
+using Modifiers;
 
 namespace Battle.Enemies
 {
+    // Boss enemy with multiple phases
     public class BossBattleController : EnemyBattleController
     {
         private Sprite defaultSprite;
@@ -29,8 +31,8 @@ namespace Battle.Enemies
         void Start()
         {
             defaultSprite = enemySprite.sprite;
-            defaultPhaseMinRoll = minRoll;
-            defaultPhaseMaxRoll = maxRoll;
+            defaultPhaseMinRoll = EnemyStatus.Status.BaseMinRoll;
+            defaultPhaseMaxRoll = EnemyStatus.Status.BaseMaxRoll;
             currentPhase = BossPhase.DEFAULT;
             phaseRollsRemaining = 3;
 
@@ -40,38 +42,9 @@ namespace Battle.Enemies
             healSprite = GetEnemyResourceSprite("bossheal");
             exhaustSprite = GetEnemyResourceSprite("bossexhausted");
             defeatedSprite = GetEnemyResourceSprite("bossdefeated");
-        }
 
-        public override RollResult ApplyRollResultMods(RollResult initial)
-        {
-            if (currentPhase == BossPhase.HEAL)
-            {
-                initial.EnemyHeal += healRate;
-            }
-            return initial;
-        }
-
-        // Update phase after damage
-        public override void ApplyPostDamageEffects(RollResult rollResult)
-        {
-            if (status.currentHealth > 0 && PlayerStatus.Health > 0)
-            {
-                // Update count of damage received while charging
-                if (currentPhase == BossPhase.CHARGE)
-                {
-                    chargeBuff += (int)Math.Max(1, rollResult.EnemyDamage);
-                }
-
-                phaseRollsRemaining--;
-                if (phaseRollsRemaining == 0)
-                {
-                    UpdatePhase();
-                }
-            }
-            else if (status.currentHealth <= 0)
-            {
-                enemySprite.sprite = defeatedSprite;
-            }
+            BossModifier mod = new BossModifier(this);
+            EnemyStatus.Status.Mods.RegisterModifier(mod);
         }
 
         private void UpdatePhase()
@@ -81,7 +54,7 @@ namespace Battle.Enemies
                 case BossPhase.DEFAULT:
                     // 50% chance to heal on low health
                     bool healing = false;
-                    if (status.currentHealth / (float)status.maxHealth < 0.5f)
+                    if (EnemyStatus.Status.Health / (float)EnemyStatus.Status.MaxHealth < 0.5f)
                     {
                         if (UnityEngine.Random.value < 0.5f)
                         {
@@ -100,23 +73,23 @@ namespace Battle.Enemies
                         BattleController.AddEnemyModMessage("Charge!");
                     }
                     phaseRollsRemaining = healOrChargeRolls;
-                    minRoll = defaultPhaseMinRoll - healOrChargeDebuff;
-                    maxRoll = defaultPhaseMaxRoll - healOrChargeDebuff;
+                    EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll - healOrChargeDebuff;
+                    EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll - healOrChargeDebuff;
                     break;
                 case BossPhase.CHARGE: // Charge moves to release
                     currentPhase = BossPhase.RELEASE;
                     BattleController.AddEnemyModMessage("Release!");
                     phaseRollsRemaining = 1;
                     enemySprite.sprite = releaseSprite;
-                    minRoll = defaultPhaseMinRoll + chargeBuff;
-                    maxRoll = defaultPhaseMaxRoll + chargeBuff;
+                    EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll + chargeBuff;
+                    EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll + chargeBuff;
                     break;
                 case BossPhase.RELEASE: // Release moves to exhaustion
                     currentPhase = BossPhase.EXHAUSTED;
                     phaseRollsRemaining = exhaustRolls;
                     enemySprite.sprite = exhaustSprite;
-                    minRoll = defaultPhaseMinRoll - exhaustDebuff;
-                    maxRoll = defaultPhaseMaxRoll - exhaustDebuff;
+                    EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll - exhaustDebuff;
+                    EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll - exhaustDebuff;
                     break;
                 case BossPhase.HEAL: // Heal and exhaustion move back to default
                 case BossPhase.EXHAUSTED:
@@ -124,9 +97,51 @@ namespace Battle.Enemies
                     phaseRollsRemaining = UnityEngine.Random.Range(
                         minDefaultPhaseRolls, maxDefaultPhaseRolls + 1);
                     enemySprite.sprite = defaultSprite;
-                    minRoll = defaultPhaseMinRoll;
-                    maxRoll = defaultPhaseMaxRoll;
+                    EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll;
+                    EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll;
                     break;
+            }
+        }
+
+        private class BossModifier : Modifier, IRollResultModifier, IPostDamageModifier
+        {
+            private BossBattleController controller;
+
+            public BossModifier(BossBattleController controller)
+            {
+                this.controller = controller;
+                actor = BattleActor.ENEMY;
+            }
+
+            public RollResult ApplyRollResultMod(RollResult initial)
+            {
+                if (controller.currentPhase == BossPhase.HEAL)
+                {
+                    initial.EnemyHeal += controller.healRate;
+                }
+                return initial;
+            }
+
+            public void ApplyPostDamageMod(RollResult rollResult)
+            {
+                if (EnemyStatus.Status.Health > 0 && PlayerStatus.Status.Health > 0)
+                {
+                    // Update count of damage received while charging
+                    if (controller.currentPhase == BossPhase.CHARGE)
+                    {
+                        controller.chargeBuff += (int)Math.Max(1, rollResult.EnemyDamage);
+                    }
+
+                    controller.phaseRollsRemaining--;
+                    if (controller.phaseRollsRemaining == 0)
+                    {
+                        controller.UpdatePhase();
+                    }
+                }
+                else if (EnemyStatus.Status.Health <= 0)
+                {
+                    controller.enemySprite.sprite = controller.defeatedSprite;
+                }
             }
         }
     }

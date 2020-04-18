@@ -3,7 +3,7 @@ using Battle;
 
 namespace Modifiers.Ability
 {
-    // Modifier that alternates each roll between buffing and debuffing the player
+    // Modifier that alternates each roll between buffing and debuffing
     public class ProcrastinationModifier : Modifier, IRollGenerationModifier
     {
         private int minRollBuff, maxRollBuff;

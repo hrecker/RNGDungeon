@@ -1,16 +1,31 @@
 ﻿using UnityEngine;
+using Modifiers;
+using System;
 
 namespace Battle
 {
-    public abstract class RollGenerator : MonoBehaviour
+    public class RollGenerator : MonoBehaviour
     {
-        protected int minRoll;
-        protected int maxRoll;
+        public BattleActor actor;
 
-        // Generate an initial roll value
-        public abstract int GenerateInitialRoll();
+        public int GenerateInitialRoll()
+        {
+            int min = actor.Status().BaseMinRoll;
+            int max = actor.Status().BaseMaxRoll;
+            foreach (IRollGenerationModifier mod in actor.Status().Mods.GetRollGenerationModifiers())
+            {
+                Tuple<int, int> modified = mod.ApplyRollGenerationMod(min, max);
+                min = modified.Item1;
+                max = modified.Item2;
+            }
+            if (min > max)
+            {
+                min = max;
+            }
+            return GenerateBasicRoll(min, max);
+        }
 
-        protected int GenerateBasicRoll(int min, int max)
+        private int GenerateBasicRoll(int min, int max)
         {
             return UnityEngine.Random.Range(min, max + 1);
         }

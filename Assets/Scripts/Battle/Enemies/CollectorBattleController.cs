@@ -1,24 +1,17 @@
-﻿
+﻿using Modifiers.Ability;
+
 namespace Battle.Enemies
 {
+    // Collector enemy that saps health and always drops a chest key
     public class CollectorBattleController : EnemyBattleController
     {
-        private int healthSapRate = 1;
-
         private void Start()
         {
-            // TODO constants representing what priorities should be used
-            rollResultModPriority = 5;
-        }
-
-        public override RollResult ApplyRollResultMods(RollResult initial)
-        {
-            if (initial.PlayerDamage > 0)
-            {
-                initial.EnemyHeal += healthSapRate;
-                BattleController.AddEnemyModMessage("Health Sap!");
-            }
-            return initial;
+            // Reuse player vampirism ability mod, with 100% chance to trigger
+            VampirismModifier mod = new VampirismModifier();
+            mod.actor = BattleActor.ENEMY;
+            mod.triggerChance = 1;
+            EnemyStatus.Status.Mods.RegisterModifier(mod);
         }
     }
 }

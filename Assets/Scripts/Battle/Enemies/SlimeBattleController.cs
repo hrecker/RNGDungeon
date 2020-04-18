@@ -1,20 +1,36 @@
-﻿namespace Battle.Enemies
+﻿using Modifiers;
+
+namespace Battle.Enemies
 {
+    // Slimes regen every other roll
     public class SlimeBattleController : EnemyBattleController
     {
-        private int regenRate = 1;
-        private bool regenRoll;
-
-        public override RollResult ApplyRollResultMods(RollResult initial)
+        private void Start()
         {
-            // Slimes regen every other roll
-            if (regenRoll)
+            SlimeModifier mod = new SlimeModifier();
+            EnemyStatus.Status.Mods.RegisterModifier(mod);
+        }
+
+        private class SlimeModifier : Modifier, IRollResultModifier
+        {
+            private int regenRate = 1;
+            private bool regenRoll;
+
+            public SlimeModifier()
             {
-                BattleController.AddEnemyModMessage("Regen!");
-                initial.EnemyHeal += regenRate;
+                actor = BattleActor.ENEMY;
             }
-            regenRoll = !regenRoll;
-            return initial;
+
+            public RollResult ApplyRollResultMod(RollResult initial)
+            {
+                if (regenRoll)
+                {
+                    BattleController.AddEnemyModMessage("Regen!");
+                    initial.EnemyHeal += regenRate;
+                }
+                regenRoll = !regenRoll;
+                return initial;
+            }
         }
     }
 }

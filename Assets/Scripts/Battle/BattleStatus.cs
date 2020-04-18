@@ -1,49 +1,79 @@
-﻿using UnityEngine;
-using UI;
+﻿using Modifiers;
 
 namespace Battle
 {
-    public abstract class BattleStatus : MonoBehaviour
+    public class BattleStatus
     {
-        public int maxHealth;
-        public int currentHealth;
-        HealthBar healthBar;
+        public BattleActor Actor { get; set; }
 
-        private int lastRenderCurrentHealth;
-
-        void Start()
+        private int maxHealth;
+        public int MaxHealth
         {
-            healthBar = GetComponentInChildren<HealthBar>();
-            UpdateHealthBar();
-        }
-
-        protected virtual void Update()
-        {
-            if (lastRenderCurrentHealth != currentHealth)
+            get { return maxHealth; }
+            set
             {
-                UpdateHealthBar();
+                maxHealth = value;
+                if (maxHealth < 0)
+                {
+                    maxHealth = 0;
+                }
+                if (health > maxHealth)
+                {
+                    health = maxHealth;
+                }
             }
         }
 
-        private void UpdateHealthBar()
+        private int health;
+        public int Health
         {
-            healthBar.UpdateHealth(currentHealth, maxHealth);
-            lastRenderCurrentHealth = currentHealth;
-        }
-
-        public abstract void ApplyResult(RollResult rollResult);
-
-        public virtual void ApplyHealthChange(int diff)
-        {
-            currentHealth += diff;
-            if (currentHealth < 0)
+            get { return health; }
+            set
             {
-                currentHealth = 0;
-            }
-            else if (currentHealth > maxHealth)
-            {
-                currentHealth = maxHealth;
+                health = value;
+                if (health < 0)
+                {
+                    health = 0;
+                }
+                else if (health > MaxHealth)
+                {
+                    health = MaxHealth;
+                }
             }
         }
+
+        public int BaseMinRoll { get; set; }
+        public int BaseMaxRoll { get; set; }
+
+        public int Luck { get; set; }
+
+        public StatusEffect ActiveStatus { get; set; }
+
+        private ActiveModifiers mods;
+        public ActiveModifiers Mods { get { return mods; } }
+
+        public BattleStatus(int maxHealth, int minRoll, int maxRoll)
+        {
+            MaxHealth = maxHealth;
+            Health = MaxHealth;
+            BaseMaxRoll = maxRoll;
+            BaseMinRoll = System.Math.Min(minRoll, maxRoll);
+            ActiveStatus = StatusEffect.NONE;
+            mods = new ActiveModifiers();
+        }
+
+        // Get trigger chance from base with luck counted in.
+        // Each positive luck point gives +5% (i.e. 3 luck is +15%,
+        // -4 luck is -20%, etc.)
+        public float GetTriggerChanceWithLuck(float baseTriggerChance)
+        {
+            return baseTriggerChance + (0.05f * Luck);
+        }
+    }
+
+    public enum StatusEffect
+    {
+        NONE,
+        BREAK
     }
 }

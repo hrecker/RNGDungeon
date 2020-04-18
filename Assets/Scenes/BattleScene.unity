@@ -367,8 +367,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2108076845}
   m_HandleRect: {fileID: 2108076844}
   m_Direction: 0
-  m_Value: 0.49999985
-  m_Size: 0.5999999
+  m_Value: 0.4999999
+  m_Size: 0.6
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2869,8 +2869,8 @@ GameObject:
   - component: {fileID: 1792967437}
   - component: {fileID: 1792967439}
   - component: {fileID: 1792967438}
+  - component: {fileID: 1792967440}
   - component: {fileID: 1792967442}
-  - component: {fileID: 1792967441}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -2937,7 +2937,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1792967436}
   m_CullTransparentMesh: 0
---- !u!114 &1792967441
+--- !u!114 &1792967440
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2946,7 +2946,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1792967436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e510b2a8ce65c59438f7620ed3a4f8ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 3940473686e43bb4b91e7044a2897dfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1792967442
@@ -2958,11 +2958,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1792967436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1f36a79ccfa69d4d925e26c84ce8124, type: 3}
+  m_Script: {fileID: 11500000, guid: 94c5134b2ad71684893bd85e57917236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
+  actor: 0
 --- !u!1 &1798820351
 GameObject:
   m_ObjectHideFlags: 0
@@ -3150,7 +3149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rollInterval: 1.5
   victoryDisplayTime: 2
-  enemy: {fileID: 3997820038344054838}
+  enemyGameObject: {fileID: 3997820038344054838}
   resultTextPanel: {fileID: 1683875630}
   techUI: {fileID: 1564339255}
   exitToMenuButton: {fileID: 1798820351}
@@ -3162,9 +3161,9 @@ MonoBehaviour:
   enemyRollUI: {fileID: 465684037}
   playerRollDamageUI: {fileID: 1143865351}
   playerRollHealUI: {fileID: 1791418934}
-  playerRollGenerator: {fileID: 1792967441}
+  playerRollGenerator: {fileID: 1792967442}
   enemyParent: {fileID: 1222135353}
-  playerBattleStatus: {fileID: 1792967442}
+  playerHealthBar: {fileID: 1792967440}
   playerStatusMessagesParent: {fileID: 638823871}
   enemyStatusMessagesParent: {fileID: 717598062}
   playerModMessagesParent: {fileID: 1303150175}
@@ -3896,20 +3895,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3997820038344054824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3997820038344054838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0704ddbd6be342349a0d4dae85d41b9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 5
-  currentHealth: 5
 --- !u!114 &3997820038344054836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3957,7 +3942,8 @@ GameObject:
   - component: {fileID: 3997820038344054839}
   - component: {fileID: 3997820038344054837}
   - component: {fileID: 3997820038344054836}
-  - component: {fileID: 3997820038344054824}
+  - component: {fileID: 3997820038344054840}
+  - component: {fileID: 3997820038344054841}
   m_Layer: 5
   m_Name: Enemy
   m_TagString: Untagged
@@ -3988,3 +3974,28 @@ RectTransform:
   m_AnchoredPosition: {x: -175, y: -30}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3997820038344054840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997820038344054838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3940473686e43bb4b91e7044a2897dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3997820038344054841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997820038344054838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c5134b2ad71684893bd85e57917236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: 1
