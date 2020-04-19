@@ -18,6 +18,8 @@ namespace Modifiers
         public int numRollsRemaining;
         // 0-1 chance that this modifier triggers (if applicable)
         public float triggerChance;
+        // Status caused by this modifier, if any
+        public Battle.StatusEffect statusEffect = Battle.StatusEffect.NONE;
 
         // Randomly determine if this modifier should be triggered
         protected bool RollTrigger()

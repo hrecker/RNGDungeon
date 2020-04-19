@@ -6,7 +6,10 @@ namespace Modifiers.StatusEffect
     // Break is a status effect that lowers min roll by one
     public class BreakModifier : RollBuffModifier, IOneTimeEffectModifier
     {
-        public BreakModifier() : base(-1, 0) { }
+        public BreakModifier() : base(-1, 0) 
+        {
+            statusEffect = Battle.StatusEffect.BREAK;
+        }
 
         public void ApplyOneTimeEffectMod()
         {

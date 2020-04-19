@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Modifiers
 {
@@ -50,6 +51,21 @@ namespace Modifiers
 
         public void RegisterModifier(Modifier mod)
         {
+            // When attempting to register a status effect, don't allow stacking.
+            // Just extend the existing status effect modifier
+            if (mod.statusEffect != Battle.StatusEffect.NONE)
+            {
+                foreach (Modifier existingMod in uniqueRegisteredModifiers)
+                {
+                    if (mod.statusEffect == existingMod.statusEffect)
+                    {
+                        existingMod.numRollsRemaining = Math.Max(mod.numRollsRemaining,
+                            existingMod.numRollsRemaining);
+                        return;
+                    }
+                }
+            }
+
             bool registered = false;
             if (mod is IRollGenerationModifier)
             {
