@@ -27,7 +27,7 @@ namespace Modifiers.Tech
         public RollResult ApplyRollResultMod(RollResult initial)
         {
             // Bulwark cannot damage the opponent
-            initial.SetDamage(actor.Opponent(), 0);
+            initial.SetRollDamage(actor.Opponent(), 0);
             return initial;
         }
     }

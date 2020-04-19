@@ -11,7 +11,7 @@ namespace Modifiers.Ability
             {
                 int damageReduction = 
                     (-initial.GetTotalHealthChange(actor)) - Status().Health + 1;
-                initial.SetDamage(actor, initial.GetDamage(actor) - damageReduction);
+                initial.AddHeal(actor, damageReduction);
                 BattleController.AddModMessage(actor, "Stalwart!");
             }
             return initial;

@@ -32,13 +32,13 @@ namespace Battle.Enemies
 
             public void ApplyPostDamageMod(RollResult initial)
             {
-                if (initial.PlayerDamage > 0 && !controller.debuffActive)
+                if (initial.PlayerRollDamage > 0 && !controller.debuffActive)
                 {
                     Modifier mod = new RollBuffModifier(-controller.rollDebuff, -controller.rollDebuff);
                     mod.isRollBounded = true;
                     mod.numRollsRemaining = 2;
                     controller.battleController.AddStatusMessage(BattleActor.PLAYER, "-2 Roll: 2 turns");
-                    PlayerStatus.Status.Mods.RegisterModifier(mod);
+                    PlayerStatus.Status.NextRollMods.Add(mod);
                     controller.debuffTurnsRemaining = 2;
                     controller.debuffActive = true;
                     BattleController.AddEnemyModMessage("Fear!");

@@ -186,7 +186,7 @@ namespace Battle
             int playerDamage = Math.Max(0, rollValues.Item2 - rollValues.Item1);
             int enemyDamage = Math.Max(0, rollValues.Item1 - rollValues.Item2);
             RollResult rollResult = new RollResult
-            { PlayerDamage = playerDamage, EnemyDamage = enemyDamage };
+            { PlayerRollDamage = playerDamage, EnemyRollDamage = enemyDamage };
             // Again apply enemy and player mods
             IEnumerable<IRollResultModifier> rrMods =
                 PlayerStatus.Status.Mods.GetRollResultModifiers().Union(

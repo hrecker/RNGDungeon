@@ -2,7 +2,7 @@
 
 namespace Modifiers.StatusEffect
 {
-    // Causes a status effect on this opponent if damage was dealt
+    // Causes a status effect on this opponent if roll damage was dealt
     public class InflictStatusOnHitModifier : Modifier, IPostDamageModifier
     {
         private BattleController battleController;
@@ -25,7 +25,7 @@ namespace Modifiers.StatusEffect
             {
                 BattleController.AddModMessage(actor, modMessage);
             }
-            if (rollResult.GetDamage(actor.Opponent()) > 0)
+            if (rollResult.GetRollDamage(actor.Opponent()) > 0)
             {
                 Modifier statusMod = status.Modifier();
                 statusMod.actor = actor.Opponent();

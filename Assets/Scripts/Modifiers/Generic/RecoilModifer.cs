@@ -2,7 +2,7 @@
 
 namespace Modifiers.Generic
 {
-    // Chance to deal some recoil damage when hit
+    // Chance to deal some recoil damage when hit by roll
     public class RecoilModifer : Modifier, IRollResultModifier
     {
         // Message to display when triggered, or null if no message should be displayed
@@ -18,9 +18,9 @@ namespace Modifiers.Generic
 
         public RollResult ApplyRollResultMod(RollResult initial)
         {
-            if (initial.GetDamage(actor) > 0 && RollTrigger())
+            if (initial.GetRollDamage(actor) > 0 && RollTrigger())
             {
-                initial.SetDamage(actor.Opponent(), initial.GetDamage(actor.Opponent()) + 1);
+                initial.AddNonRollDamage(actor.Opponent(), 1);
                 if (modMessage != null)
                 {
                     BattleController.AddModMessage(actor, modMessage);

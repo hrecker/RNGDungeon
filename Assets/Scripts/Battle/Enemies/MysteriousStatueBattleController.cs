@@ -66,12 +66,12 @@ namespace Battle.Enemies
             {
                 if (controller.currentPhase < 3)
                 {
-                    if (initial.EnemyDamage >= 1)
+                    if (initial.EnemyRollDamage >= 1)
                     {
-                        initial.EnemyDamage -= controller.damageReduction;
-                        if (initial.EnemyDamage < 1)
+                        initial.EnemyRollDamage -= controller.damageReduction;
+                        if (initial.EnemyRollDamage < 1)
                         {
-                            initial.EnemyDamage = 1;
+                            initial.EnemyRollDamage = 1;
                         }
                     }
                 }
@@ -80,7 +80,7 @@ namespace Battle.Enemies
 
             public void ApplyPostDamageMod(RollResult rollResult)
             {
-                if (rollResult.EnemyDamage > 0 && EnemyStatus.Status.Health > 0)
+                if (rollResult.EnemyRollDamage > 0 && EnemyStatus.Status.Health > 0)
                 {
                     controller.hitsTaken++;
                     controller.UpdatePhase();

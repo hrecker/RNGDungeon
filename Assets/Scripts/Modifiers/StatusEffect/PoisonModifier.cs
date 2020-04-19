@@ -17,7 +17,7 @@ namespace Modifiers.StatusEffect
 
         public RollResult ApplyRollResultMod(RollResult initial)
         {
-            initial.SetDamage(actor, initial.GetDamage(actor) + 1);
+            initial.AddNonRollDamage(actor, 1);
             return initial;
         }
 

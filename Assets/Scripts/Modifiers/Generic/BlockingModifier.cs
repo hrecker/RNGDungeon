@@ -2,7 +2,7 @@
 
 namespace Modifiers.Generic
 {
-    // Prevents damage
+    // Prevents roll damage
     public class BlockingModifier : Modifier, IRollResultModifier
     {
         public BlockingModifier()
@@ -12,7 +12,7 @@ namespace Modifiers.Generic
 
         public RollResult ApplyRollResultMod(RollResult initial)
         {
-            initial.SetDamage(actor, 0);
+            initial.SetRollDamage(actor, 0);
             return initial;
         }
     }
