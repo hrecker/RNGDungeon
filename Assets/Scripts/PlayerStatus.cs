@@ -24,7 +24,7 @@ public class PlayerStatus
             //TODO this will potentially be pretty inefficient in the inventory screen
             if (weaponMod != null)
             {
-                Status.Mods.DeregisterModifier(weaponMod);
+                weaponMod.DeregisterSelf();
             }
             if (equippedWeapon != null)
             {
@@ -59,8 +59,8 @@ public class PlayerStatus
         EquippedTrinkets = new List<Item>();
         EquippedWeapon = Data.Cache.GetItem("Shortsword");
         EnabledTechs = new List<Tech>();
-        EnabledTechs.Add(Data.Cache.GetTech("HeavySwing"));
-        EnabledTechs.Add(Data.Cache.GetTech("Bulwark"));
+        EnabledTechs.Add(Data.Cache.GetTech("Sideswipe"));
+        EnabledTechs.Add(Data.Cache.GetTech("Topple"));
         Initialized = true;
     }
 

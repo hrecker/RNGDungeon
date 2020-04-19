@@ -29,6 +29,8 @@ namespace Data
         // Techs: 301 - 400
         HEAVYSWING = 301,
         RAGE = 302,
-        BULWARK = 303
+        BULWARK = 303,
+        SIDESWIPE = 304,
+        TOPPLE = 305
     }
 }

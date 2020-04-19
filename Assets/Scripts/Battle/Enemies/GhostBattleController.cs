@@ -37,7 +37,8 @@ namespace Battle.Enemies
                     Modifier mod = new RollBuffModifier(-controller.rollDebuff, -controller.rollDebuff);
                     mod.isRollBounded = true;
                     mod.numRollsRemaining = 2;
-                    controller.battleController.AddPlayerRollBoundedMod(mod, "-2 Roll: 2 turns", null);
+                    controller.battleController.AddStatusMessage(BattleActor.PLAYER, "-2 Roll: 2 turns");
+                    PlayerStatus.Status.Mods.RegisterModifier(mod);
                     controller.debuffTurnsRemaining = 2;
                     controller.debuffActive = true;
                     BattleController.AddEnemyModMessage("Fear!");

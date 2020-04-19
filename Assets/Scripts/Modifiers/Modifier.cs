@@ -36,8 +36,11 @@ namespace Modifiers
 
         public void DeregisterSelf()
         {
+            OnDeregister();
             Status().Mods.DeregisterModifier(this);
         }
+
+        protected virtual void OnDeregister() { }
 
         protected BattleStatus Status()
         {

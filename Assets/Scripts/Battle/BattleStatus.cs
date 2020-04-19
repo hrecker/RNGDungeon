@@ -1,4 +1,5 @@
 ﻿using Modifiers;
+using System.Collections.Generic;
 
 namespace Battle
 {
@@ -47,10 +48,14 @@ namespace Battle
 
         public int Luck { get; set; }
 
-        public StatusEffect ActiveStatus { get; set; }
+        public List<StatusEffect> ActiveEffects { get; set; }
 
         private ActiveModifiers mods;
         public ActiveModifiers Mods { get { return mods; } }
+
+        // Mods that should be added just before the next roll
+        private List<Modifier> nextRollMods;
+        public List<Modifier> NextRollMods { get { return nextRollMods; } }
 
         public BattleStatus(int maxHealth, int minRoll, int maxRoll)
         {
@@ -58,8 +63,9 @@ namespace Battle
             Health = MaxHealth;
             BaseMaxRoll = maxRoll;
             BaseMinRoll = System.Math.Min(minRoll, maxRoll);
-            ActiveStatus = StatusEffect.NONE;
+            ActiveEffects = new List<StatusEffect>();
             mods = new ActiveModifiers();
+            nextRollMods = new List<Modifier>();
         }
 
         // Get trigger chance from base with luck counted in.

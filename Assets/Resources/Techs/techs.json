@@ -23,6 +23,22 @@
             "modEffect": {
                 "playerMinRollChange": 3
             }
+        },
+        {
+            "name": "Sideswipe",
+            "description": "Causes break",
+            "cooldownRolls": 4,
+            "modType": 304
+        },
+        {
+            "name": "Topple",
+            "description": "Raises roll against broken enemies",
+            "cooldownRolls": 5,
+            "modType": 305,
+            "modEffect": {
+                "playerMinRollChange": 2,
+                "playerMaxRollChange": 2
+            }
         }
     ]
 }

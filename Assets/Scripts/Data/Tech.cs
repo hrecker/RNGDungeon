@@ -1,6 +1,8 @@
 ﻿using System;
 using Modifiers;
 using Modifiers.Tech;
+using Modifiers.StatusEffect;
+using Battle;
 
 namespace Data
 {
@@ -18,7 +20,7 @@ namespace Data
         public ModType modType;
         public ModEffect modEffect;
 
-        public Modifier CreateTechModifier()
+        public Modifier CreateTechModifier(BattleController battleController)
         {
             Modifier result = null;
             switch (modType)
@@ -32,6 +34,13 @@ namespace Data
                 case ModType.BULWARK:
                     result = new BulwarkModifier(modEffect.playerMinRollChange);
                     break;
+                case ModType.SIDESWIPE:
+                    result = new SideswipeModifier(battleController);
+                    break;
+                case ModType.TOPPLE:
+                    result = new ToppleModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange);
+                    break;
             }
             if (result != null)
             {
@@ -39,7 +48,7 @@ namespace Data
                 result.numRollsRemaining = numRollsInEffect;
                 result.triggerChance = modEffect.baseModTriggerChance;
                 result.priority = modEffect.modPriority;
-                result.actor = BattleActor.PLAYER;
+                result.actor = modEffect.actor;
             }
             return result;
         }

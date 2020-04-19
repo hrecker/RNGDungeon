@@ -54,7 +54,7 @@ namespace Data
             {
                 result.triggerChance = modEffect.baseModTriggerChance;
                 result.priority = modEffect.modPriority;
-                result.actor = BattleActor.PLAYER;
+                result.actor = modEffect.actor;
             }
             return result;
         }

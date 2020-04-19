@@ -148,7 +148,7 @@ namespace Battle
                 Tech selected = techUI.GetSelectedTech();
                 if (!techMods.ContainsKey(selected.name))
                 {
-                    techMods.Add(selected.name, selected.CreateTechModifier());
+                    techMods.Add(selected.name, selected.CreateTechModifier(this));
                 }
                 // Add UI messages if necessary
                 playerStatusMessagesToShow.Add(selected.playerStatusMessage);
@@ -156,6 +156,17 @@ namespace Battle
                 PlayerStatus.Status.Mods.RegisterModifier(techMods[selected.name]);
             }
             techUI.Roll();
+            // Add any other mods that should be active before the roll
+            foreach (Modifier mod in PlayerStatus.Status.NextRollMods)
+            {
+                PlayerStatus.Status.Mods.RegisterModifier(mod);
+            }
+            PlayerStatus.Status.NextRollMods.Clear();
+            foreach (Modifier mod in EnemyStatus.Status.NextRollMods)
+            {
+                EnemyStatus.Status.Mods.RegisterModifier(mod);
+            }
+            EnemyStatus.Status.NextRollMods.Clear();
 
             // Generate roll numeric values
             int playerInitial = playerRollGenerator.GenerateInitialRoll();
@@ -354,17 +365,17 @@ namespace Battle
             }
         }
 
-        public void AddPlayerRollBoundedMod(Modifier mod, int priority)
+        public void AddStatusMessage(BattleActor actor, string message)
         {
-            AddPlayerRollBoundedMod(mod, null, null);
-        }
-
-        // Used when something else (an enemy) needs to add a mod that ends when the battle ends
-        public void AddPlayerRollBoundedMod(Modifier mod, string playerUiMessage, string enemyUiMessage)
-        {
-            PlayerStatus.Status.Mods.RegisterModifier(mod);
-            playerStatusMessagesToShow.Add(playerUiMessage);
-            enemyStatusMessagesToShow.Add(enemyUiMessage);
+            switch (actor)
+            {
+                case BattleActor.PLAYER:
+                    playerStatusMessagesToShow.Add(message);
+                    break;
+                case BattleActor.ENEMY:
+                    enemyStatusMessagesToShow.Add(message);
+                    break;
+            }
         }
 
         public static void AddModMessage(BattleActor actor, string message)

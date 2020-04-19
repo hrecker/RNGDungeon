@@ -77,15 +77,15 @@ namespace Modifiers
                 RegisterModifier((IPostBattleModifier)mod, mod.priority);
             }
 
+            if (registered)
+            {
+                uniqueRegisteredModifiers.Add(mod);
+            }
             // One shot modifiers are just instantly applied and don't need to be registered
             if (mod is IOneTimeEffectModifier)
             {
                 registered = true;
                 ((IOneTimeEffectModifier)mod).ApplyOneTimeEffectMod();
-            }
-            else
-            {
-                uniqueRegisteredModifiers.Add(mod);
             }
 
             if (!registered)
@@ -217,7 +217,10 @@ namespace Modifiers
         {
             if (mod.isRollBounded)
             {
-                mod.numRollsRemaining--;
+                if (mod.numRollsRemaining > 0)
+                {
+                    mod.numRollsRemaining--;
+                }
                 if (mod.numRollsRemaining <= 0)
                 {
                     mod.DeregisterSelf();
@@ -233,7 +236,7 @@ namespace Modifiers
             {
                 if (uniqueRegisteredModifiers[i].isRollBounded)
                 {
-                    DeregisterModifier(uniqueRegisteredModifiers[i]);
+                    uniqueRegisteredModifiers[i].DeregisterSelf();
                 }
             }
         }

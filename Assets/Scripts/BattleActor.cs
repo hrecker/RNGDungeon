@@ -1,9 +1,11 @@
 ﻿using Battle;
+using System;
 
+[Serializable]
 public enum BattleActor
 {
-    PLAYER,
-    ENEMY
+    PLAYER = 0,
+    ENEMY = 1
 }
 
 public static class BattleActorExtensions

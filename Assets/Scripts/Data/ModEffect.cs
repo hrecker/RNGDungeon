@@ -11,5 +11,7 @@ namespace Data
         public int playerMinRollChange;
         public int playerMaxRollChange;
         public float baseModTriggerChance;
+        // Who this mod should be registered to
+        public BattleActor actor;
     }
 }
