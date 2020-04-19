@@ -25,6 +25,7 @@ namespace Data
         PROCRASTINATION = 206,
         SPIKY = 207,
         RECOVERY = 208,
+        VENOMOUS = 209,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

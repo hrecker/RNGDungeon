@@ -20,7 +20,7 @@ namespace Data
         public ModType modType;
         public ModEffect modEffect;
 
-        public Modifier CreateTechModifier(BattleController battleController)
+        public Modifier CreateTechModifier()
         {
             Modifier result = null;
             switch (modType)
@@ -36,7 +36,7 @@ namespace Data
                     break;
                 case ModType.SIDESWIPE:
                     result = new InflictStatusOnHitModifier(StatusEffect.BREAK,
-                        "Sideswipe!", 2, battleController);
+                        false, "Sideswipe!", 2);
                     break;
                 case ModType.TOPPLE:
                     result = new ToppleModifier(modEffect.playerMinRollChange,
@@ -44,7 +44,7 @@ namespace Data
                     break;
                 case ModType.INFECT:
                     result = new InflictStatusOnHitModifier(StatusEffect.POISON,
-                        "Infect!", 3, battleController);
+                        false, "Infect!", 3);
                     break;
             }
             if (result != null)

@@ -25,7 +25,7 @@ namespace Battle.Enemies
             {
                 if (regenRoll)
                 {
-                    BattleController.AddEnemyModMessage("Regen!");
+                    BattleController.AddModMessage(BattleActor.ENEMY, "Regen!");
                     initial.EnemyHeal += regenRate;
                 }
                 regenRoll = !regenRoll;

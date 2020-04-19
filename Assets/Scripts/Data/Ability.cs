@@ -2,6 +2,7 @@
 using Modifiers;
 using Modifiers.Ability;
 using Modifiers.Generic;
+using Modifiers.StatusEffect;
 
 namespace Data
 {
@@ -48,6 +49,10 @@ namespace Data
                     break;
                 case ModType.RECOVERY:
                     result = new RecoveryModifier(modEffect.playerHealthChange);
+                    break;
+                case ModType.VENOMOUS:
+                    result = new InflictStatusOnHitModifier(Battle.StatusEffect.POISON, true,
+                        "Venomous!", 3);
                     break;
             }
             if (result != null)

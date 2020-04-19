@@ -79,6 +79,15 @@
             "modEffect": {
                 "playerHealthChange": 2
             }
+        },
+        {
+            "name": "Venomous",
+            "displayName": "Venomous",
+            "description": "Chance to inflict poison on hit",
+            "modType": 209,
+            "modEffect": {
+                "baseModTriggerChance": 0.2
+            }
         }
     ]
 }

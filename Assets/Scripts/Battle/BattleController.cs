@@ -54,8 +54,8 @@ namespace Battle
         public float statusMessageSpacing = 40.0f;
 
         private Dictionary<string, Modifier> techMods;
-        private List<string> playerStatusMessagesToShow;
-        private List<string> enemyStatusMessagesToShow;
+        private static List<string> playerStatusMessagesToShow;
+        private static List<string> enemyStatusMessagesToShow;
         private static List<string> playerModMessagesToShow;
         private static List<string> enemyModMessagesToShow;
         private static int currentRoll;
@@ -138,9 +138,6 @@ namespace Battle
 
         private void Roll()
         {
-            playerModMessagesToShow.Clear();
-            enemyModMessagesToShow.Clear();
-
             // If there are modifiers to add, add before the roll starts
             // Add mods for selected techs
             if (techUI.GetSelectedTech() != null)
@@ -148,7 +145,7 @@ namespace Battle
                 Tech selected = techUI.GetSelectedTech();
                 if (!techMods.ContainsKey(selected.name))
                 {
-                    techMods.Add(selected.name, selected.CreateTechModifier(this));
+                    techMods.Add(selected.name, selected.CreateTechModifier());
                 }
                 // Add UI messages if necessary
                 playerStatusMessagesToShow.Add(selected.playerStatusMessage);
@@ -219,10 +216,12 @@ namespace Battle
             CheckBattleComplete();
 
             // Battle status messages
-            CreateStatusMessages(playerStatusMessagesToShow, enemyStatusMessagesToShow);
+            CreateStatusMessages();
             CreateModMessages();
             playerStatusMessagesToShow.Clear();
             enemyStatusMessagesToShow.Clear();
+            playerModMessagesToShow.Clear();
+            enemyModMessagesToShow.Clear();
 
             if (!completed)
             {
@@ -338,8 +337,9 @@ namespace Battle
             if (PlayerStatus.UseItem(item, true))
             {
                 // Add status messages if there are any
-                CreateStatusMessages(new List<string>() { item.playerStatusMessage },
-                    new List<string>() { item.enemyStatusMessage });
+                CreateMessages(new List<string>() { item.playerStatusMessage },
+                    new List<string>() { item.enemyStatusMessage },
+                    playerStatusMessagesParent, enemyStatusMessagesParent);
                 return true;
             }
             return false;
@@ -365,7 +365,7 @@ namespace Battle
             }
         }
 
-        public void AddStatusMessage(BattleActor actor, string message)
+        public static void AddStatusMessage(BattleActor actor, string message)
         {
             switch (actor)
             {
@@ -383,51 +383,36 @@ namespace Battle
             switch (actor)
             {
                 case BattleActor.PLAYER:
-                    AddPlayerModMessage(message);
+                    playerModMessagesToShow.Add(message);
                     break;
                 case BattleActor.ENEMY:
-                    AddEnemyModMessage(message);
+                    enemyModMessagesToShow.Add(message);
                     break;
             }
-        }
-
-        public static void AddPlayerModMessage(string message)
-        {
-            playerModMessagesToShow.Add(message);
-        }
-
-        public static void AddEnemyModMessage(string message)
-        {
-            enemyModMessagesToShow.Add(message);
         }
 
         private void CreateModMessages()
         {
-            for (int i = 0; i < playerModMessagesToShow.Count; i++)
-            {
-                CreateStatusMessage(playerModMessagesToShow[i], playerModMessagesParent, i);
-            }
-            for (int i = 0; i < enemyModMessagesToShow.Count; i++)
-            {
-                CreateStatusMessage(enemyModMessagesToShow[i], enemyModMessagesParent, i);
-            }
+            CreateMessages(playerModMessagesToShow, enemyModMessagesToShow,
+                playerModMessagesParent, enemyModMessagesParent);
         }
 
-        private void CreateStatusMessages(List<string> playerMessages, List<string> enemyMessages)
+        private void CreateStatusMessages()
         {
-            if (playerMessages != null)
+            CreateMessages(playerStatusMessagesToShow, enemyStatusMessagesToShow,
+                playerStatusMessagesParent, enemyStatusMessagesParent);
+        }
+
+        private void CreateMessages(List<string> playerMessages, List<string> enemyMessages, 
+            RectTransform playerMessageParent, RectTransform enemyMessageParent)
+        {
+            for (int i = 0; i < playerMessages.Count; i++)
             {
-                for (int i = 0; i < playerMessages.Count; i++)
-                {
-                    CreateStatusMessage(playerMessages[i], playerStatusMessagesParent, i);
-                }
+                CreateStatusMessage(playerMessages[i], playerMessageParent, i);
             }
-            if (enemyMessages != null)
+            for (int i = 0; i < enemyMessages.Count; i++)
             {
-                for (int i = 0; i < enemyMessages.Count; i++)
-                {
-                    CreateStatusMessage(enemyMessages[i], enemyStatusMessagesParent, i);
-                }
+                CreateStatusMessage(enemyMessages[i], enemyMessageParent, i);
             }
         }
 

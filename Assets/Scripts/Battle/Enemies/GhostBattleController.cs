@@ -7,15 +7,11 @@ namespace Battle.Enemies
     public class GhostBattleController : EnemyBattleController
     {
         private int rollDebuff = 2;
-        private BattleController battleController;
         private bool debuffActive;
         private int debuffTurnsRemaining;
 
         private void Start()
         {
-            battleController = GameObject.Find("BattleController").
-                gameObject.GetComponent<BattleController>();
-
             GhostModifier mod = new GhostModifier(this);
             EnemyStatus.Status.Mods.RegisterModifier(mod);
         }
@@ -37,11 +33,11 @@ namespace Battle.Enemies
                     Modifier mod = new RollBuffModifier(-controller.rollDebuff, -controller.rollDebuff);
                     mod.isRollBounded = true;
                     mod.numRollsRemaining = 2;
-                    controller.battleController.AddStatusMessage(BattleActor.PLAYER, "-2 Roll: 2 turns");
+                    BattleController.AddStatusMessage(BattleActor.PLAYER, "-2 Roll: 2 turns");
                     PlayerStatus.Status.NextRollMods.Add(mod);
                     controller.debuffTurnsRemaining = 2;
                     controller.debuffActive = true;
-                    BattleController.AddEnemyModMessage("Fear!");
+                    BattleController.AddModMessage(BattleActor.ENEMY, "Fear!");
                 }
                 else if (controller.debuffActive)
                 {

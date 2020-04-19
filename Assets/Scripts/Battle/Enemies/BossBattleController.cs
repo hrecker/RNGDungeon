@@ -61,7 +61,7 @@ namespace Battle.Enemies
                             currentPhase = BossPhase.HEAL;
                             enemySprite.sprite = healSprite;
                             healing = true;
-                            BattleController.AddEnemyModMessage("Heal!");
+                            BattleController.AddModMessage(BattleActor.ENEMY, "Heal!");
                         }
                     }
                     // Otherwise move to charge phase
@@ -70,7 +70,7 @@ namespace Battle.Enemies
                         currentPhase = BossPhase.CHARGE;
                         enemySprite.sprite = chargeSprite;
                         chargeBuff = 0;
-                        BattleController.AddEnemyModMessage("Charge!");
+                        BattleController.AddModMessage(BattleActor.ENEMY, "Charge!");
                     }
                     phaseRollsRemaining = healOrChargeRolls;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll - healOrChargeDebuff;
@@ -78,7 +78,7 @@ namespace Battle.Enemies
                     break;
                 case BossPhase.CHARGE: // Charge moves to release
                     currentPhase = BossPhase.RELEASE;
-                    BattleController.AddEnemyModMessage("Release!");
+                    BattleController.AddModMessage(BattleActor.ENEMY, "Release!");
                     phaseRollsRemaining = 1;
                     enemySprite.sprite = releaseSprite;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll + chargeBuff;

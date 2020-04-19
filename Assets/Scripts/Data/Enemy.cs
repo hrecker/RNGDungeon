@@ -21,6 +21,8 @@ namespace Data
                     return typeof(CollectorBattleController);
                 case "Slime":
                     return typeof(SlimeBattleController);
+                case "Snake":
+                    return typeof(SnakeBattleController);
                 case "Ghost":
                     return typeof(GhostBattleController);
                 case "MysteriousStatue":

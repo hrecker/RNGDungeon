@@ -28,7 +28,10 @@
             "name": "Sideswipe",
             "description": "Inflicts break",
             "cooldownRolls": 4,
-            "modType": 304
+            "modType": 304,
+            "modEffect": {
+                "baseModTriggerChance": 1
+            }
         },
         {
             "name": "Topple",
@@ -44,7 +47,10 @@
             "name": "Infect",
             "description": "Inflicts poison",
             "cooldownRolls": 5,
-            "modType": 306
+            "modType": 306,
+            "modEffect": {
+                "baseModTriggerChance": 1
+            }
         }
     ]
 }

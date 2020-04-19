@@ -19,6 +19,12 @@
             "maxHealth": 4
         },
         {
+            "name": "Snake",
+            "baseMinRoll": 2,
+            "baseMaxRoll": 3,
+            "maxHealth": 4
+        },
+        {
             "name": "Ghost",
             "baseMinRoll": 3,
             "baseMaxRoll": 4,
