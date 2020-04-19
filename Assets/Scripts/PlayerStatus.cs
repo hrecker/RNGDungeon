@@ -60,7 +60,7 @@ public class PlayerStatus
         EquippedWeapon = Data.Cache.GetItem("Shortsword");
         EnabledTechs = new List<Tech>();
         EnabledTechs.Add(Data.Cache.GetTech("Sideswipe"));
-        EnabledTechs.Add(Data.Cache.GetTech("Topple"));
+        EnabledTechs.Add(Data.Cache.GetTech("Infect"));
         Initialized = true;
     }
 

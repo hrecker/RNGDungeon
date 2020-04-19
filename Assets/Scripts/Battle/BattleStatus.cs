@@ -1,5 +1,6 @@
 ﻿using Modifiers;
 using System.Collections.Generic;
+using Modifiers.StatusEffect;
 
 namespace Battle
 {
@@ -80,6 +81,36 @@ namespace Battle
     public enum StatusEffect
     {
         NONE,
-        BREAK
+        BREAK,
+        POISON
+    }
+
+    public static class StatusEffectExtensions
+    {
+        public static string Name(this StatusEffect effect)
+        {
+            switch (effect)
+            {
+                case StatusEffect.BREAK:
+                    return "Break";
+                case StatusEffect.POISON:
+                    return "Poison";
+                default:
+                    return null;
+            }
+        }
+
+        public static Modifier Modifier(this StatusEffect effect)
+        {
+            switch (effect)
+            {
+                case StatusEffect.BREAK:
+                    return new BreakModifier();
+                case StatusEffect.POISON:
+                    return new PoisonModifier();
+                default:
+                    return null;
+            }
+        }
     }
 }

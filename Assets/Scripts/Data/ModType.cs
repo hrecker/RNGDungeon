@@ -31,6 +31,7 @@ namespace Data
         RAGE = 302,
         BULWARK = 303,
         SIDESWIPE = 304,
-        TOPPLE = 305
+        TOPPLE = 305,
+        INFECT = 306
     }
 }

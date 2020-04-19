@@ -35,11 +35,16 @@ namespace Data
                     result = new BulwarkModifier(modEffect.playerMinRollChange);
                     break;
                 case ModType.SIDESWIPE:
-                    result = new SideswipeModifier(battleController);
+                    result = new InflictStatusOnHitModifier(StatusEffect.BREAK,
+                        "Sideswipe!", 2, battleController);
                     break;
                 case ModType.TOPPLE:
                     result = new ToppleModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange);
+                    break;
+                case ModType.INFECT:
+                    result = new InflictStatusOnHitModifier(StatusEffect.POISON,
+                        "Infect!", 3, battleController);
                     break;
             }
             if (result != null)
