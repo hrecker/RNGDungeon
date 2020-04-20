@@ -26,6 +26,7 @@ namespace Battle
         public GameObject exitToMenuButton;
         public GameObject itemIconPrefab;
         public GameObject itemDropPanel;
+        private StatusUI statusUI;
 
         public Text rollCountText;
         public Text playerRollUI;
@@ -59,9 +60,11 @@ namespace Battle
         private static List<string> playerModMessagesToShow;
         private static List<string> enemyModMessagesToShow;
         private static int currentRoll;
+        private bool firstUpdate;
 
         private void Awake()
         {
+            statusUI = GetComponent<StatusUI>();
             baseRollInterval = rollInterval;
             // Add enemycontroller for the given enemy
             string enemyName = CurrentLevel.currentEnemyName;
@@ -82,6 +85,7 @@ namespace Battle
 
         private void Start()
         {
+            firstUpdate = true;
             currentRoll = 1;
             UpdateRollCountUI();
             exitToMenuButton.SetActive(false);
@@ -103,6 +107,12 @@ namespace Battle
 
         void Update()
         {
+            if (firstUpdate)
+            {
+                statusUI.UpdateStatusIcons();
+                firstUpdate = false;
+            }
+
             timer += Time.deltaTime;
 
             if (!completed && timer >= rollInterval)
@@ -212,6 +222,8 @@ namespace Battle
             PlayerStatus.Status.Mods.DecrementAndDeregisterModsIfNecessary();
             EnemyStatus.Status.Mods.DecrementAndDeregisterModsIfNecessary();
             currentRoll++;
+            
+            statusUI.UpdateStatusIcons();
 
             CheckBattleComplete();
 
@@ -340,6 +352,8 @@ namespace Battle
                 CreateMessages(new List<string>() { item.playerStatusMessage },
                     new List<string>() { item.enemyStatusMessage },
                     playerStatusMessagesParent, enemyStatusMessagesParent);
+                // Update status icons in case status has changed
+                statusUI.UpdateStatusIcons();
                 return true;
             }
             return false;

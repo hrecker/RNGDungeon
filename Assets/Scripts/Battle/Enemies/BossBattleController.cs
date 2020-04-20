@@ -28,6 +28,8 @@ namespace Battle.Enemies
         private BossPhase currentPhase;
         private int phaseRollsRemaining;
 
+        private BossModifier mod;
+
         void Start()
         {
             defaultSprite = enemySprite.sprite;
@@ -43,7 +45,7 @@ namespace Battle.Enemies
             exhaustSprite = GetEnemyResourceSprite("bossexhausted");
             defeatedSprite = GetEnemyResourceSprite("bossdefeated");
 
-            BossModifier mod = new BossModifier(this);
+            mod = new BossModifier(this);
             EnemyStatus.Status.Mods.RegisterModifier(mod);
         }
 
@@ -75,6 +77,7 @@ namespace Battle.Enemies
                     phaseRollsRemaining = healOrChargeRolls;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll - healOrChargeDebuff;
                     EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll - healOrChargeDebuff;
+                    mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
                     break;
                 case BossPhase.CHARGE: // Charge moves to release
                     currentPhase = BossPhase.RELEASE;
@@ -83,6 +86,7 @@ namespace Battle.Enemies
                     enemySprite.sprite = releaseSprite;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll + chargeBuff;
                     EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll + chargeBuff;
+                    mod.battleEffect = RollBoundedBattleEffect.BUFF;
                     break;
                 case BossPhase.RELEASE: // Release moves to exhaustion
                     currentPhase = BossPhase.EXHAUSTED;
@@ -90,6 +94,7 @@ namespace Battle.Enemies
                     enemySprite.sprite = exhaustSprite;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll - exhaustDebuff;
                     EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll - exhaustDebuff;
+                    mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
                     break;
                 case BossPhase.HEAL: // Heal and exhaustion move back to default
                 case BossPhase.EXHAUSTED:
@@ -99,6 +104,7 @@ namespace Battle.Enemies
                     enemySprite.sprite = defaultSprite;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll;
                     EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll;
+                    mod.battleEffect = RollBoundedBattleEffect.NONE;
                     break;
             }
         }
@@ -129,7 +135,7 @@ namespace Battle.Enemies
                     // Update count of damage received while charging
                     if (controller.currentPhase == BossPhase.CHARGE)
                     {
-                        controller.chargeBuff += (int)Math.Max(1, rollResult.EnemyDamage);
+                        controller.chargeBuff += (int)Math.Max(1, rollResult.EnemyRollDamage);
                     }
 
                     controller.phaseRollsRemaining--;

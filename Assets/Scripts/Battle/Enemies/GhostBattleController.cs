@@ -33,6 +33,7 @@ namespace Battle.Enemies
                     Modifier mod = new RollBuffModifier(-controller.rollDebuff, -controller.rollDebuff);
                     mod.isRollBounded = true;
                     mod.numRollsRemaining = 2;
+                    mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
                     BattleController.AddStatusMessage(BattleActor.PLAYER, "-2 Roll: 2 turns");
                     PlayerStatus.Status.NextRollMods.Add(mod);
                     controller.debuffTurnsRemaining = 2;

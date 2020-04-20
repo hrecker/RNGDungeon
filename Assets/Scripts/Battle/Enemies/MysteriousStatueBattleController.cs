@@ -15,6 +15,8 @@ namespace Battle.Enemies
         private int finalPhaseMinRoll;
         private int finalPhaseMaxRoll;
 
+        private MysteriousStatueModifier mod;
+
         private void Start()
         {
             currentPhase = 1;
@@ -27,7 +29,7 @@ namespace Battle.Enemies
             phase2 = GetEnemyResourceSprite("mysteriousstatue2");
             phase3 = GetEnemyResourceSprite("mysteriousstatue3");
 
-            MysteriousStatueModifier mod = new MysteriousStatueModifier(this);
+            mod = new MysteriousStatueModifier(this);
             EnemyStatus.Status.Mods.RegisterModifier(mod);
         }
 
@@ -47,6 +49,7 @@ namespace Battle.Enemies
             {
                 currentPhase = 3;
                 enemySprite.sprite = phase3;
+                mod.battleEffect = RollBoundedBattleEffect.NONE;
                 EnemyStatus.Status.BaseMinRoll = finalPhaseMinRoll;
                 EnemyStatus.Status.BaseMaxRoll = finalPhaseMaxRoll;
             }
@@ -60,6 +63,7 @@ namespace Battle.Enemies
             {
                 this.controller = controller;
                 actor = BattleActor.ENEMY;
+                battleEffect = RollBoundedBattleEffect.BLOCK;
             }
 
             public RollResult ApplyRollResultMod(RollResult initial)

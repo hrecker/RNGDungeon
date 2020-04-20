@@ -8,6 +8,7 @@ namespace Modifiers.StatusEffect
         public PoisonModifier()
         {
             statusEffect = Battle.StatusEffect.POISON;
+            battleEffect = RollBoundedBattleEffect.POISON;
         }
 
         public void ApplyOneTimeEffectMod()

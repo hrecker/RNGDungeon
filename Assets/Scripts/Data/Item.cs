@@ -31,6 +31,7 @@ namespace Data
                     break;
                 case ModType.RECOIL:
                     result = new RecoilModifer();
+                    result.battleEffect = RollBoundedBattleEffect.RECOIL;
                     break;
                 case ModType.WEAPON:
                     result = new RollBuffModifier(

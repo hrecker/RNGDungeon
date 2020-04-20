@@ -8,6 +8,7 @@ namespace Modifiers.Generic
         public BlockingModifier()
         {
             priority = 3;
+            battleEffect = RollBoundedBattleEffect.BLOCK;
         }
 
         public RollResult ApplyRollResultMod(RollResult initial)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Modifiers
 {
@@ -22,6 +23,12 @@ namespace Modifiers
             postDamageMods = new SortedDictionary<int, List<IPostDamageModifier>>();
             postBattleMods = new SortedDictionary<int, List<IPostBattleModifier>>();
             uniqueRegisteredModifiers = new List<Modifier>();
+        }
+
+        public IEnumerable<Modifier> GetRollBoundedBattleEffectModifiers()
+        {
+            return uniqueRegisteredModifiers.Where(m => 
+                m.battleEffect != RollBoundedBattleEffect.NONE);
         }
 
         public List<IRollGenerationModifier> GetRollGenerationModifiers()

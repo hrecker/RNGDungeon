@@ -9,6 +9,7 @@ namespace Modifiers.StatusEffect
         public BreakModifier() : base(-1, 0) 
         {
             statusEffect = Battle.StatusEffect.BREAK;
+            battleEffect = RollBoundedBattleEffect.BREAK;
         }
 
         public void ApplyOneTimeEffectMod()

@@ -18,6 +18,8 @@ namespace Modifiers.Tech
                 BattleController.AddModMessage(actor, "Heavy Swing!");
                 initialMinRoll += rollBuff;
                 initialMaxRoll += rollBuff;
+                // Add debuff effect sprite for next two rolls
+                battleEffect = RollBoundedBattleEffect.DEBUFF;
             }
             else if (rollCount <= debuffRolls)
             {
