@@ -10,19 +10,25 @@ namespace Modifiers.Item
         {
             foreach (Modifier nextRollMod in Status().GetNextRollRollBoundedBattleEffectModifiers().ToList())
             {
-                Status().NextRollMods.Remove(nextRollMod);
+                if (nextRollMod.battleEffect.IsNegativeEffect())
+                {
+                    Status().NextRollMods.Remove(nextRollMod);
+                }
             }
             foreach (Modifier activeMod in Status().GetActiveRollBoundedBattleEffectModifiers().ToList())
             {
-                activeMod.DeregisterSelf();
+                if (activeMod.battleEffect.IsNegativeEffect())
+                {
+                    activeMod.DeregisterSelf();
+                }
             }
         }
 
         // Can only apply if there are active debuffs
         public bool CanApply()
         {
-            return Status().GetNextRollRollBoundedBattleEffectModifiers().GetEnumerator().MoveNext()
-                || Status().GetActiveRollBoundedBattleEffectModifiers().GetEnumerator().MoveNext();
+            return Status().GetNextRollRollBoundedBattleEffectModifiers().Any(m => m.battleEffect.IsNegativeEffect())
+                || Status().GetActiveRollBoundedBattleEffectModifiers().Any(m => m.battleEffect.IsNegativeEffect());
         }
     }
 }

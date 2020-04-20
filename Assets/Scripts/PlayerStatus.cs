@@ -60,8 +60,8 @@ public class PlayerStatus
         EquippedTrinkets = new List<Item>();
         EquippedWeapon = Data.Cache.GetItem("Shortsword");
         EnabledTechs = new List<Tech>();
-        EnabledTechs.Add(Data.Cache.GetTech("HeavySwing"));
-        EnabledTechs.Add(Data.Cache.GetTech("Infect"));
+        AddTech(Data.Cache.GetTech("HeavySwing"));
+        AddTech(Data.Cache.GetTech("Infect"));
         Initialized = true;
     }
 
@@ -148,5 +148,11 @@ public class PlayerStatus
     {
         abilities.Add(ability);
         Status.Mods.RegisterModifier(ability.CreateAbilityModifier());
+    }
+
+    public static void AddTech(Tech tech)
+    {
+        tech.ResetCooldown();
+        EnabledTechs.Add(tech);
     }
 }
