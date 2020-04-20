@@ -54,7 +54,6 @@ namespace Battle
         public GameObject statusMessagePrefab;
         public float statusMessageSpacing = 40.0f;
 
-        private Dictionary<string, Modifier> techMods;
         private static List<string> playerStatusMessagesToShow;
         private static List<string> enemyStatusMessagesToShow;
         private static List<string> playerModMessagesToShow;
@@ -91,7 +90,6 @@ namespace Battle
             exitToMenuButton.SetActive(false);
             itemDropPanel.SetActive(false);
             resultTextPanel.SetActive(false);
-            techMods = new Dictionary<string, Modifier>();
             playerRollDamageText = playerRollDamageUI.GetComponentInChildren<Text>();
             playerRollHealText = playerRollHealUI.GetComponentInChildren<Text>();
             enemyRollDamageText = enemyRollDamageUI.GetComponentInChildren<Text>();
@@ -153,14 +151,10 @@ namespace Battle
             if (techUI.GetSelectedTech() != null)
             {
                 Tech selected = techUI.GetSelectedTech();
-                if (!techMods.ContainsKey(selected.name))
-                {
-                    techMods.Add(selected.name, selected.CreateTechModifier());
-                }
                 // Add UI messages if necessary
                 playerStatusMessagesToShow.Add(selected.playerStatusMessage);
                 enemyStatusMessagesToShow.Add(selected.enemyStatusMessage);
-                PlayerStatus.Status.Mods.RegisterModifier(techMods[selected.name]);
+                PlayerStatus.Status.Mods.RegisterModifier(selected.CreateTechModifier());
             }
             techUI.Roll();
             // Add any other mods that should be active before the roll
@@ -250,6 +244,7 @@ namespace Battle
             {
                 // End any roll-bounded modifiers
                 PlayerStatus.Status.Mods.DeregisterAllRollBoundedMods();
+                PlayerStatus.Status.NextRollMods.Clear();
 
                 // Reset roll count
                 currentRoll = 0;

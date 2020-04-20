@@ -52,6 +52,7 @@ public class PlayerStatus
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
         Inventory = new Dictionary<Item, int>();
         Inventory.Add(Data.Cache.GetItem("HealthPotion"), 3);
+        Inventory.Add(Data.Cache.GetItem("Panacea"), 10);
         Inventory.Add(Data.Cache.GetItem("BlockingPotion"), 1);
         Inventory.Add(Data.Cache.GetItem("RecoilPotion"), 1);
         Inventory.Add(Data.Cache.GetItem("Shortsword"), 1);

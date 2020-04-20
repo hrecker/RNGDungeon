@@ -49,6 +49,13 @@
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1
             }
+        },
+        {
+            "name": "Panacea",
+            "itemType": 1,
+            "tooltipText": "Cure all active debuffs",
+            "playerStatusMessage": "Cured!",
+            "modType": 401
         }
     ]
 }

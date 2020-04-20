@@ -4,7 +4,7 @@
             "name": "HeavySwing",
             "displayName": "Heavy Swing",
             "description": "Buffs for one roll, followed by a two roll debuff",
-            "playerStatusMessage": "-2 Roll: 2 turns",
+            "playerStatusMessage": "-1 Roll: 2 turns",
             "cooldownRolls": 6,
             "numRollsInEffect": 3,
             "modType": 301

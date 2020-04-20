@@ -1,6 +1,5 @@
 ﻿using Modifiers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,14 +15,14 @@ namespace Battle
         public float iconMargin;
         public StatusIconSprite[] iconSprites;
 
-        private Dictionary<Modifier, StatusIcon> playerIcons;
-        private Dictionary<Modifier, StatusIcon> enemyIcons;
+        private Dictionary<RollBoundedBattleEffect, StatusIcon> playerIcons;
+        private Dictionary<RollBoundedBattleEffect, StatusIcon> enemyIcons;
         private Dictionary<RollBoundedBattleEffect, Sprite> iconSpriteMap;
 
         void Start()
         {
-            playerIcons = new Dictionary<Modifier, StatusIcon>();
-            enemyIcons = new Dictionary<Modifier, StatusIcon>();
+            playerIcons = new Dictionary<RollBoundedBattleEffect, StatusIcon>();
+            enemyIcons = new Dictionary<RollBoundedBattleEffect, StatusIcon>();
             iconSpriteMap = new Dictionary<RollBoundedBattleEffect, Sprite>();
             foreach (StatusIconSprite iconSprite in iconSprites)
             {
@@ -37,41 +36,40 @@ namespace Battle
             UpdateStatusIcons(BattleActor.ENEMY, enemyIcons, enemyStatusIconParent);
         }
 
-        private void UpdateStatusIcons(BattleActor actor, Dictionary<Modifier, StatusIcon> icons,
+        private void UpdateStatusIcons(BattleActor actor, 
+            Dictionary<RollBoundedBattleEffect, StatusIcon> icons,
             RectTransform iconParent)
         {
             // Check modifiers active for the actor - include both mods to be applied next roll
             // as well as currently active mods.
-            IEnumerable<Modifier> statusMods = actor.Status().NextRollMods.Where(
-                m => m.battleEffect != RollBoundedBattleEffect.NONE && m.isRollBounded).Union(
-                actor.Status().Mods.GetRollBoundedBattleEffectModifiers());
+            IEnumerable<Modifier> statusMods = 
+                actor.Status().GetNextRollRollBoundedBattleEffectModifiers().Union(
+                actor.Status().GetActiveRollBoundedBattleEffectModifiers());
+
+            List<RollBoundedBattleEffect> foundEffects = new List<RollBoundedBattleEffect>();
             foreach (Modifier mod in statusMods)
             {
-                if (!icons.ContainsKey(mod))
+                if (mod.battleEffect != RollBoundedBattleEffect.NONE)
                 {
-                    InstantiateStatusIcon(mod, icons, iconParent);
-                }
-                else
-                {
-                    // Update sprite in case mod has changed it's effect
-                    icons[mod].statusIcon.sprite = iconSpriteMap[mod.battleEffect];
+                    foundEffects.Add(mod.battleEffect);
+                    if (!icons.ContainsKey(mod.battleEffect))
+                    {
+                        InstantiateStatusIcon(mod.battleEffect, icons, iconParent);
+                    }
                 }
             }
 
-            // Remove any deregistered mods or mods with no effect anymore
-            foreach (Modifier mod in new List<Modifier>(icons.Keys))
+            foreach (RollBoundedBattleEffect removed in icons.Keys.Except(foundEffects).ToList())
             {
-                if (mod.isDeregistered || mod.battleEffect == RollBoundedBattleEffect.NONE)
-                {
-                    Destroy(icons[mod].rectTransform.gameObject);
-                    icons.Remove(mod);
-                }
+                // Remove any icons that are no longer present
+                Destroy(icons[removed].rectTransform.gameObject);
+                icons.Remove(removed);
             }
 
             UpdateStatusIconsUI(icons);
         }
 
-        private void UpdateStatusIconsUI(Dictionary<Modifier, StatusIcon> icons)
+        private void UpdateStatusIconsUI(Dictionary<RollBoundedBattleEffect, StatusIcon> icons)
         {
             if (icons.Count == 0)
             {
@@ -82,14 +80,15 @@ namespace Battle
             float nextIconCenter = -1 * ((icons.Count - 1) / 2.0f) * 
                 (iconMargin + sampleTransform.rect.width);
             
-            foreach (Modifier mod in icons.Keys)
+            foreach (RollBoundedBattleEffect effect in icons.Keys)
             {
-                icons[mod].rectTransform.anchoredPosition = Vector2.right * nextIconCenter;
+                icons[effect].rectTransform.anchoredPosition = Vector2.right * nextIconCenter;
                 nextIconCenter += (iconMargin + sampleTransform.rect.width);
             }
         }
 
-        private void InstantiateStatusIcon(Modifier mod, Dictionary<Modifier, StatusIcon> icons,
+        private void InstantiateStatusIcon(RollBoundedBattleEffect effect,
+            Dictionary<RollBoundedBattleEffect, StatusIcon> icons,
             RectTransform parent)
         {
             GameObject icon = Instantiate(statusIconPrefab, parent);
@@ -98,8 +97,8 @@ namespace Battle
                 rectTransform = icon.GetComponent<RectTransform>(),
                 statusIcon = icon.GetComponent<Image>(),
             };
-            statusIcon.statusIcon.sprite = iconSpriteMap[mod.battleEffect];
-            icons.Add(mod, statusIcon);
+            statusIcon.statusIcon.sprite = iconSpriteMap[effect];
+            icons.Add(effect, statusIcon);
         }
 
         private class StatusIcon

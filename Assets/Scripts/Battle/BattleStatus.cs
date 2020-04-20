@@ -1,6 +1,7 @@
 ﻿using Modifiers;
 using System.Collections.Generic;
 using Modifiers.StatusEffect;
+using System.Linq;
 
 namespace Battle
 {
@@ -75,6 +76,18 @@ namespace Battle
         public float GetTriggerChanceWithLuck(float baseTriggerChance)
         {
             return baseTriggerChance + (0.05f * Luck);
+        }
+
+        // Get all mods with roll bounded effects that apply to this actor
+        public IEnumerable<Modifier> GetActiveRollBoundedBattleEffectModifiers()
+        {
+            return Mods.GetRollBoundedBattleEffectModifiers();
+        }
+
+        // Get mods for this actor that will apply next roll that have roll bounded effects
+        public IEnumerable<Modifier> GetNextRollRollBoundedBattleEffectModifiers()
+        {
+            return NextRollMods.Where(m => m.battleEffect != RollBoundedBattleEffect.NONE);
         }
     }
 

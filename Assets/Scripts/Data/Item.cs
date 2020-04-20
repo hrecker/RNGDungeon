@@ -1,6 +1,7 @@
 ﻿using System;
 using Modifiers;
 using Modifiers.Generic;
+using Modifiers.Item;
 
 namespace Data
 {
@@ -41,10 +42,12 @@ namespace Data
                     result = new HealthChangeModifier(modEffect.playerHealthChange,
                         modEffect.playerMaxHealthChange);
                     break;
+                case ModType.PANACEA:
+                    result = new PanaceaModifier();
+                    break;
             }
             if (result != null)
             {
-                //TODO allow effects that just last until the battle ends?
                 result.isRollBounded = numRollsInEffect > 0;
                 result.numRollsRemaining = numRollsInEffect;
                 result.triggerChance = modEffect.baseModTriggerChance;

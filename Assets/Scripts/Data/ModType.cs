@@ -33,6 +33,9 @@ namespace Data
         BULWARK = 303,
         SIDESWIPE = 304,
         TOPPLE = 305,
-        INFECT = 306
+        INFECT = 306,
+
+        // Items: 401 - 500
+        PANACEA = 401
     }
 }
