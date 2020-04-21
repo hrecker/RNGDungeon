@@ -33,15 +33,8 @@ namespace Battle
 
         private void UpdateItemCount()
         {
-            if (ItemCount == 1)
-            {
-                itemCountText.enabled = false;
-            }
-            else
-            {
-                itemCountText.enabled = true;
-                itemCountText.text = ItemCount.ToString();
-            }
+            itemCountText.enabled = true;
+            itemCountText.text = ItemCount.ToString();
         }
     }
 }

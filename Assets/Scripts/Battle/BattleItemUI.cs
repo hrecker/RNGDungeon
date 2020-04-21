@@ -48,8 +48,9 @@ namespace Battle
             GameObject itemIconPrefab, Transform itemIconParent, bool enableClick)
         {
             GameObject newIcon = Instantiate(itemIconPrefab, itemIconParent);
-            Image itemImage = newIcon.GetComponent<Image>();
-            Text tooltip = newIcon.GetComponentInChildren<Text>();
+            Image itemImage = newIcon.GetComponentInChildren<Image>();
+            Text tooltip = newIcon.transform.Find("TooltipPanel").
+                transform.Find("Tooltip").GetComponent<Text>();
             ItemIcon icon = newIcon.GetComponent<ItemIcon>();
             itemImage.sprite = Data.Cache.GetItemIcon(item.name);
             tooltip.text = item.tooltipText;
