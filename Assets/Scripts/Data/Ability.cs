@@ -54,6 +54,10 @@ namespace Data
                     result = new InflictStatusOnHitModifier(Battle.StatusEffect.POISON, true,
                         "Venomous!", 3);
                     break;
+                case ModType.CAREPACKAGE:
+                    result = new HealthChangeModifier(
+                        PlayerStatus.Status.MaxHealth - PlayerStatus.Status.Health, 0);
+                    break;
             }
             if (result != null)
             {

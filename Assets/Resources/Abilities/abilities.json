@@ -88,6 +88,12 @@
             "modEffect": {
                 "baseModTriggerChance": 0.2
             }
+        },
+        {
+            "name": "CarePackage",
+            "displayName": "Care Package",
+            "description": "Restore all health immediately",
+            "modType": 210
         }
     ]
 }

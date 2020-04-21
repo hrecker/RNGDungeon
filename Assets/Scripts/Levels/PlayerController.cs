@@ -21,6 +21,8 @@ namespace Levels
         private float timer;
         private bool moving;
         private bool selectingAbility;
+        private static List<Ability> availableAbilities;
+
         private PauseMenu pauseMenu;
 
         private Vector2 startPosition;
@@ -184,7 +186,10 @@ namespace Levels
             // Allow viewing inventory during ability selection
             inventoryInput.SetInventoryEnabled(true);
             abilitySelection.gameObject.SetActive(true);
-            List<Ability> availableAbilities = Data.Cache.GetRandomAbilities(3, PlayerStatus.GetAbilities());
+            if (availableAbilities == null || availableAbilities.Count == 0)
+            {
+                availableAbilities = Data.Cache.GetRandomAbilities(3, PlayerStatus.GetAbilities());
+            }
             abilitySelection.DisplayAbilitySelection(availableAbilities[0],
                 availableAbilities[1], availableAbilities[2]);
             selectingAbility = true;
@@ -196,6 +201,7 @@ namespace Levels
             CurrentLevel.SetHasSelectedLevelAbility(true);
             abilitySelection.gameObject.SetActive(false);
             selectingAbility = false;
+            availableAbilities.Clear();
             // Update health UI in case the ability affected player health
             playerHealthBar.UpdateHealth(PlayerStatus.Status.Health, PlayerStatus.Status.MaxHealth);
         }

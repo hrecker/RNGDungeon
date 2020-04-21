@@ -26,6 +26,7 @@ namespace Data
         SPIKY = 207,
         RECOVERY = 208,
         VENOMOUS = 209,
+        CAREPACKAGE = 210,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,
