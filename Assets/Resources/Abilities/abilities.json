@@ -94,6 +94,12 @@
             "displayName": "Care Package",
             "description": "Restore all health immediately",
             "modType": 210
+        },
+        {
+            "name": "HighStamina",
+            "displayName": "High Stamina",
+            "description": "Reduces all tech cooldowns by 2",
+            "modType": 211
         }
     ]
 }

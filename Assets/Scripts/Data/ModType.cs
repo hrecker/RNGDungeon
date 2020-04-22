@@ -27,6 +27,7 @@ namespace Data
         RECOVERY = 208,
         VENOMOUS = 209,
         CAREPACKAGE = 210,
+        HIGHSTAMINA = 211,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

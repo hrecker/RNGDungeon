@@ -12,6 +12,7 @@ namespace Modifiers
         private SortedDictionary<int, List<IRollValueModifier>> rollValueMods;
         private SortedDictionary<int, List<IPostDamageModifier>> postDamageMods;
         private SortedDictionary<int, List<IPostBattleModifier>> postBattleMods;
+        private SortedDictionary<int, List<ITechModifier>> techMods;
 
         private List<Modifier> uniqueRegisteredModifiers;
 
@@ -22,6 +23,7 @@ namespace Modifiers
             rollValueMods = new SortedDictionary<int, List<IRollValueModifier>>();
             postDamageMods = new SortedDictionary<int, List<IPostDamageModifier>>();
             postBattleMods = new SortedDictionary<int, List<IPostBattleModifier>>();
+            techMods = new SortedDictionary<int, List<ITechModifier>>();
             uniqueRegisteredModifiers = new List<Modifier>();
         }
 
@@ -54,6 +56,11 @@ namespace Modifiers
         public List<IPostBattleModifier> GetPostBattleModifiers()
         {
             return GetModifiers(postBattleMods);
+        }
+
+        public List<ITechModifier> GetTechModifiers()
+        {
+            return GetModifiers(techMods);
         }
 
         public void RegisterModifier(Modifier mod)
@@ -99,6 +106,11 @@ namespace Modifiers
                 registered = true;
                 RegisterModifier((IPostBattleModifier)mod, mod.priority);
             }
+            if (mod is ITechModifier)
+            {
+                registered = true;
+                RegisterModifier((ITechModifier)mod, mod.priority);
+            }
 
             if (registered)
             {
@@ -142,6 +154,11 @@ namespace Modifiers
             RegisterModifier(postBattleMods, mod, priority);
         }
 
+        private void RegisterModifier(ITechModifier mod, int priority)
+        {
+            RegisterModifier(techMods, mod, priority);
+        }
+
         public bool DeregisterModifier(Modifier mod)
         {
             bool deregistered = false;
@@ -164,6 +181,10 @@ namespace Modifiers
             if (mod is IPostBattleModifier)
             {
                 deregistered |= DeregisterModifier((IPostBattleModifier)mod);
+            }
+            if (mod is ITechModifier)
+            {
+                deregistered |= DeregisterModifier((ITechModifier)mod);
             }
             uniqueRegisteredModifiers.Remove(mod);
             return deregistered;
@@ -192,6 +213,11 @@ namespace Modifiers
         private bool DeregisterModifier(IPostBattleModifier mod)
         {
             return DeregisterModifier(postBattleMods, mod);
+        }
+
+        private bool DeregisterModifier(ITechModifier mod)
+        {
+            return DeregisterModifier(techMods, mod);
         }
 
         public void DecrementAndDeregisterModsIfNecessary()
@@ -228,6 +254,14 @@ namespace Modifiers
             foreach (IPostDamageModifier postDamageMod in GetPostDamageModifiers())
             {
                 Modifier mod = (Modifier)postDamageMod;
+                if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
+                {
+                    decremented.Add(mod);
+                }
+            }
+            foreach (ITechModifier techMod in GetTechModifiers())
+            {
+                Modifier mod = (Modifier)techMod;
                 if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
                 {
                     decremented.Add(mod);

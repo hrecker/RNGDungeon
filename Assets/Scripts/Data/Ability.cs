@@ -58,6 +58,9 @@ namespace Data
                     result = new HealthChangeModifier(
                         PlayerStatus.Status.MaxHealth - PlayerStatus.Status.Health, 0);
                     break;
+                case ModType.HIGHSTAMINA:
+                    result = new HighStaminaModifier();
+                    break;
             }
             if (result != null)
             {

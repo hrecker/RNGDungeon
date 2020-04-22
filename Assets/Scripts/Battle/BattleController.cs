@@ -156,7 +156,6 @@ namespace Battle
                 enemyStatusMessagesToShow.Add(selected.enemyStatusMessage);
                 PlayerStatus.Status.Mods.RegisterModifier(selected.CreateTechModifier());
             }
-            techUI.Roll();
             // Add any other mods that should be active before the roll
             foreach (Modifier mod in PlayerStatus.Status.NextRollMods)
             {
@@ -233,6 +232,7 @@ namespace Battle
             {
                 UpdateRollCountUI();
             }
+            techUI.Roll();
             UpdateRollUI(rollValues.Item1, rollValues.Item2, !completed);
             UpdateHealthUI(rollResult, !completed);
         }
