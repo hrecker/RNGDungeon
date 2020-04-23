@@ -13,9 +13,9 @@ namespace Modifiers.Tech
 
         public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
         {
+            BattleController.AddModMessage(actor, "Rage!");
             if ((float)Status().Health / Status().MaxHealth < healthThreshold)
             {
-                BattleController.AddModMessage(actor, "Rage!");
                 int buff = (int)Math.Max(1, rollBuffFraction * initialMaxRoll);
                 initialMinRoll += buff;
                 initialMaxRoll += buff;

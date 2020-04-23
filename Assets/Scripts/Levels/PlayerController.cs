@@ -14,7 +14,7 @@ namespace Levels
         public InventoryInput inventoryInput;
         public GameObject pickupPanel;
         public GameObject itemIconPrefab;
-        public AbilitySelectionUI abilitySelection;
+        public AbilityAndTechSelectionUI abilityAndTechSelection;
         public Text keyCountText;
         public HealthBar playerHealthBar;
         public Text currentFloorText;
@@ -22,6 +22,7 @@ namespace Levels
         private bool moving;
         private bool selectingAbility;
         private static List<Ability> availableAbilities;
+        private static List<Tech> availableTechs;
 
         private PauseMenu pauseMenu;
 
@@ -50,7 +51,7 @@ namespace Levels
             }
             else
             {
-                abilitySelection.gameObject.SetActive(false);
+                abilityAndTechSelection.gameObject.SetActive(false);
             }
             transform.position = PlayerStatus.MapPosition;
             UpdateKeyCount();
@@ -185,23 +186,28 @@ namespace Levels
         {
             // Allow viewing inventory during ability selection
             inventoryInput.SetInventoryEnabled(true);
-            abilitySelection.gameObject.SetActive(true);
+            abilityAndTechSelection.gameObject.SetActive(true);
             if (availableAbilities == null || availableAbilities.Count == 0)
             {
                 availableAbilities = Data.Cache.GetRandomAbilities(3, PlayerStatus.GetAbilities());
             }
-            abilitySelection.DisplayAbilitySelection(availableAbilities[0],
-                availableAbilities[1], availableAbilities[2]);
+            if (availableTechs == null || availableTechs.Count == 0)
+            {
+                availableTechs = Data.Cache.GetRandomTechs(3, PlayerStatus.GetTechs());
+            }
+            abilityAndTechSelection.DisplaySelection(availableAbilities, availableTechs);
             selectingAbility = true;
         }
 
-        public void SelectAbility(Ability ability)
+        public void SelectAbilityAndTech(Ability ability, Tech tech)
         {
             PlayerStatus.AddAbility(ability);
+            PlayerStatus.AddTech(tech);
             CurrentLevel.SetHasSelectedLevelAbility(true);
-            abilitySelection.gameObject.SetActive(false);
+            abilityAndTechSelection.gameObject.SetActive(false);
             selectingAbility = false;
             availableAbilities.Clear();
+            availableTechs.Clear();
             // Update health UI in case the ability affected player health
             playerHealthBar.UpdateHealth(PlayerStatus.Status.Health, PlayerStatus.Status.MaxHealth);
         }

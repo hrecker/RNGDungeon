@@ -60,8 +60,6 @@ public class PlayerStatus
         EquippedTrinkets = new List<Item>();
         EquippedWeapon = Data.Cache.GetItem("Shortsword");
         EnabledTechs = new List<Tech>();
-        AddTech(Data.Cache.GetTech("HeavySwing"));
-        AddTech(Data.Cache.GetTech("Infect"));
         Initialized = true;
     }
 
@@ -142,6 +140,11 @@ public class PlayerStatus
     public static List<Ability> GetAbilities()
     {
         return new List<Ability>(abilities);
+    }
+
+    public static List<Tech> GetTechs()
+    {
+        return new List<Tech>(EnabledTechs);
     }
 
     public static void AddAbility(Ability ability)

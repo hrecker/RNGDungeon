@@ -17,7 +17,7 @@
         },
         {
             "name": "Bulwark",
-            "description": "Raises min roll, but does not deal damage",
+            "description": "Raises roll, but does not deal damage",
             "cooldownRolls": 8,
             "modType": 303,
             "modEffect": {

@@ -65,6 +65,11 @@ namespace Data
             return currentCooldown;
         }
 
+        public int GetBaseCooldown()
+        {
+            return cooldownRolls;
+        }
+
         public void ActivateCooldown()
         {
             // Apply tech cooldown mods

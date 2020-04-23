@@ -161,25 +161,36 @@ namespace Data
 
         public static List<Ability> GetRandomAbilities(int numAbilities, List<Ability> disallowed)
         {
-            List<Ability> chosenAbilities = new List<Ability>();
-            List<Ability> allAbilities = new List<Ability>(abilities.Values);
-            // Don't select abilities from the disallowed list
-            foreach (Ability disallow in disallowed)
+            return GetRandomSelection(numAbilities, abilities.Values, disallowed);
+        }
+
+        public static List<Tech> GetRandomTechs(int numTechs, List<Tech> disallowed)
+        {
+            return GetRandomSelection(numTechs, techs.Values, disallowed);
+        }
+
+        private static List<T> GetRandomSelection<T>(int numToSelect, 
+            IEnumerable<T> allPossible, IEnumerable<T> disallowed)
+        {
+            List<T> chosenEntries = new List<T>();
+            List<T> allEntries = new List<T>(allPossible);
+            // Don't select entries from the disallowed list
+            foreach (T disallow in disallowed)
             {
-                allAbilities.Remove(disallow);
+                allEntries.Remove(disallow);
             }
-            for (int i = 0; i < numAbilities; i++)
+            for (int i = 0; i < numToSelect; i++)
             {
-                Ability chosen = allAbilities[UnityEngine.Random.Range(0, allAbilities.Count)];
-                // If there are enough abilities, prevent duplicates
-                if (allAbilities.Count > 1)
+                T chosen = allEntries[UnityEngine.Random.Range(0, allEntries.Count)];
+                // If there are enough entries, prevent duplicates
+                if (allEntries.Count > 1)
                 {
-                    allAbilities.Remove(chosen);
+                    allEntries.Remove(chosen);
                 }
-                chosenAbilities.Add(chosen);
+                chosenEntries.Add(chosen);
             }
 
-            return chosenAbilities;
+            return chosenEntries;
         }
 
         public static Tech GetTech(string name)
