@@ -37,6 +37,18 @@
             "maxHealth": 5
         },
         {
+            "name": "FireBug",
+            "baseMinRoll": 1,
+            "baseMaxRoll": 4,
+            "maxHealth": 9
+        },
+        {
+            "name": "Spirit",
+            "baseMinRoll": 0,
+            "baseMaxRoll": 5,
+            "maxHealth": 8
+        },
+        {
             "name": "Boss",
             "baseMinRoll": 4,
             "baseMaxRoll": 6,

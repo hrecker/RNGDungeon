@@ -27,6 +27,10 @@ namespace Data
                     return typeof(GhostBattleController);
                 case "MysteriousStatue":
                     return typeof(MysteriousStatueBattleController);
+                case "FireBug":
+                    return typeof(FireBugBattleController);
+                case "Spirit":
+                    return typeof(SpiritBattleController);
                 case "Boss":
                     return typeof(BossBattleController);
                 default:
