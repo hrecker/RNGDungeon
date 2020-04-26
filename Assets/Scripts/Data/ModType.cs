@@ -28,6 +28,7 @@ namespace Data
         VENOMOUS = 209,
         CAREPACKAGE = 210,
         HIGHSTAMINA = 211,
+        CONTAGIOUS = 212,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

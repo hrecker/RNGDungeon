@@ -20,7 +20,6 @@
         },
         {
             "name": "Vampirism",
-            "displayName": "Vampirism",
             "description": "Chance to sap health on hit",
             "modType": 203,
             "modEffect": {
@@ -29,7 +28,6 @@
         },
         {
             "name": "Heroic",
-            "displayName": "Heroic",
             "description": "Increases roll when on low health",
             "modType": 204,
             "modEffect": {
@@ -54,7 +52,6 @@
         },
         {
             "name": "Procrastination",
-            "displayName": "Procrastination",
             "description": "Alternate between high and low rolls",
             "modType": 206,
             "modEffect": {
@@ -64,7 +61,6 @@
         },
         {
             "name": "Spiky",
-            "displayName": "Spiky",
             "description": "Chance to deal recoil damage when hit by an enemy",
             "modType": 207,
             "modEffect": {
@@ -73,7 +69,6 @@
         },
         {
             "name": "Recovery",
-            "displayName": "Recovery",
             "description": "Heal after battles",
             "modType": 208,
             "modEffect": {
@@ -82,7 +77,6 @@
         },
         {
             "name": "Venomous",
-            "displayName": "Venomous",
             "description": "Chance to inflict poison on hit",
             "modType": 209,
             "modEffect": {
@@ -100,6 +94,14 @@
             "displayName": "High Stamina",
             "description": "Reduces all tech cooldowns by 2",
             "modType": 211
+        },
+        {
+            "name": "Contagious",
+            "description": "Chance to debuff enemy when hit",
+            "modType": 212,
+            "modEffect": {
+                "baseModTriggerChance": 0.25
+            }
         }
     ]
 }

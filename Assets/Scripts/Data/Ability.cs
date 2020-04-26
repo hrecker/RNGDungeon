@@ -61,6 +61,9 @@ namespace Data
                 case ModType.HIGHSTAMINA:
                     result = new HighStaminaModifier();
                     break;
+                case ModType.CONTAGIOUS:
+                    result = new ContagiousModifier(2, 2, "Contagious!");
+                    break;
             }
             if (result != null)
             {
