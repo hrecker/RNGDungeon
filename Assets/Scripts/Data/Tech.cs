@@ -76,15 +76,19 @@ namespace Data
             int cooldown = cooldownRolls;
             foreach (ITechModifier mod in PlayerStatus.Status.Mods.GetTechModifiers())
             {
-                cooldown = mod.ApplyTechCooldownModifier(cooldown);
+                cooldown = mod.ApplyTechCooldownModifier(this, cooldown);
             }
-            cooldown = Math.Max(cooldown, 0);
+            // Cooldown can't be reduced below 1
+            cooldown = Math.Max(cooldown, 1);
             currentCooldown = cooldown;
         }
 
         public void DecrementCooldown()
         {
-            currentCooldown--;
+            if (currentCooldown > 0)
+            {
+                currentCooldown--;
+            }
         }
 
         public void ResetCooldown()

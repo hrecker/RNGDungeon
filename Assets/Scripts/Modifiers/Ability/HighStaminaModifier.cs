@@ -1,14 +1,11 @@
-﻿using System;
-using UnityEngine;
-
-namespace Modifiers.Ability
+﻿namespace Modifiers.Ability
 {
     // Mod that reduces tech cooldowns by 2
     public class HighStaminaModifier : Modifier, ITechModifier
     {
-        public int ApplyTechCooldownModifier(int startingCooldown)
+        public int ApplyTechCooldownModifier(Data.Tech tech, int startingCooldown)
         {
-            return Math.Max(0, startingCooldown - 2);
+            return startingCooldown - 2;
         }
     }
 }

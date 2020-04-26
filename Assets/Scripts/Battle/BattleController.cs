@@ -148,13 +148,14 @@ namespace Battle
         {
             // If there are modifiers to add, add before the roll starts
             // Add mods for selected techs
+            Tech selectedTech = null;
             if (techUI.GetSelectedTech() != null)
             {
-                Tech selected = techUI.GetSelectedTech();
+                selectedTech = techUI.GetSelectedTech();
                 // Add UI messages if necessary
-                playerStatusMessagesToShow.Add(selected.playerStatusMessage);
-                enemyStatusMessagesToShow.Add(selected.enemyStatusMessage);
-                PlayerStatus.Status.Mods.RegisterModifier(selected.CreateTechModifier());
+                playerStatusMessagesToShow.Add(selectedTech.playerStatusMessage);
+                enemyStatusMessagesToShow.Add(selectedTech.enemyStatusMessage);
+                PlayerStatus.Status.Mods.RegisterModifier(selectedTech.CreateTechModifier());
             }
             // Add any other mods that should be active before the roll
             foreach (Modifier mod in PlayerStatus.Status.NextRollMods)
@@ -186,7 +187,11 @@ namespace Battle
             int playerDamage = Math.Max(0, rollValues.Item2 - rollValues.Item1);
             int enemyDamage = Math.Max(0, rollValues.Item1 - rollValues.Item2);
             RollResult rollResult = new RollResult
-            { PlayerRollDamage = playerDamage, EnemyRollDamage = enemyDamage };
+            { 
+                PlayerRollDamage = playerDamage, 
+                EnemyRollDamage = enemyDamage,
+                PlayerTech = selectedTech
+            };
             // Again apply enemy and player mods
             IEnumerable<IRollResultModifier> rrMods =
                 PlayerStatus.Status.Mods.GetRollResultModifiers().Union(
@@ -219,6 +224,18 @@ namespace Battle
             statusUI.UpdateStatusIcons();
 
             CheckBattleComplete();
+            foreach (Tech tech in PlayerStatus.EnabledTechs)
+            {
+                tech.DecrementCooldown();
+            }
+            techUI.Roll();
+
+            if (!completed)
+            {
+                UpdateRollCountUI();
+            }
+            UpdateRollUI(rollValues.Item1, rollValues.Item2, !completed);
+            UpdateHealthUI(rollResult, !completed);
 
             // Battle status messages
             CreateStatusMessages();
@@ -227,14 +244,6 @@ namespace Battle
             enemyStatusMessagesToShow.Clear();
             playerModMessagesToShow.Clear();
             enemyModMessagesToShow.Clear();
-
-            if (!completed)
-            {
-                UpdateRollCountUI();
-            }
-            techUI.Roll();
-            UpdateRollUI(rollValues.Item1, rollValues.Item2, !completed);
-            UpdateHealthUI(rollResult, !completed);
         }
 
         private void CheckBattleComplete()

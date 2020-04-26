@@ -63,14 +63,8 @@ namespace Battle
             selectedHighlight.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, selectedHeight);
         }
 
-        // Trigger cooldown update on tech buttons
         public void Roll()
         {
-            // Cooldowns
-            foreach (TechButton button in buttons)
-            {
-                button.DecrementCooldownIfNecessary();
-            }
             // Reselect default if necessary
             if (selectedTech != defaultTech)
             {

@@ -2,6 +2,6 @@
 {
     public interface ITechModifier
     {
-        int ApplyTechCooldownModifier(int startingCooldown);
+        int ApplyTechCooldownModifier(Data.Tech tech, int startingCooldown);
     }
 }

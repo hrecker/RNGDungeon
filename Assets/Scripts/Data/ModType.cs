@@ -29,6 +29,7 @@ namespace Data
         CAREPACKAGE = 210,
         HIGHSTAMINA = 211,
         CONTAGIOUS = 212,
+        SNOWBALL = 213,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

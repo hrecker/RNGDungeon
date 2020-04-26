@@ -64,6 +64,9 @@ namespace Data
                 case ModType.CONTAGIOUS:
                     result = new ContagiousModifier(2, 2, "Contagious!");
                     break;
+                case ModType.SNOWBALL:
+                    result = new SnowballModifier();
+                    break;
             }
             if (result != null)
             {

@@ -102,6 +102,11 @@
             "modEffect": {
                 "baseModTriggerChance": 0.25
             }
+        },
+        {
+            "name": "Snowball",
+            "description": "Reduces tech cooldown by 2 when that tech hits successfully",
+            "modType": 213
         }
     ]
 }

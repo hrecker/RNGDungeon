@@ -14,6 +14,7 @@ namespace Battle
         public GameObject cooldownPanel;
         public Text cooldownText;
         private Tech tech;
+        private int lastRenderedCooldown;
 
         private TechButtonController buttonController;
         private PauseMenu pauseMenu;
@@ -23,6 +24,7 @@ namespace Battle
             pauseMenu = FindObjectOfType<PauseMenu>();
             buttonController = GetComponentInParent<TechButtonController>();
             buttonController.RegisterTechButton(this);
+            lastRenderedCooldown = -1;
 
             if (isDefaultTech)
             {
@@ -46,20 +48,6 @@ namespace Battle
             }
         }
 
-        public void DecrementCooldownIfNecessary()
-        {
-            if (tech != null && tech.GetCurrentCooldown() > 0)
-            {
-                tech.DecrementCooldown();
-            }
-            else
-            {
-                return;
-            }
-
-            UpdateCooldownText();
-        }
-
         public void ActivateCooldown()
         {
             // Default tech has no cooldown
@@ -67,14 +55,12 @@ namespace Battle
             {
                 return;
             }
-
             tech.ActivateCooldown();
-            UpdateCooldownText();
         }
 
         private void UpdateCooldownText()
         {
-            if (isDefaultTech)
+            if (isDefaultTech || lastRenderedCooldown == tech.GetCurrentCooldown())
             {
                 return;
             }
@@ -82,6 +68,12 @@ namespace Battle
             int cooldown = tech.GetCurrentCooldown();
             cooldownPanel.SetActive(cooldown > 0);
             cooldownText.text = cooldown.ToString();
+            lastRenderedCooldown = cooldown;
+        }
+
+        private void Update()
+        {
+            UpdateCooldownText();
         }
     }
 }
