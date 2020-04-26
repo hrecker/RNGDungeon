@@ -77,6 +77,9 @@ namespace Data
                     result = new OverwhelmingSpeedModifier(modEffect.playerMinRollChange, 
                         modEffect.playerMaxRollChange);
                     break;
+                case ModType.THICKSKIN:
+                    result = new ThickSkinModifier();
+                    break;
             }
             if (result != null)
             {

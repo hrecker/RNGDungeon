@@ -33,6 +33,7 @@ namespace Data
         SKILLED = 214,
         LIFEDRAIN = 215,
         OVERWHELMINGSPEED = 216,
+        THICKSKIN = 217,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,
