@@ -96,6 +96,11 @@ namespace Levels
             if (tiles[tileX, tileY].tileType == TileType.STAIRS)
             {
                 Level nextLevel = Data.Cache.GetLevel(activeLevel.floor + 1);
+                // Reset tech cooldowns
+                foreach (Tech tech in PlayerStatus.EnabledTechs)
+                {
+                    tech.ResetCooldown();
+                }
                 if (nextLevel != null)
                 {
                     InitLevel(nextLevel);
@@ -105,12 +110,6 @@ namespace Levels
                 else
                 {
                     // Initialize boss fight
-                    // reset tech cooldowns
-                    foreach (Tech tech in PlayerStatus.EnabledTechs)
-                    {
-                        tech.ResetCooldown();
-                    }
-                    // set next enemy
                     currentEnemyName = "Boss";
                     return MoveResult.BATTLE;
                 }
