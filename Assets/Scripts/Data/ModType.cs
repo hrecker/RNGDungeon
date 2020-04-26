@@ -31,6 +31,7 @@ namespace Data
         CONTAGIOUS = 212,
         SNOWBALL = 213,
         SKILLED = 214,
+        LIFEDRAIN = 215,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

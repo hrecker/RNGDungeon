@@ -115,6 +115,15 @@
             "modEffect": {
                 "playerMaxRollChange": 1
             }
+        },
+        {
+            "name": "LifeDrain",
+            "displayName": "Life Drain",
+            "description": "All techs restore player health by 1 on hit",
+            "modType": 215,
+            "modEffect": {
+                "playerHealthChange": 1
+            }
         }
     ]
 }

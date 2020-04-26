@@ -70,6 +70,9 @@ namespace Data
                 case ModType.SKILLED:
                     result = new SkilledModifier(modEffect.playerMaxRollChange);
                     break;
+                case ModType.LIFEDRAIN:
+                    result = new LifeDrainModifier(modEffect.playerHealthChange);
+                    break;
             }
             if (result != null)
             {
