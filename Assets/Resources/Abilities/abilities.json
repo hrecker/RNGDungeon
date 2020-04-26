@@ -140,6 +140,11 @@
             "displayName": "Thick Skin",
             "description": "Reduces roll damage taken by 1 (can't reduce below 1)",
             "modType": 217
+        },
+        {
+            "name": "Retaliation",
+            "description": "Decreases active tech cooldowns when dealt roll damage",
+            "modType": 218
         }
     ]
 }

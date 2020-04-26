@@ -80,6 +80,9 @@ namespace Data
                 case ModType.THICKSKIN:
                     result = new ThickSkinModifier();
                     break;
+                case ModType.RETALIATION:
+                    result = new RetaliationModifier();
+                    break;
             }
             if (result != null)
             {

@@ -34,6 +34,7 @@ namespace Data
         LIFEDRAIN = 215,
         OVERWHELMINGSPEED = 216,
         THICKSKIN = 217,
+        RETALIATION = 218,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,
