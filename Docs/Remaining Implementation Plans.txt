@@ -38,8 +38,8 @@ Abilities should be fairly evenly distributed across archetypes
 15Snowball - T              Tech cooldown is reduced by 2 after a hit
 16Skilled - T               All techs include an extra +1 max roll when activated
 17LifeDrain - T             On hit, techs restore player health
+18Overwhelming Speed - TO   Consecutively used techs increase roll
 -
-18Lightning Fast - TO       Consecutively used techs increase roll
 19Thick Skin - W            Reduce damage taken by 1
 20Retaliation - RT          Taking damage reduces tech cooldown
 21Overkill - O              When the player rolls 5 greater than enemy, add 3 bonus damage

@@ -124,6 +124,16 @@
             "modEffect": {
                 "playerHealthChange": 1
             }
+        },
+        {
+            "name": "OverwhelmingSpeed",
+            "displayName": "Overwhelming Speed",
+            "description": "Using techs consecutively increases roll",
+            "modType": 216,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1
+            }
         }
     ]
 }

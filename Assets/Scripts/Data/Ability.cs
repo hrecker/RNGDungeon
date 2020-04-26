@@ -73,6 +73,10 @@ namespace Data
                 case ModType.LIFEDRAIN:
                     result = new LifeDrainModifier(modEffect.playerHealthChange);
                     break;
+                case ModType.OVERWHELMINGSPEED:
+                    result = new OverwhelmingSpeedModifier(modEffect.playerMinRollChange, 
+                        modEffect.playerMaxRollChange);
+                    break;
             }
             if (result != null)
             {
