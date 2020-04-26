@@ -67,6 +67,9 @@ namespace Data
                 case ModType.SNOWBALL:
                     result = new SnowballModifier();
                     break;
+                case ModType.SKILLED:
+                    result = new SkilledModifier(modEffect.playerMaxRollChange);
+                    break;
             }
             if (result != null)
             {

@@ -14,7 +14,7 @@ namespace Modifiers.Generic
             this.maxRollDiff = maxRollDiff;
         }
 
-        public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
+        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
         {
             initialMinRoll += minRollDiff;
             initialMaxRoll += maxRollDiff;

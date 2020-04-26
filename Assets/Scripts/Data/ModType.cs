@@ -30,6 +30,7 @@ namespace Data
         HIGHSTAMINA = 211,
         CONTAGIOUS = 212,
         SNOWBALL = 213,
+        SKILLED = 214,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

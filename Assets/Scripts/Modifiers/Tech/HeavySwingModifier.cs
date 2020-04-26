@@ -11,7 +11,7 @@ namespace Modifiers.Tech
         private const int rollDebuff = 1;
         private const int debuffRolls = 2;
 
-        public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
+        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
         {
             if (rollCount == 0)
             {

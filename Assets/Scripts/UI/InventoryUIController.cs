@@ -52,7 +52,7 @@ namespace UI
                 PlayerStatus.Status.BaseMinRoll, PlayerStatus.Status.BaseMaxRoll);
             foreach (IRollGenerationModifier mod in PlayerStatus.Status.Mods.GetRollGenerationModifiers())
             {
-                baseRoll = mod.ApplyRollGenerationMod(baseRoll.Item1, baseRoll.Item2);
+                baseRoll = mod.ApplyRollGenerationMod(null, baseRoll.Item1, baseRoll.Item2);
             }
             rollBoundsText.text = "Roll: [" + baseRoll.Item1 + "-" + baseRoll.Item2 + "]";
         }

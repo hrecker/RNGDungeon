@@ -107,6 +107,14 @@
             "name": "Snowball",
             "description": "Reduces tech cooldown by 2 when that tech hits successfully",
             "modType": 213
+        },
+        {
+            "name": "Skilled",
+            "description": "All techs get an extra +1 max roll",
+            "modType": 214,
+            "modEffect": {
+                "playerMaxRollChange": 1
+            }
         }
     ]
 }

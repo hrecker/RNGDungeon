@@ -66,7 +66,7 @@ namespace Battle.Enemies
                 actor = BattleActor.ENEMY;
             }
 
-            public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
+            public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
             {
                 return new Tuple<int, int>(initialMinRoll + controller.GetRollBuff(),
                     initialMaxRoll + controller.GetRollBuff());

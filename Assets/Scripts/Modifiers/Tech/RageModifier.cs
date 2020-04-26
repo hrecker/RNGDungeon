@@ -11,7 +11,7 @@ namespace Modifiers.Tech
         // The buff is based on a fraction of the current max roll. 
         private const float rollBuffFraction = 0.34f;
 
-        public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
+        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
         {
             BattleController.AddModMessage(actor, "Rage!");
             if ((float)Status().Health / Status().MaxHealth < healthThreshold)

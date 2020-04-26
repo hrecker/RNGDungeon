@@ -8,13 +8,13 @@ namespace Battle
     {
         public BattleActor actor;
 
-        public int GenerateInitialRoll()
+        public int GenerateInitialRoll(Data.Tech tech)
         {
             int min = actor.Status().BaseMinRoll;
             int max = actor.Status().BaseMaxRoll;
             foreach (IRollGenerationModifier mod in actor.Status().Mods.GetRollGenerationModifiers())
             {
-                Tuple<int, int> modified = mod.ApplyRollGenerationMod(min, max);
+                Tuple<int, int> modified = mod.ApplyRollGenerationMod(tech, min, max);
                 min = modified.Item1;
                 max = modified.Item2;
             }

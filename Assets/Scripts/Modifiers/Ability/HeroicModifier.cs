@@ -14,7 +14,7 @@ namespace Modifiers.Ability
             this.baseMaxRollBuff = baseMaxRollBuff;
         }
 
-        public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
+        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
         {
             float healthPercent = (float)Status().Health / Status().MaxHealth;
             // Under 25% health, the buff is doubled

@@ -35,9 +35,9 @@ Abilities should be fairly evenly distributed across archetypes
 12HighStamina - T           Reduces tech cooldown
 13Intimidate - W            Debuffs enemy at start of battle
 14Contagious - WL           Chance to debuff enemy when player is hit
--
 15Snowball - T              Tech cooldown is reduced by 2 after a hit
 16Skilled - T               All techs include an extra +1 max roll when activated
+-
 17LifeDrain - T             On hit, techs restore player health
 18Lightning Fast - TO       Consecutively used techs increase roll
 19Thick Skin - W            Reduce damage taken by 1

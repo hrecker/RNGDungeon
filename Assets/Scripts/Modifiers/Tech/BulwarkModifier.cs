@@ -15,7 +15,7 @@ namespace Modifiers.Tech
         }
 
         // Roll generation
-        public Tuple<int, int> ApplyRollGenerationMod(int initialMinRoll, int initialMaxRoll)
+        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
         {
             // Do not allow the buff to raise the min roll above the max
             BattleController.AddModMessage(actor, "Bulwark!");
