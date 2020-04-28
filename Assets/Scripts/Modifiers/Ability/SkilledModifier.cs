@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Battle;
+using System;
 
 namespace Modifiers.Ability
 {
@@ -12,13 +13,13 @@ namespace Modifiers.Ability
             this.maxRollBuff = maxRollBuff;
         }
 
-        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
+        public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
-            if (tech != null)
+            if (currentRollGen.PlayerTech != null)
             {
-                initialMaxRoll += maxRollBuff;
+                currentRollGen.MaxRoll += maxRollBuff;
             }
-            return new Tuple<int, int>(initialMinRoll, initialMaxRoll);
+            return currentRollGen;
         }
     }
 }

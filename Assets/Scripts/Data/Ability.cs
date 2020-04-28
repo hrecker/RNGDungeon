@@ -90,6 +90,10 @@ namespace Data
                     result = new InflictStatusOnHitModifier(Battle.StatusEffect.ENRAGED,
                         true, "Taunting!", 3);
                     break;
+                case ModType.PATIENCE:
+                    result = new PatienceModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange);
+                    break;
             }
             if (result != null)
             {

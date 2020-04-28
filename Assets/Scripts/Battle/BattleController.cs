@@ -170,8 +170,8 @@ namespace Battle
             EnemyStatus.Status.NextRollMods.Clear();
 
             // Generate roll numeric values
-            int playerInitial = playerRollGenerator.GenerateInitialRoll(selectedTech);
-            int enemyInitial = enemyRollGenerator.GenerateInitialRoll(selectedTech);
+            int playerInitial = playerRollGenerator.GenerateInitialRoll(selectedTech, currentRoll);
+            int enemyInitial = enemyRollGenerator.GenerateInitialRoll(selectedTech, currentRoll);
             Tuple<int, int> rollValues = new Tuple<int, int>(playerInitial, enemyInitial);
             // Apply enemy and player mods to get final roll values
             IEnumerable<IRollValueModifier> rvMods = 

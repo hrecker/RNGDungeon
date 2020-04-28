@@ -15,16 +15,16 @@ namespace Modifiers.Tech
             this.maxRollBuff = maxRollBuff;
         }
 
-        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
+        public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
             BattleController.AddModMessage(actor, "Topple!");
             // Only buff if opponent is broken
             if (actor.Opponent().Status().ActiveEffects.Contains(Battle.StatusEffect.BREAK))
             {
-                initialMinRoll += minRollBuff;
-                initialMaxRoll += maxRollBuff;
+                currentRollGen.MinRoll += minRollBuff;
+                currentRollGen.MaxRoll += maxRollBuff;
             }
-            return new Tuple<int, int>(initialMinRoll, initialMaxRoll);
+            return currentRollGen;
         }
     }
 }

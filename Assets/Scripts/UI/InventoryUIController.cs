@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Modifiers;
 using Data;
+using Battle;
 
 namespace UI
 {
@@ -48,13 +49,16 @@ namespace UI
 
         private void UpdateRollBoundsUI()
         {
-            Tuple<int, int> baseRoll = new Tuple<int, int>(
-                PlayerStatus.Status.BaseMinRoll, PlayerStatus.Status.BaseMaxRoll);
+            RollGeneration rollGen = new RollGeneration()
+            {
+                MinRoll = PlayerStatus.Status.BaseMinRoll,
+                MaxRoll = PlayerStatus.Status.BaseMaxRoll
+            };
             foreach (IRollGenerationModifier mod in PlayerStatus.Status.Mods.GetRollGenerationModifiers())
             {
-                baseRoll = mod.ApplyRollGenerationMod(null, baseRoll.Item1, baseRoll.Item2);
+                rollGen = mod.ApplyRollGenerationMod(rollGen);
             }
-            rollBoundsText.text = "Roll: [" + baseRoll.Item1 + "-" + baseRoll.Item2 + "]";
+            rollBoundsText.text = "Roll: [" + rollGen.MinRoll + "-" + rollGen.MaxRoll + "]";
         }
 
         private void UpdateTechUI()

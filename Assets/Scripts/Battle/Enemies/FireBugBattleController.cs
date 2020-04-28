@@ -66,10 +66,11 @@ namespace Battle.Enemies
                 actor = BattleActor.ENEMY;
             }
 
-            public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
+            public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
             {
-                return new Tuple<int, int>(initialMinRoll + controller.GetRollBuff(),
-                    initialMaxRoll + controller.GetRollBuff());
+                currentRollGen.MinRoll += controller.GetRollBuff();
+                currentRollGen.MaxRoll += controller.GetRollBuff();
+                return currentRollGen;
             }
 
             public void ApplyPostDamageMod(RollResult rollResult)

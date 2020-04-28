@@ -11,23 +11,23 @@ namespace Modifiers.Tech
         private const int rollDebuff = 1;
         private const int debuffRolls = 2;
 
-        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
+        public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
             if (rollCount == 0)
             {
                 BattleController.AddModMessage(actor, "Heavy Swing!");
-                initialMinRoll += rollBuff;
-                initialMaxRoll += rollBuff;
+                currentRollGen.MinRoll += rollBuff;
+                currentRollGen.MaxRoll += rollBuff;
                 // Add debuff effect sprite for next two rolls
                 battleEffect = RollBoundedBattleEffect.DEBUFF;
             }
             else if (rollCount <= debuffRolls)
             {
-                initialMinRoll -= rollDebuff;
-                initialMaxRoll -= rollDebuff;
+                currentRollGen.MinRoll -= rollDebuff;
+                currentRollGen.MaxRoll -= rollDebuff;
             }
             rollCount++;
-            return new Tuple<int, int>(initialMinRoll, initialMaxRoll);
+            return currentRollGen;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Modifiers.Ability
             this.maxRollBuff = maxRollBuff;
         }
 
-        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
+        public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
             // Don't apply when the battle hasn't started, so that the player doesn't
             // see a permanent buff in their inventory from this ability
@@ -24,16 +24,16 @@ namespace Modifiers.Ability
                 // Buff on odd rolls (to include the first roll), debuff on even
                 if (currentRoll % 2 == 1)
                 {
-                    initialMinRoll += minRollBuff;
-                    initialMaxRoll += maxRollBuff;
+                    currentRollGen.MinRoll += minRollBuff;
+                    currentRollGen.MaxRoll += maxRollBuff;
                 }
                 else
                 {
-                    initialMinRoll -= minRollBuff;
-                    initialMaxRoll -= maxRollBuff;
+                    currentRollGen.MinRoll -= minRollBuff;
+                    currentRollGen.MaxRoll -= maxRollBuff;
                 }
             }
-            return new Tuple<int, int>(initialMinRoll, initialMaxRoll);
+            return currentRollGen;
         }
     }
 }

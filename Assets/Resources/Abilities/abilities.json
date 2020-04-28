@@ -158,6 +158,15 @@
             "modEffect": {
                 "baseModTriggerChance": 0.2
             }
+        },
+        {
+            "name": "Patience",
+            "description": "Raises roll the longer a battle lasts",
+            "modType": 221,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1
+            }
         }
     ]
 }

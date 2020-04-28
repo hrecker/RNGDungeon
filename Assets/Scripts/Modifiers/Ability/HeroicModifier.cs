@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Battle;
+using System;
 
 namespace Modifiers.Ability
 {
@@ -14,22 +15,22 @@ namespace Modifiers.Ability
             this.baseMaxRollBuff = baseMaxRollBuff;
         }
 
-        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
+        public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
             float healthPercent = (float)Status().Health / Status().MaxHealth;
             // Under 25% health, the buff is doubled
             if (healthPercent <= 0.25f)
             {
-                initialMinRoll += (2 * baseMinRollBuff);
-                initialMaxRoll += (2 * baseMaxRollBuff);
+                currentRollGen.MinRoll += (2 * baseMinRollBuff);
+                currentRollGen.MaxRoll += (2 * baseMaxRollBuff);
             }
             // Under 50% health, the base buff is applied
             else if (healthPercent <= 0.5f)
             {
-                initialMinRoll += baseMinRollBuff;
-                initialMaxRoll += baseMaxRollBuff;
+                currentRollGen.MinRoll += baseMinRollBuff;
+                currentRollGen.MaxRoll += baseMaxRollBuff;
             }
-            return new Tuple<int, int>(initialMinRoll, initialMaxRoll);
+            return currentRollGen;
         }
     }
 }

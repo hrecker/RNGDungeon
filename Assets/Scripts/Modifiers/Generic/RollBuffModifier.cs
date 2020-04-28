@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Battle;
 
 namespace Modifiers.Generic
 {
     // Apply a buff/debuff to min and/or max roll
     public class RollBuffModifier : Modifier, IRollGenerationModifier
     {
-        private int minRollDiff;
-        private int maxRollDiff;
+        protected int minRollDiff;
+        protected int maxRollDiff;
 
         public RollBuffModifier(int minRollDiff, int maxRollDiff)
         {
@@ -14,11 +14,11 @@ namespace Modifiers.Generic
             this.maxRollDiff = maxRollDiff;
         }
 
-        public Tuple<int, int> ApplyRollGenerationMod(Data.Tech tech, int initialMinRoll, int initialMaxRoll)
+        public virtual RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
-            initialMinRoll += minRollDiff;
-            initialMaxRoll += maxRollDiff;
-            return new Tuple<int, int>(initialMinRoll, initialMaxRoll);
+            currentRollGen.MinRoll += minRollDiff;
+            currentRollGen.MaxRoll += maxRollDiff;
+            return currentRollGen;
         }
     }
 }
