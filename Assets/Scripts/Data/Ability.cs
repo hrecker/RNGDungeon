@@ -94,6 +94,9 @@ namespace Data
                     result = new PatienceModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange);
                     break;
+                case ModType.RELIC:
+                    result = new RelicModifier();
+                    break;
             }
             if (result != null)
             {

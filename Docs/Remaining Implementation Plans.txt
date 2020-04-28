@@ -44,8 +44,8 @@ Abilities should be fairly evenly distributed across archetypes
 21Overkill - O              When the player rolls 5 greater than enemy, add 3 bonus damage
 22Taunting - LR             Chance to enrage enemy on hit
 23Patience - WO             Increases roll the longer the battle lasts
--
 24Relic - G                 One time get a rare item
+-
 
 
 

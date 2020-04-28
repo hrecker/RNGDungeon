@@ -38,6 +38,7 @@ namespace Data
         OVERKILL = 219,
         TAUNTING = 220,
         PATIENCE = 221,
+        RELIC = 222,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

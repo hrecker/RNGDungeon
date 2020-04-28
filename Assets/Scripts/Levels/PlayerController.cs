@@ -32,6 +32,8 @@ namespace Levels
         private Dictionary<Rarity, float> itemPickupRarityChances;
         private Dictionary<Rarity, float> chestRarityChances;
 
+        public static Item randomlyGivenItem;
+
         // This is just for testing individually the map scene
         private void Awake()
         {
@@ -76,6 +78,13 @@ namespace Levels
             if (pauseMenu.IsPaused() || selectingAbility)
             {
                 return;
+            }
+
+            // If a random item has been given to the player, display it
+            if (randomlyGivenItem != null)
+            {
+                HandleItemPickup(randomlyGivenItem);
+                randomlyGivenItem = null;
             }
 
             if (moving)
@@ -148,10 +157,14 @@ namespace Levels
                         break;
                     case MoveResult.CHESTOPEN:
                         UpdateKeyCount();
-                        HandleItemPickup(chestRarityChances);
+                        PickupRandomItem(chestRarityChances);
+                        inventoryInput.SetInventoryEnabled(true);
+                        CheckInput();
                         break;
                     case MoveResult.ITEMPICKUP:
-                        HandleItemPickup(itemPickupRarityChances);
+                        PickupRandomItem(itemPickupRarityChances);
+                        inventoryInput.SetInventoryEnabled(true);
+                        CheckInput();
                         break;
                     default:
                         // Check input as soon as move is finished so there's no jittering
@@ -162,9 +175,14 @@ namespace Levels
             }
         }
 
-        private void HandleItemPickup(Dictionary<Rarity, float> rarityChances)
+        private void PickupRandomItem(Dictionary<Rarity, float> rarityChances)
         {
             Item pickedUp = Data.Cache.GetRandomItem(rarityChances);
+            HandleItemPickup(pickedUp);
+        }
+
+        private void HandleItemPickup(Item pickedUp)
+        {
             PlayerStatus.AddItem(pickedUp);
             // Update UI
             pickupPanel.SetActive(true);
@@ -177,9 +195,6 @@ namespace Levels
                 itemIconPrefab, pickupPanel.transform, false);
             newIcon.GetComponent<ItemIcon>().ItemCount = 1;
             pickupPanel.GetComponent<SelfDeactivate>().ResetTimer();
-            // Re-enable input
-            inventoryInput.SetInventoryEnabled(true);
-            CheckInput();
         }
 
         public void ShowAbilitySelectionUI()

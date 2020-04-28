@@ -167,6 +167,11 @@
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1
             }
+        },
+        {
+            "name": "Relic",
+            "description": "Receive a random rare item",
+            "modType": 222
         }
     ]
 }
