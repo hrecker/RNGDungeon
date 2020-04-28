@@ -83,6 +83,9 @@ namespace Data
                 case ModType.RETALIATION:
                     result = new RetaliationModifier();
                     break;
+                case ModType.OVERKILL:
+                    result = new OverkillModifier();
+                    break;
             }
             if (result != null)
             {

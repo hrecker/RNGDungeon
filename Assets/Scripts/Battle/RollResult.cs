@@ -2,6 +2,7 @@
 {
     public class RollResult
     {
+        public int PlayerRollValue { get; set; }
         public int PlayerRollDamage { get; set; }
         public int PlayerNonRollDamage { get; set; }
         public int PlayerDamage
@@ -9,6 +10,7 @@
             get { return PlayerRollDamage + PlayerNonRollDamage; } 
         }
         public int PlayerHeal { get; set; }
+        public int EnemyRollValue { get; set; }
         public int EnemyRollDamage { get; set; }
         public int EnemyNonRollDamage { get; set; }
         public int EnemyDamage
@@ -87,6 +89,19 @@
         public int GetTotalEnemyHealthChange()
         {
             return EnemyHeal - (EnemyRollDamage + EnemyNonRollDamage);
+        }
+
+        public int GetRollValue(BattleActor actor)
+        {
+            switch(actor)
+            {
+                case BattleActor.PLAYER:
+                    return PlayerRollValue;
+                case BattleActor.ENEMY:
+                    return EnemyRollValue;
+                default:
+                    throw new System.Exception("Invalid battle actor type");
+            }
         }
 
         public int GetRollDamage(BattleActor actor)

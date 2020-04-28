@@ -145,6 +145,11 @@
             "name": "Retaliation",
             "description": "Decreases active tech cooldowns when dealt roll damage",
             "modType": 218
+        },
+        {
+            "name": "Overkill",
+            "description": "Deals 3 extra damage when the player rolls at least 5 more than the enemy",
+            "modType": 219
         }
     ]
 }

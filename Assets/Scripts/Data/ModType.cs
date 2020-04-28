@@ -35,6 +35,7 @@ namespace Data
         OVERWHELMINGSPEED = 216,
         THICKSKIN = 217,
         RETALIATION = 218,
+        OVERKILL = 219,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

@@ -188,6 +188,8 @@ namespace Battle
             int enemyDamage = Math.Max(0, rollValues.Item1 - rollValues.Item2);
             RollResult rollResult = new RollResult
             { 
+                PlayerRollValue = rollValues.Item1,
+                EnemyRollValue = rollValues.Item2,
                 PlayerRollDamage = playerDamage, 
                 EnemyRollDamage = enemyDamage,
                 PlayerTech = selectedTech
