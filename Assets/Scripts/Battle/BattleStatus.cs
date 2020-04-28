@@ -95,7 +95,8 @@ namespace Battle
     {
         NONE,
         BREAK,
-        POISON
+        POISON,
+        ENRAGED
     }
 
     public static class StatusEffectExtensions
@@ -108,6 +109,8 @@ namespace Battle
                     return "Break";
                 case StatusEffect.POISON:
                     return "Poison";
+                case StatusEffect.ENRAGED:
+                    return "Enraged";
                 default:
                     return null;
             }
@@ -121,6 +124,8 @@ namespace Battle
                     return new BreakModifier();
                 case StatusEffect.POISON:
                     return new PoisonModifier();
+                case StatusEffect.ENRAGED:
+                    return new EnragedModifier();
                 default:
                     return null;
             }

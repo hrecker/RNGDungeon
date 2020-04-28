@@ -86,6 +86,10 @@ namespace Data
                 case ModType.OVERKILL:
                     result = new OverkillModifier();
                     break;
+                case ModType.TAUNTING:
+                    result = new InflictStatusOnHitModifier(Battle.StatusEffect.ENRAGED,
+                        true, "Taunting!", 3);
+                    break;
             }
             if (result != null)
             {

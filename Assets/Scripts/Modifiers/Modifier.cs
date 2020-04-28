@@ -69,7 +69,8 @@ namespace Modifiers
         BREAK,
         POISON,
         BLOCK,
-        RECOIL
+        RECOIL,
+        ENRAGED
     }
 
     public static class RollBoundedBattleEffectExtensions

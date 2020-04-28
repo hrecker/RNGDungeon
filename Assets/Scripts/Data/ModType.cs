@@ -36,6 +36,7 @@ namespace Data
         THICKSKIN = 217,
         RETALIATION = 218,
         OVERKILL = 219,
+        TAUNTING = 220,
 
         // Techs: 301 - 400
         HEAVYSWING = 301,

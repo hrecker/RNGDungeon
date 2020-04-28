@@ -150,6 +150,14 @@
             "name": "Overkill",
             "description": "Deals 3 extra damage when the player rolls at least 5 more than the enemy",
             "modType": 219
+        },
+        {
+            "name": "Taunting",
+            "description": "Chance to enrage enemy on hit",
+            "modType": 220,
+            "modEffect": {
+                "baseModTriggerChance": 0.2
+            }
         }
     ]
 }
