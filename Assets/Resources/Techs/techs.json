@@ -80,6 +80,18 @@
             "modEffect": {
                 "playerHealthChange": 3
             }
+        },
+        {
+            "name": "WildCharge",
+            "displayName": "Wild Charge",
+            "description": "Raises max roll and and lowers min roll for 3 turns",
+            "cooldownRolls": 9,
+            "modType": 310,
+            "numRollsInEffect": 3,
+            "modEffect": {
+                "playerMinRollChange": -2,
+                "playerMaxRollChange": 2
+            }
         }
     ]
 }

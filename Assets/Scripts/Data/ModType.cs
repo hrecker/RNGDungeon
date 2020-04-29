@@ -50,6 +50,7 @@ namespace Data
         OMEGASLASH = 307,
         FORTIFY = 308,
         BANDAGE = 309,
+        WILDCHARGE = 310,
 
         // Items: 401 - 500
         PANACEA = 401

@@ -4,6 +4,7 @@ using Modifiers.Tech;
 using Modifiers.StatusEffect;
 using Modifiers.Generic;
 using Battle;
+using System.Collections.Generic;
 
 namespace Data
 {
@@ -24,54 +25,64 @@ namespace Data
         // activate it's cooldown after the roll completes
         public bool scheduledCooldownActivate;
 
-        public Modifier CreateTechModifier()
+        public List<Modifier> CreateTechModifiers()
         {
-            Modifier result = null;
+            List<Modifier> result = new List<Modifier>();
             switch (modType)
             {
                 case ModType.HEAVYSWING:
-                    result = new HeavySwingModifier();
+                    result.Add(new HeavySwingModifier());
                     break;
                 case ModType.RAGE:
-                    result = new RageModifier();
+                    result.Add(new RageModifier());
                     break;
                 case ModType.BULWARK:
-                    result = new BulwarkModifier(modEffect.playerMinRollChange);
+                    result.Add(new BulwarkModifier(modEffect.playerMinRollChange));
                     break;
                 case ModType.SIDESWIPE:
-                    result = new InflictStatusOnHitModifier(StatusEffect.BREAK,
-                        false, "Sideswipe!", 2);
+                    result.Add(new InflictStatusOnHitModifier(StatusEffect.BREAK,
+                        false, "Sideswipe!", 2));
                     break;
                 case ModType.TOPPLE:
-                    result = new ToppleModifier(modEffect.playerMinRollChange,
-                        modEffect.playerMaxRollChange);
+                    result.Add(new ToppleModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
                     break;
                 case ModType.INFECT:
-                    result = new InflictStatusOnHitModifier(StatusEffect.POISON,
-                        false, "Infect!", 3);
+                    result.Add(new InflictStatusOnHitModifier(StatusEffect.POISON,
+                        false, "Infect!", 3));
                     break;
                 case ModType.OMEGASLASH:
-                    result = new OmegaSlashModifier(modEffect.playerMinRollChange,
-                        modEffect.playerMaxRollChange);
+                    result.Add(new OmegaSlashModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
                     break;
                 case ModType.FORTIFY:
-                    result = new RollBuffModifier(modEffect.playerMinRollChange,
+                    Modifier fortifyMod = new RollBuffModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange,
                         "Fortify!");
-                    result.battleEffect = RollBoundedBattleEffect.BUFF;
+                    fortifyMod.battleEffect = RollBoundedBattleEffect.BUFF;
+                    result.Add(fortifyMod);
                     break;
                 case ModType.BANDAGE:
-                    result = new HealthChangeModifier(modEffect.playerHealthChange,
-                        0, "Bandage!");
+                    result.Add(new HealthChangeModifier(modEffect.playerHealthChange,
+                        0, "Bandage!"));
+                    break;
+                case ModType.WILDCHARGE:
+                    Modifier buffMod = new RollBuffModifier(0, modEffect.playerMaxRollChange,
+                        "Wild Charge!");
+                    buffMod.battleEffect = RollBoundedBattleEffect.BUFF;
+                    Modifier debuffMod = new RollBuffModifier(modEffect.playerMinRollChange, 0);
+                    debuffMod.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                    result.Add(buffMod);
+                    result.Add(debuffMod);
                     break;
             }
-            if (result != null)
+            foreach (Modifier mod in result)
             {
-                result.isRollBounded = true;
-                result.numRollsRemaining = numRollsInEffect;
-                result.triggerChance = modEffect.baseModTriggerChance;
-                result.priority = modEffect.modPriority;
-                result.actor = modEffect.actor;
+                mod.isRollBounded = true;
+                mod.numRollsRemaining = numRollsInEffect;
+                mod.triggerChance = modEffect.baseModTriggerChance;
+                mod.priority = modEffect.modPriority;
+                mod.actor = modEffect.actor;
             }
             return result;
         }

@@ -68,11 +68,11 @@ Techs by archetype
 4 Sideswipe - OW            Inflicts break on hit
 5 Topple - O                Deals extra damage to broken enemies
 6 Infect - W                Inflicts poison on hit
--
 7 Fortify - W               Increases min roll for 3 turns
 8 Omegaslash - O            Huge roll increase, but puts ALL techs on cooldown
 9 Bandage - RW              Heals player
 10WildCharge - OR           Increases max roll and decreases min roll for 3 turns
+-
 11Prayer - LO               Temporarily boosts luck
 12Bide - RO                 Debuffs player for 2 turns, then buffs based on damage player was dealt
 13FinishingBlow - W         Increased damage to enemies inflicted with break, poison, or rage

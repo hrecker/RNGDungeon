@@ -155,7 +155,10 @@ namespace Battle
                 // Add UI messages if necessary
                 playerStatusMessagesToShow.Add(selectedTech.playerStatusMessage);
                 enemyStatusMessagesToShow.Add(selectedTech.enemyStatusMessage);
-                PlayerStatus.Status.Mods.RegisterModifier(selectedTech.CreateTechModifier());
+                foreach (Modifier techMod in selectedTech.CreateTechModifiers())
+                {
+                    PlayerStatus.Status.Mods.RegisterModifier(techMod);
+                }
             }
             // Add any other mods that should be active before the roll
             foreach (Modifier mod in PlayerStatus.Status.NextRollMods)
