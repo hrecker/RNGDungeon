@@ -61,6 +61,16 @@
                 "playerMinRollChange": 5,
                 "playerMaxRollChange": 5
             }
+        },
+        {
+            "name": "Fortify",
+            "description": "Increases min roll for 3 turns",
+            "cooldownRolls": 6,
+            "modType": 308,
+            "numRollsInEffect": 3,
+            "modEffect": {
+                "playerMinRollChange": 2
+            }
         }
     ]
 }

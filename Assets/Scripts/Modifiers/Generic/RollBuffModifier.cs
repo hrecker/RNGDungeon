@@ -8,14 +8,26 @@ namespace Modifiers.Generic
         protected int minRollDiff;
         protected int maxRollDiff;
 
-        public RollBuffModifier(int minRollDiff, int maxRollDiff)
+        private string firstRollModMessage;
+        private bool isFirstRoll;
+
+        public RollBuffModifier(int minRollDiff, int maxRollDiff) : this(minRollDiff, maxRollDiff, null) { }
+
+        public RollBuffModifier(int minRollDiff, int maxRollDiff, string firstRollModMessage)
         {
             this.minRollDiff = minRollDiff;
             this.maxRollDiff = maxRollDiff;
+            this.firstRollModMessage = firstRollModMessage;
+            isFirstRoll = true;
         }
 
         public virtual RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
+            if (isFirstRoll)
+            {
+                BattleController.AddModMessage(actor, firstRollModMessage);
+                isFirstRoll = false;
+            }
             currentRollGen.MinRoll += minRollDiff;
             currentRollGen.MaxRoll += maxRollDiff;
             return currentRollGen;

@@ -2,6 +2,7 @@
 using Modifiers;
 using Modifiers.Tech;
 using Modifiers.StatusEffect;
+using Modifiers.Generic;
 using Battle;
 
 namespace Data
@@ -52,6 +53,12 @@ namespace Data
                 case ModType.OMEGASLASH:
                     result = new OmegaSlashModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange);
+                    break;
+                case ModType.FORTIFY:
+                    result = new RollBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange,
+                        "Fortify!");
+                    result.battleEffect = RollBoundedBattleEffect.BUFF;
                     break;
             }
             if (result != null)

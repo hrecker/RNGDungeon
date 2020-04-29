@@ -48,6 +48,7 @@ namespace Data
         TOPPLE = 305,
         INFECT = 306,
         OMEGASLASH = 307,
+        FORTIFY = 308,
 
         // Items: 401 - 500
         PANACEA = 401
