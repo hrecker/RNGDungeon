@@ -71,6 +71,15 @@
             "modEffect": {
                 "playerMinRollChange": 2
             }
+        },
+        {
+            "name": "Bandage",
+            "description": "Heals 3 health",
+            "cooldownRolls": 8,
+            "modType": 309,
+            "modEffect": {
+                "playerHealthChange": 3
+            }
         }
     ]
 }

@@ -60,6 +60,10 @@ namespace Data
                         "Fortify!");
                     result.battleEffect = RollBoundedBattleEffect.BUFF;
                     break;
+                case ModType.BANDAGE:
+                    result = new HealthChangeModifier(modEffect.playerHealthChange,
+                        0, "Bandage!");
+                    break;
             }
             if (result != null)
             {

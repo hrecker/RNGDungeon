@@ -49,6 +49,7 @@ namespace Data
         INFECT = 306,
         OMEGASLASH = 307,
         FORTIFY = 308,
+        BANDAGE = 309,
 
         // Items: 401 - 500
         PANACEA = 401

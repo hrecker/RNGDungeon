@@ -11,7 +11,8 @@ namespace Modifiers.Generic
         private string firstRollModMessage;
         private bool isFirstRoll;
 
-        public RollBuffModifier(int minRollDiff, int maxRollDiff) : this(minRollDiff, maxRollDiff, null) { }
+        public RollBuffModifier(int minRollDiff, int maxRollDiff) : 
+            this(minRollDiff, maxRollDiff, null) { }
 
         public RollBuffModifier(int minRollDiff, int maxRollDiff, string firstRollModMessage)
         {
