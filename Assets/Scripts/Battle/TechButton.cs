@@ -48,16 +48,6 @@ namespace Battle
             }
         }
 
-        public void ActivateCooldown()
-        {
-            // Default tech has no cooldown
-            if (isDefaultTech)
-            {
-                return;
-            }
-            tech.ActivateCooldown();
-        }
-
         private void UpdateCooldownText()
         {
             if (isDefaultTech || lastRenderedCooldown == tech.GetCurrentCooldown())

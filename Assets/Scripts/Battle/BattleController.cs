@@ -228,7 +228,11 @@ namespace Battle
             CheckBattleComplete();
             foreach (Tech tech in PlayerStatus.EnabledTechs)
             {
-                tech.DecrementCooldown();
+                tech.UpdateCooldownPostRoll();
+            }
+            if (selectedTech != null)
+            {
+                selectedTech.ActivateCooldown();
             }
             techUI.Roll();
 

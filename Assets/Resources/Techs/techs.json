@@ -51,6 +51,16 @@
             "modEffect": {
                 "baseModTriggerChance": 1
             }
+        },
+        {
+            "name": "OmegaSlash",
+            "description": "Buffs roll greatly, but puts all techs on full cooldown",
+            "cooldownRolls": 15,
+            "modType": 307,
+            "modEffect": {
+                "playerMinRollChange": 5,
+                "playerMaxRollChange": 5
+            }
         }
     ]
 }

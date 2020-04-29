@@ -68,7 +68,6 @@ namespace Battle
             // Reselect default if necessary
             if (selectedTech != defaultTech)
             {
-                selectedTech.ActivateCooldown();
                 SelectTech(defaultTech);
             }
         }

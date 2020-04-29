@@ -47,6 +47,7 @@ namespace Data
         SIDESWIPE = 304,
         TOPPLE = 305,
         INFECT = 306,
+        OMEGASLASH = 307,
 
         // Items: 401 - 500
         PANACEA = 401

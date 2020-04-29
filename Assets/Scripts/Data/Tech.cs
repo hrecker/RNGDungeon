@@ -19,6 +19,9 @@ namespace Data
         public int numRollsInEffect;
         public ModType modType;
         public ModEffect modEffect;
+        // This bool can be used to schedule this tech to 
+        // activate it's cooldown after the roll completes
+        public bool scheduledCooldownActivate;
 
         public Modifier CreateTechModifier()
         {
@@ -45,6 +48,10 @@ namespace Data
                 case ModType.INFECT:
                     result = new InflictStatusOnHitModifier(StatusEffect.POISON,
                         false, "Infect!", 3);
+                    break;
+                case ModType.OMEGASLASH:
+                    result = new OmegaSlashModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange);
                     break;
             }
             if (result != null)
@@ -88,6 +95,20 @@ namespace Data
             if (currentCooldown > 0)
             {
                 currentCooldown--;
+            }
+        }
+
+        // Updates cooldown post-roll. In almost every case this just decrements.
+        public void UpdateCooldownPostRoll()
+        {
+            if (scheduledCooldownActivate)
+            {
+                ActivateCooldown();
+                scheduledCooldownActivate = false;
+            }
+            else
+            {
+                DecrementCooldown();
             }
         }
 
