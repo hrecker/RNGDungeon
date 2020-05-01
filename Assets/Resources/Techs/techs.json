@@ -92,6 +92,13 @@
                 "playerMinRollChange": -2,
                 "playerMaxRollChange": 2
             }
+        },
+        {
+            "name": "Prayer",
+            "description": "Boosts luck for 3 turns",
+            "cooldownRolls": 9,
+            "modType": 311,
+            "numRollsInEffect": 3
         }
     ]
 }

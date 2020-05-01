@@ -54,10 +54,10 @@ namespace Battle
         public GameObject statusMessagePrefab;
         public float statusMessageSpacing = 40.0f;
 
-        private static List<string> playerStatusMessagesToShow;
-        private static List<string> enemyStatusMessagesToShow;
-        private static List<string> playerModMessagesToShow;
-        private static List<string> enemyModMessagesToShow;
+        private static List<string> playerStatusMessagesToShow = new List<string>();
+        private static List<string> enemyStatusMessagesToShow = new List<string>();
+        private static List<string> playerModMessagesToShow = new List<string>();
+        private static List<string> enemyModMessagesToShow = new List<string>();
         private static int currentRoll;
         private bool firstUpdate;
 

@@ -75,6 +75,11 @@ namespace Data
                     result.Add(buffMod);
                     result.Add(debuffMod);
                     break;
+                case ModType.PRAYER:
+                    Modifier luckMod = new LuckBuffModifier(3, "Prayer!");
+                    luckMod.battleEffect = RollBoundedBattleEffect.LUCKBUFF;
+                    result.Add(luckMod);
+                    break;
             }
             foreach (Modifier mod in result)
             {

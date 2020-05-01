@@ -112,15 +112,21 @@ namespace Modifiers
                 RegisterModifier((ITechModifier)mod, mod.priority);
             }
 
-            if (registered)
-            {
-                uniqueRegisteredModifiers.Add(mod);
-            }
-            // One shot modifiers are just instantly applied and don't need to be registered
+            // One shot modifiers are usually just instantly applied and don't need to be registered
+            // However if they are roll bounded they are registered so they can be deregistered
+            // after the right number of rolls.
             if (mod is IOneTimeEffectModifier)
             {
                 registered = true;
                 ((IOneTimeEffectModifier)mod).ApplyOneTimeEffectMod();
+                if (mod.isRollBounded)
+                {
+                    uniqueRegisteredModifiers.Add(mod);
+                }
+            }
+            else if (registered)
+            {
+                uniqueRegisteredModifiers.Add(mod);
             }
 
             if (!registered)
@@ -222,50 +228,9 @@ namespace Modifiers
 
         public void DecrementAndDeregisterModsIfNecessary()
         {
-            // Keep track of mods that have already been decremented so that
-            // modifiers that implement multiple types don't get
-            // decremented more than once.
-            List<Modifier> decremented = new List<Modifier>();
-            // Iterate over all battle-relevant mod lists to decrement them
-            foreach (IRollGenerationModifier rollGenMod in GetRollGenerationModifiers())
+            foreach (Modifier mod in uniqueRegisteredModifiers.ToList())
             {
-                Modifier mod = (Modifier)rollGenMod;
-                if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
-                {
-                    decremented.Add(mod);
-                }
-            }
-            foreach (IRollResultModifier rollResultMod in GetRollResultModifiers())
-            {
-                Modifier mod = (Modifier)rollResultMod;
-                if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
-                {
-                    decremented.Add(mod);
-                }
-            }
-            foreach (IRollValueModifier rollValueMod in GetRollValueModifiers())
-            {
-                Modifier mod = (Modifier)rollValueMod;
-                if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
-                {
-                    decremented.Add(mod);
-                }
-            }
-            foreach (IPostDamageModifier postDamageMod in GetPostDamageModifiers())
-            {
-                Modifier mod = (Modifier)postDamageMod;
-                if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
-                {
-                    decremented.Add(mod);
-                }
-            }
-            foreach (ITechModifier techMod in GetTechModifiers())
-            {
-                Modifier mod = (Modifier)techMod;
-                if (!decremented.Contains(mod) && !DecrementAndDeregisterIfNecessary(mod))
-                {
-                    decremented.Add(mod);
-                }
+                DecrementAndDeregisterIfNecessary(mod);
             }
         }
 

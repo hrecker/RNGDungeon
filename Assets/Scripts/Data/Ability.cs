@@ -34,7 +34,7 @@ namespace Data
                         modEffect.playerMaxRollChange);
                     break;
                 case ModType.LUCKYHORSESHOE:
-                    result = new LuckyHorseshoeModifier();
+                    result = new LuckBuffModifier(3);
                     break;
                 case ModType.HEALTHCHANGE:
                     result = new HealthChangeModifier(modEffect.playerHealthChange,

@@ -70,7 +70,8 @@ namespace Modifiers
         POISON,
         BLOCK,
         RECOIL,
-        ENRAGED
+        ENRAGED,
+        LUCKBUFF
     }
 
     public static class RollBoundedBattleEffectExtensions
@@ -85,6 +86,7 @@ namespace Modifiers
                 case RollBoundedBattleEffect.BUFF:
                 case RollBoundedBattleEffect.BLOCK:
                 case RollBoundedBattleEffect.RECOIL:
+                case RollBoundedBattleEffect.LUCKBUFF:
                     return false;
                 case RollBoundedBattleEffect.DEBUFF:
                 case RollBoundedBattleEffect.BREAK:

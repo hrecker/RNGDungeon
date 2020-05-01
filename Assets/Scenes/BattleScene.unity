@@ -368,7 +368,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2108076844}
   m_Direction: 0
   m_Value: 0.5
-  m_Size: 0.5999999
+  m_Size: 0.6
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3204,6 +3204,8 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 98fc10680b0375c4b836357d660b8de7, type: 3}
   - effect: 7
     sprite: {fileID: 21300000, guid: 2827f73325d4f8248a5e9c6280634a91, type: 3}
+  - effect: 8
+    sprite: {fileID: 21300000, guid: e4093312f623a8f4d8d18c7a0292fbee, type: 3}
 --- !u!114 &1840173235
 MonoBehaviour:
   m_ObjectHideFlags: 0

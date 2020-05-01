@@ -51,6 +51,7 @@ namespace Data
         FORTIFY = 308,
         BANDAGE = 309,
         WILDCHARGE = 310,
+        PRAYER = 311,
 
         // Items: 401 - 500
         PANACEA = 401

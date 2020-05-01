@@ -34,7 +34,7 @@ namespace Battle.Enemies
                     mod.isRollBounded = true;
                     mod.numRollsRemaining = 2;
                     mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
-                    BattleController.AddStatusMessage(BattleActor.PLAYER, "-2 Roll: 2 turns");
+                    BattleController.AddStatusMessage(BattleActor.PLAYER, "-2 Roll: 2 rolls");
                     PlayerStatus.Status.NextRollMods.Add(mod);
                     controller.debuffTurnsRemaining = 2;
                     controller.debuffActive = true;
