@@ -88,6 +88,9 @@ namespace Data
                     result.Add(initialDebuff);
                     result.Add(new BideModifier());
                     break;
+                case ModType.CRIT:
+                    result.Add(new CritModifier());
+                    break;
             }
             foreach (Modifier mod in result)
             {

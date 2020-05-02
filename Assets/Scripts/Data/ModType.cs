@@ -53,6 +53,7 @@ namespace Data
         WILDCHARGE = 310,
         PRAYER = 311,
         BIDE = 312,
+        CRIT = 313,
 
         // Items: 401 - 500
         PANACEA = 401

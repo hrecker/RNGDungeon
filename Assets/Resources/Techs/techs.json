@@ -110,6 +110,15 @@
                 "playerMinRollChange": -2,
                 "playerMaxRollChange": -2
             }
+        },
+        {
+            "name": "Crit",
+            "description": "Chance to deal double damage on hit",
+            "cooldownRolls": 6,
+            "modType": 313,
+            "modEffect": {
+                "baseModTriggerChance": 0.5
+            }
         }
     ]
 }
