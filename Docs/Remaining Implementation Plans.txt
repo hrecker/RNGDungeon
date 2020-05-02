@@ -74,13 +74,13 @@ Techs by archetype
 10WildCharge - OR           Increases max roll and decreases min roll for 3 turns
 11Prayer - LO               Temporarily boosts luck
 12Bide - RO                 Debuffs player for 2 turns, then buffs based on damage player was dealt
-13FinishingBlow - W         Increased damage to enemies inflicted with break, poison, or rage
-14Crit - LO                 Chance to deal double damage on hit
-15WildGuess - L             Chance to greatly buff the player
-16WildCurse - L             Chance to greatly debuff the enemy
-17OccultHealing - L         Chance to greatly heal the player
--
+13Crit - LO                 Chance to deal double damage on hit
+14WildGuess - L             Chance to greatly buff the player
+15WildCurse - L             Chance to greatly debuff the enemy
+16OccultHealing - L         Chance to greatly heal the player
+17FinishingBlow - W         Increased damage to enemies inflicted with break, poison, or rage
 18Zero - R                  Roll a zero
+-
 19Practice - T              Next tech used has no cooldown
 20Risky Kick - R            Does heavy damage but inflicts recoil on the player
 

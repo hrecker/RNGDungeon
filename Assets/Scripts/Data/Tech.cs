@@ -100,6 +100,13 @@ namespace Data
                 case ModType.OCCULTHEALING:
                     result.Add(new OccultHealingModifier(modEffect.playerHealthChange));
                     break;
+                case ModType.FINISHINGBLOW:
+                    result.Add(new FinishingBlow(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
+                    break;
+                case ModType.ZERO:
+                    result.Add(new ZeroModifier());
+                    break;
             }
             foreach (Modifier mod in result)
             {

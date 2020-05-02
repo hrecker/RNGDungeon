@@ -154,6 +154,23 @@
                 "playerHealthChange": 10,
                 "baseModTriggerChance": 0.35
             }
+        },
+        {
+            "name": "FinishingBlow",
+            "displayName": "Finishing Blow",
+            "description": "Buffs roll against enemies inflicted with a status",
+            "cooldownRolls": 5,
+            "modType": 317,
+            "modEffect": {
+                "playerMinRollChange": 3,
+                "playerMaxRollChange": 3
+            }
+        },
+        {
+            "name": "Zero",
+            "description": "Roll a zero",
+            "cooldownRolls": 5,
+            "modType": 318
         }
     ]
 }

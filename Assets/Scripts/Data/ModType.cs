@@ -57,6 +57,8 @@ namespace Data
         WILDGUESS = 314,
         WILDCURSE = 315,
         OCCULTHEALING = 316,
+        FINISHINGBLOW = 317,
+        ZERO = 318,
 
         // Items: 401 - 500
         PANACEA = 401
