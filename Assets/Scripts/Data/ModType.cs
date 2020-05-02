@@ -52,6 +52,7 @@ namespace Data
         BANDAGE = 309,
         WILDCHARGE = 310,
         PRAYER = 311,
+        BIDE = 312,
 
         // Items: 401 - 500
         PANACEA = 401

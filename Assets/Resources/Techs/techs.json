@@ -95,10 +95,21 @@
         },
         {
             "name": "Prayer",
-            "description": "Boosts luck for 3 turns",
+            "description": "Boosts luck for 3 rolls",
             "cooldownRolls": 9,
             "modType": 311,
             "numRollsInEffect": 3
+        },
+        {
+            "name": "Bide",
+            "description": "Debuffs player for 2 rolls, the buffs based on damage received",
+            "cooldownRolls": 8,
+            "modType": 312,
+            "numRollsInEffect": 3,
+            "modEffect": {
+                "playerMinRollChange": -2,
+                "playerMaxRollChange": -2
+            }
         }
     ]
 }

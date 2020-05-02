@@ -80,11 +80,22 @@ namespace Data
                     luckMod.battleEffect = RollBoundedBattleEffect.LUCKBUFF;
                     result.Add(luckMod);
                     break;
+                case ModType.BIDE:
+                    Modifier initialDebuff = new RollBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange);
+                    initialDebuff.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                    initialDebuff.numRollsRemaining = numRollsInEffect - 1;
+                    result.Add(initialDebuff);
+                    result.Add(new BideModifier());
+                    break;
             }
             foreach (Modifier mod in result)
             {
                 mod.isRollBounded = true;
-                mod.numRollsRemaining = numRollsInEffect;
+                if (mod.numRollsRemaining == 0)
+                {
+                    mod.numRollsRemaining = numRollsInEffect;
+                }
                 mod.triggerChance = modEffect.baseModTriggerChance;
                 mod.priority = modEffect.modPriority;
                 mod.actor = modEffect.actor;
