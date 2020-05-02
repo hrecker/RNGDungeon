@@ -45,6 +45,12 @@ namespace Data
                 case ModType.PANACEA:
                     result = new PanaceaModifier();
                     break;
+                case ModType.HOLYWATER:
+                    result = new LuckBuffModifier(2, null, false);
+                    break;
+                case ModType.ENERGYDRINK:
+                    result = new EnergyDrinkModifier();
+                    break;
             }
             if (result != null)
             {

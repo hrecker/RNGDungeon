@@ -2,6 +2,7 @@
 
 namespace Data
 {
+    //TODO can probably consolidate some of this when more mod properties are loaded from json
     [Serializable]
     public enum ModType
     {
@@ -63,6 +64,8 @@ namespace Data
         RISKYKICK = 320,
 
         // Items: 401 - 500
-        PANACEA = 401
+        PANACEA = 401,
+        HOLYWATER = 402,
+        ENERGYDRINK = 403
     }
 }

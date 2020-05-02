@@ -56,6 +56,34 @@
             "tooltipText": "Cure all active debuffs",
             "playerStatusMessage": "Cured!",
             "modType": 401
+        },
+        {
+            "name": "HolyWater",
+            "itemType": 1,
+            "displayName": "Holy Water",
+            "tooltipText": "Increases luck for 2 rolls",
+            "playerStatusMessage": "+2 Luck: 2 rolls",
+            "numRollsInEffect": 2,
+            "modType": 402
+        },
+        {
+            "name": "EnergyDrink",
+            "itemType": 1,
+            "displayName": "Enery Drink",
+            "tooltipText": "Reduces active tech cooldowns by 1",
+            "modType": 403
+        },
+        {
+            "name": "LargeHealthPotion",
+            "displayName": "Large Health Potion",
+            "rarity": 1,
+            "tooltipText": "Heals 10 health",
+            "playerStatusMessage": "+10 health",
+            "failedUseMessage": "Already at maximum health",
+            "modType": 3,
+            "modEffect": {
+                "playerHealthChange": 10
+            }
         }
     ]
 }

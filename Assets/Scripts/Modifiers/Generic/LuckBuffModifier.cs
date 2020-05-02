@@ -7,13 +7,18 @@ namespace Modifiers.Generic
     {
         private int luckBuff;
         private string modMessage;
+        private bool addRollStatusMessage;
 
-        public LuckBuffModifier(int luckBuff) : this(luckBuff, null) { }
+        public LuckBuffModifier(int luckBuff) : this(luckBuff, null, true) { }
 
-        public LuckBuffModifier(int luckBuff, string modMessage)
+        public LuckBuffModifier(int luckBuff, string modMessage) : 
+            this(luckBuff, modMessage, true) { }
+
+        public LuckBuffModifier(int luckBuff, string modMessage, bool addRollStatusMessage)
         {
             this.luckBuff = luckBuff;
             this.modMessage = modMessage;
+            this.addRollStatusMessage = addRollStatusMessage;
         }
 
         public void ApplyOneTimeEffectMod()
@@ -23,9 +28,9 @@ namespace Modifiers.Generic
             {
                 BattleController.AddModMessage(actor, modMessage);
             }
-            if (isRollBounded)
+            if (addRollStatusMessage)
             {
-                BattleController.AddStatusMessage(actor, "+ " + luckBuff + 
+                BattleController.AddStatusMessage(actor, "+" + luckBuff + 
                     " Luck: " + numRollsRemaining + " rolls");
             }
         }
