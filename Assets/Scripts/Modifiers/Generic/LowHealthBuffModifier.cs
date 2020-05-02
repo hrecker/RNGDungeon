@@ -1,15 +1,14 @@
 ﻿using Battle;
-using System;
 
-namespace Modifiers.Ability
+namespace Modifiers.Generic
 {
     // Buffs when at or below 50% health. Below 25% health, the buff is doubled.
-    public class HeroicModifier : Modifier, IRollGenerationModifier
+    public class LowHealthBuffModifier : Modifier, IRollGenerationModifier
     {
         private int baseMinRollBuff;
         private int baseMaxRollBuff;
 
-        public HeroicModifier(int baseMinRollBuff, int baseMaxRollBuff)
+        public LowHealthBuffModifier(int baseMinRollBuff, int baseMaxRollBuff)
         {
             this.baseMinRollBuff = baseMinRollBuff;
             this.baseMaxRollBuff = baseMaxRollBuff;

@@ -63,7 +63,7 @@ namespace Data
                     result.Add(fortifyMod);
                     break;
                 case ModType.BANDAGE:
-                    result.Add(new HealthChangeModifier(modEffect.playerHealthChange,
+                    result.Add(new RollHealthChangeModifier(modEffect.playerHealthChange,
                         0, "Bandage!"));
                     break;
                 case ModType.WILDCHARGE:
@@ -101,8 +101,9 @@ namespace Data
                     result.Add(new OccultHealingModifier(modEffect.playerHealthChange));
                     break;
                 case ModType.FINISHINGBLOW:
-                    result.Add(new FinishingBlow(modEffect.playerMinRollChange,
-                        modEffect.playerMaxRollChange));
+                    result.Add(new StatusPunishingRollBuffModifier(
+                        modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange, "Finishing Blow!"));
                     break;
                 case ModType.ZERO:
                     result.Add(new ZeroModifier());

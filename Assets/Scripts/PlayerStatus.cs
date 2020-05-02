@@ -15,21 +15,28 @@ public class PlayerStatus
     public static Dictionary<Item, int> Inventory { get; set; }
 
     private static Item equippedWeapon;
-    private static Modifier weaponMod;
+    private static List<Modifier> weaponMods;
     public static Item EquippedWeapon { 
         get { return equippedWeapon; } 
         set
         {
             equippedWeapon = value;
             //TODO this will potentially be pretty inefficient in the inventory screen
-            if (weaponMod != null)
+            if (weaponMods.Count > 0)
             {
-                weaponMod.DeregisterSelf();
+                foreach (Modifier mod in weaponMods)
+                {
+                    mod.DeregisterSelf();
+                }
+                weaponMods.Clear();
             }
             if (equippedWeapon != null)
             {
-                weaponMod = equippedWeapon.CreateItemModifier();
-                Status.Mods.RegisterModifier(weaponMod);
+                foreach (Modifier weaponMod in equippedWeapon.CreateItemModifiers())
+                {
+                    weaponMods.Add(weaponMod);
+                    Status.Mods.RegisterModifier(weaponMod);
+                }
             }
         }
     }
@@ -52,8 +59,9 @@ public class PlayerStatus
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
         Inventory = new Dictionary<Item, int>();
         Inventory.Add(Data.Cache.GetItem("HealthPotion"), 3);
-        Inventory.Add(Data.Cache.GetItem("Shortsword"), 1);
+        Inventory.Add(Data.Cache.GetItem("Panacea"), 2);
         abilities = new List<Ability>();
+        weaponMods = new List<Modifier>();
         EquippedTrinkets = new List<Item>();
         EnabledTechs = new List<Tech>();
         Initialized = true;
@@ -75,7 +83,7 @@ public class PlayerStatus
     // Returns true if the item was successfully used
     public static bool UseItem(Item item, bool isInBattle)
     {
-        Modifier itemMod = null;
+        List<Modifier> itemMods = new List<Modifier>();
         switch (item.itemType)
         {
             case ItemType.EQUIPMENT:
@@ -96,12 +104,12 @@ public class PlayerStatus
                 }
                 break;
             case ItemType.USABLE_ANYTIME:
-                itemMod = item.CreateItemModifier();
+                itemMods.AddRange(item.CreateItemModifiers());
                 break;
             case ItemType.USABLE_ONLY_IN_BATTLE:
                 if (isInBattle)
                 {
-                    itemMod = item.CreateItemModifier();
+                    itemMods.AddRange(item.CreateItemModifiers());
                 }
                 else
                 {
@@ -110,15 +118,22 @@ public class PlayerStatus
                 break;
         }
 
-        if (itemMod != null)
+        if (itemMods.Count > 0)
         {
-            // If this is a one time mod and it can't be applied, return false
-            if (itemMod is IOneTimeEffectModifier && 
-                !((IOneTimeEffectModifier)itemMod).CanApply())
+            // If there is a one time mod and it can't be applied, return false
+            foreach (Modifier itemMod in itemMods)
             {
+                if (itemMod is IOneTimeEffectModifier &&
+                    !((IOneTimeEffectModifier)itemMod).CanApply())
+                {
                     return false;
+                }
             }
-            Status.Mods.RegisterModifier(itemMod);
+            // Otherwise register all item mods
+            foreach (Modifier itemMod in itemMods)
+            {
+                Status.Mods.RegisterModifier(itemMod);
+            }
         }
 
         if (Inventory.ContainsKey(item))

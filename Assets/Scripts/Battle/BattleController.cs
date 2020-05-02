@@ -13,6 +13,8 @@ namespace Battle
 {
     public class BattleController : MonoBehaviour
     {
+        public static bool isInBattle;
+
         public float rollInterval = 1.0f;
         public float victoryDisplayTime = 2.0f;
         private float timer = 0.0f;
@@ -63,6 +65,7 @@ namespace Battle
 
         private void Awake()
         {
+            isInBattle = true;
             statusUI = GetComponent<StatusUI>();
             baseRollInterval = rollInterval;
             // Add enemycontroller for the given enemy
@@ -293,6 +296,7 @@ namespace Battle
                     ShowResult("Defeat", true);
                 }
                 completed = true;
+                isInBattle = false;
             }
         }
 

@@ -16,6 +16,11 @@ namespace Data
 
         // Weapons: 101 - 200
         WEAPON = 101,
+        POISONEDSWORD = 102,
+        PUNISHINGSWORD = 103,
+        CURSEDSWORD = 104,
+        DEMONICSWORD = 105,
+        SPECIALTYSWORD = 106,
 
         // Abilities: 201 - 300
         STALWART = 201,

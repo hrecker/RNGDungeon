@@ -39,15 +39,16 @@
             }
         },
         {
-            "name": "Shortsword",
+            "name": "SharpenedSword",
+            "displayName": "Sharpened Sword",
             "itemType": 2,
             "rarity": 2,
-            "tooltipText": "+1 min roll, +1 max roll",
+            "tooltipText": "+2 roll",
             "equipSlot": 1,
             "modType": 101,
             "modEffect": {
-                "playerMinRollChange": 1,
-                "playerMaxRollChange": 1
+                "playerMinRollChange": 2,
+                "playerMaxRollChange": 2
             }
         },
         {
@@ -83,6 +84,73 @@
             "modType": 3,
             "modEffect": {
                 "playerHealthChange": 10
+            }
+        },
+        {
+            "name": "PoisonedSword",
+            "displayName": "Poisoned Sword",
+            "itemType": 2,
+            "rarity": 2,
+            "tooltipText": "+1 roll, chance to poison on hit",
+            "equipSlot": 1,
+            "modType": 102,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1,
+                "baseModTriggerChance": 0.15
+            }
+        },
+        {
+            "name": "PunishingSword",
+            "displayName": "Punishing Sword",
+            "itemType": 2,
+            "rarity": 2,
+            "tooltipText": "+1 roll, +3 against enemies with a status",
+            "equipSlot": 1,
+            "modType": 103,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1
+            }
+        },
+        {
+            "name": "CursedSword",
+            "displayName": "Cursed Sword",
+            "itemType": 2,
+            "rarity": 2,
+            "tooltipText": "+1 roll, randomly buff or debuff every 3 rolls",
+            "equipSlot": 1,
+            "modType": 104,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1,
+                "baseModTriggerChance": 0.5
+            }
+        },
+        {
+            "name": "DemonicSword",
+            "displayName": "Demonic Sword",
+            "itemType": 2,
+            "rarity": 2,
+            "tooltipText": "+1 roll, with increased buff when on low health",
+            "equipSlot": 1,
+            "modType": 105,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1
+            }
+        },
+        {
+            "name": "SpecialtySword",
+            "displayName": "Specialty Sword",
+            "itemType": 2,
+            "rarity": 2,
+            "tooltipText": "+1 roll, +3 when using a tech",
+            "equipSlot": 1,
+            "modType": 106,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1
             }
         }
     ]

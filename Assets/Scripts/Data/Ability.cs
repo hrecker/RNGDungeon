@@ -30,7 +30,7 @@ namespace Data
                     result = new VampirismModifier();
                     break;
                 case ModType.HEROIC:
-                    result = new HeroicModifier(modEffect.playerMinRollChange,
+                    result = new LowHealthBuffModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange);
                     break;
                 case ModType.LUCKYHORSESHOE:
@@ -68,7 +68,8 @@ namespace Data
                     result = new SnowballModifier();
                     break;
                 case ModType.SKILLED:
-                    result = new SkilledModifier(modEffect.playerMaxRollChange);
+                    result = new TechBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange);
                     break;
                 case ModType.LIFEDRAIN:
                     result = new LifeDrainModifier(modEffect.playerHealthChange);

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Modifiers;
 using Modifiers.Generic;
 using Modifiers.Item;
+using Modifiers.StatusEffect;
 
 namespace Data
 {
@@ -22,43 +24,73 @@ namespace Data
         public ModEffect modEffect;
 
         // For items that represent modifiers
-        public Modifier CreateItemModifier()
+        public List<Modifier> CreateItemModifiers()
         {
-            Modifier result = null;
+            List<Modifier> result = new List<Modifier>();
             switch (modType)
             {
                 case ModType.BLOCK:
-                    result = new BlockingModifier();
+                    result.Add(new BlockingModifier());
                     break;
                 case ModType.RECOIL:
-                    result = new RecoilModifer();
-                    result.battleEffect = RollBoundedBattleEffect.RECOIL;
+                    Modifier mod = new RecoilModifer();
+                    mod.battleEffect = RollBoundedBattleEffect.RECOIL;
+                    result.Add(mod);
                     break;
                 case ModType.WEAPON:
-                    result = new RollBuffModifier(
-                        modEffect.playerMinRollChange, modEffect.playerMaxRollChange);
+                    result.Add(new RollBuffModifier(
+                        modEffect.playerMinRollChange, modEffect.playerMaxRollChange));
                     break;
                 case ModType.HEALTHCHANGE:
-                    result = new HealthChangeModifier(modEffect.playerHealthChange,
-                        modEffect.playerMaxHealthChange);
+                    result.Add(new HealthChangeModifier(modEffect.playerHealthChange,
+                        modEffect.playerMaxHealthChange));
                     break;
                 case ModType.PANACEA:
-                    result = new PanaceaModifier();
+                    result.Add(new PanaceaModifier());
                     break;
                 case ModType.HOLYWATER:
-                    result = new LuckBuffModifier(2, null, false);
+                    result.Add(new LuckBuffModifier(2, null, false));
                     break;
                 case ModType.ENERGYDRINK:
-                    result = new EnergyDrinkModifier();
+                    result.Add(new EnergyDrinkModifier());
+                    break;
+                case ModType.POISONEDSWORD:
+                    result.Add(new RollBuffModifier(modEffect.playerMinRollChange, 
+                        modEffect.playerMaxRollChange));
+                    result.Add(new InflictStatusOnHitModifier(
+                        Battle.StatusEffect.POISON, 3));
+                    break;
+                case ModType.PUNISHINGSWORD:
+                    result.Add(new RollBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
+                    result.Add(new StatusPunishingRollBuffModifier(2, 2));
+                    break;
+                case ModType.CURSEDSWORD:
+                    result.Add(new RollBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
+                    result.Add(new CursedSwordModifier(3));
+                    break;
+                case ModType.DEMONICSWORD:
+                    result.Add(new RollBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
+                    result.Add(new LowHealthBuffModifier(1, 1));
+                    break;
+                case ModType.SPECIALTYSWORD:
+                    result.Add(new RollBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
+                    result.Add(new TechBuffModifier(2, 2));
                     break;
             }
-            if (result != null)
+            if (result.Count > 0)
             {
-                result.isRollBounded = numRollsInEffect > 0;
-                result.numRollsRemaining = numRollsInEffect;
-                result.triggerChance = modEffect.baseModTriggerChance;
-                result.priority = modEffect.modPriority;
-                result.actor = modEffect.actor;
+                foreach (Modifier mod in result)
+                {
+                    mod.isRollBounded = numRollsInEffect > 0;
+                    mod.numRollsRemaining = numRollsInEffect;
+                    mod.triggerChance = modEffect.baseModTriggerChance;
+                    mod.priority = modEffect.modPriority;
+                    mod.actor = modEffect.actor;
+                }
             }
             return result;
         }
