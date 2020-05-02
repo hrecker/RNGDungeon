@@ -54,6 +54,9 @@ namespace Data
         PRAYER = 311,
         BIDE = 312,
         CRIT = 313,
+        WILDGUESS = 314,
+        WILDCURSE = 315,
+        OCCULTHEALING = 316,
 
         // Items: 401 - 500
         PANACEA = 401

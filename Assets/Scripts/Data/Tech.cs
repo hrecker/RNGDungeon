@@ -91,6 +91,15 @@ namespace Data
                 case ModType.CRIT:
                     result.Add(new CritModifier());
                     break;
+                case ModType.WILDGUESS:
+                    result.Add(new WildGuessModifier(modEffect.playerMaxRollChange, 3));
+                    break;
+                case ModType.WILDCURSE:
+                    result.Add(new WildCurseModifier(modEffect.playerMinRollChange, 3));
+                    break;
+                case ModType.OCCULTHEALING:
+                    result.Add(new OccultHealingModifier(modEffect.playerHealthChange));
+                    break;
             }
             foreach (Modifier mod in result)
             {

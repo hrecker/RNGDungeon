@@ -31,6 +31,7 @@ namespace Battle.Enemies
                 if (initial.PlayerRollDamage > 0 && !controller.debuffActive)
                 {
                     Modifier mod = new RollBuffModifier(-controller.rollDebuff, -controller.rollDebuff);
+                    mod.actor = BattleActor.PLAYER;
                     mod.isRollBounded = true;
                     mod.numRollsRemaining = 2;
                     mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
