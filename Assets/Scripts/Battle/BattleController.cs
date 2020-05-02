@@ -235,7 +235,7 @@ namespace Battle
             }
             if (selectedTech != null)
             {
-                selectedTech.ActivateCooldown();
+                selectedTech.ActivateCooldown(true);
             }
             techUI.Roll();
 

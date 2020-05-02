@@ -15,7 +15,8 @@ namespace Modifiers.Ability
             damageDealt = rollResult.EnemyRollDamage > 0;
         }
 
-        public int ApplyTechCooldownModifier(Data.Tech tech, int startingCooldown)
+        public int ApplyTechCooldownModifier(Data.Tech tech, bool isSelectedTech,
+            int startingCooldown)
         {
             if (damageDealt && activeTech == tech)
             {

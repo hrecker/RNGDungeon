@@ -107,6 +107,12 @@ namespace Data
                 case ModType.ZERO:
                     result.Add(new ZeroModifier());
                     break;
+                case ModType.WARMUP:
+                    result.Add(new WarmupModifier());
+                    break;
+                case ModType.RISKYKICK:
+                    result.Add(new RiskyKickModifier(modEffect.playerMaxRollChange));
+                    break;
             }
             foreach (Modifier mod in result)
             {
@@ -134,13 +140,16 @@ namespace Data
             return cooldownRolls;
         }
 
-        public void ActivateCooldown()
+        // isSelectedTech represents if this was the actual tech used this roll
+        // it can be false in situations where something else has scheduled the cooldown
+        // activation (such as the OmegaSlash tech)
+        public void ActivateCooldown(bool isSelectedTech)
         {
             // Apply tech cooldown mods
             int cooldown = cooldownRolls;
             foreach (ITechModifier mod in PlayerStatus.Status.Mods.GetTechModifiers())
             {
-                cooldown = mod.ApplyTechCooldownModifier(this, cooldown);
+                cooldown = mod.ApplyTechCooldownModifier(this, isSelectedTech, cooldown);
             }
             // Cooldown can't be reduced below 1
             cooldown = Math.Max(cooldown, 1);
@@ -160,7 +169,7 @@ namespace Data
         {
             if (scheduledCooldownActivate)
             {
-                ActivateCooldown();
+                ActivateCooldown(false);
                 scheduledCooldownActivate = false;
             }
             else

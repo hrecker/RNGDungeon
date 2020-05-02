@@ -59,6 +59,8 @@ namespace Data
         OCCULTHEALING = 316,
         FINISHINGBLOW = 317,
         ZERO = 318,
+        WARMUP = 319,
+        RISKYKICK = 320,
 
         // Items: 401 - 500
         PANACEA = 401

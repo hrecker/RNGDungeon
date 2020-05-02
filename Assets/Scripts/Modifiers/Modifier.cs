@@ -16,6 +16,8 @@ namespace Modifiers
         public bool isRollBounded;
         // Number of rolls that this modifier should exist for (if applicable)
         public int numRollsRemaining;
+        // Whether this modifier should remain in effect until the end of battle
+        public bool isFullBattleModifier;
         // 0-1 chance that this modifier triggers (if applicable)
         public float triggerChance;
         // Status caused by this modifier, if any

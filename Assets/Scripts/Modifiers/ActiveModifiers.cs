@@ -237,7 +237,7 @@ namespace Modifiers
         // Return true if the mod was deregistered by this method
         private static bool DecrementAndDeregisterIfNecessary(Modifier mod)
         {
-            if (mod.isRollBounded)
+            if (mod.isRollBounded && !mod.isFullBattleModifier)
             {
                 if (mod.numRollsRemaining > 0)
                 {
@@ -256,7 +256,8 @@ namespace Modifiers
         {
             for (int i = uniqueRegisteredModifiers.Count - 1; i >= 0; i--)
             {
-                if (uniqueRegisteredModifiers[i].isRollBounded)
+                if (uniqueRegisteredModifiers[i].isRollBounded ||
+                    uniqueRegisteredModifiers[i].isFullBattleModifier)
                 {
                     uniqueRegisteredModifiers[i].DeregisterSelf();
                 }

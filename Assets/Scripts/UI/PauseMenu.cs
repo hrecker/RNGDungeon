@@ -38,10 +38,6 @@ namespace UI
             Time.timeScale = 0;
             DisplayPauseMenu();
             isPaused = true;
-            //TODO will need to disable any other inputs
-            // PlayerController
-            // Inventory
-            // Battle stances (clicking on stances, tooltips)
         }
 
         public void Unpause()

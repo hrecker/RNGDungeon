@@ -17,7 +17,6 @@ namespace Battle
         void Start()
         {
             // Create item icons for each item in the player's inventory
-            //TODO handle duplicates
             itemIcons = new Dictionary<Item, GameObject>();
             CreateItemIcons();
             Render();
@@ -25,12 +24,6 @@ namespace Battle
 
         private void CreateItemIcons()
         {
-            //TODO remove, for testing
-            if (PlayerStatus.Inventory == null)
-            {
-                PlayerStatus.InitializeIfNecessary();
-            }
-
             foreach (Item item in PlayerStatus.Inventory.Keys)
             {
                 if (PlayerStatus.Inventory[item] > 0 &&

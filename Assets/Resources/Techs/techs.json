@@ -171,6 +171,22 @@
             "description": "Roll a zero",
             "cooldownRolls": 5,
             "modType": 318
+        },
+        {
+            "name": "Warm-up",
+            "description": "Reduces cooldown of the next tech used in this battle to 1",
+            "cooldownRolls": 10,
+            "modType": 319
+        },
+        {
+            "name": "RiskyKick",
+            "displayName": "Risky Kick",
+            "description": "Raises max roll but deals 1 damage to the player",
+            "cooldownRolls": 8,
+            "modType": 320,
+            "modEffect": {
+                "playerMaxRollChange": 3
+            }
         }
     ]
 }

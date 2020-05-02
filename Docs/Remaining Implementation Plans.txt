@@ -80,9 +80,9 @@ Techs by archetype
 16OccultHealing - L         Chance to greatly heal the player
 17FinishingBlow - W         Increased damage to enemies inflicted with break, poison, or rage
 18Zero - R                  Roll a zero
--
-19Practice - T              Next tech used has no cooldown
+19Warm-up - T               Next tech used has no cooldown
 20Risky Kick - R            Does heavy damage but inflicts recoil on the player
+-
 
 
 
