@@ -105,11 +105,12 @@ namespace UI
                     displayName = "Weapon: None"
                 });
             }
-            foreach (Item trinket in PlayerStatus.EquippedTrinkets)
+            foreach (Item trinket in PlayerStatus.EquippedTrinketIds.Keys)
             {
                 equipmentUIText.Add(new UIText
                 {
-                    displayName = trinket.GetDisplayName(),
+                    displayName = PlayerStatus.EquippedTrinketIds[trinket].Count + "x " + 
+                                        trinket.GetDisplayName(),
                     tooltipText = trinket.tooltipText,
                     callbackIdentifier = trinket.name,
                     sprite = Data.Cache.GetItemIcon(trinket.name)
@@ -198,7 +199,7 @@ namespace UI
             }
             else
             {
-                PlayerStatus.EquippedTrinkets.Remove(selected);
+                PlayerStatus.UnequipTrinket(selected);
             }
             PlayerStatus.AddItem(selected);
 

@@ -13,6 +13,7 @@ namespace Modifiers
         private SortedDictionary<int, List<IPostDamageModifier>> postDamageMods;
         private SortedDictionary<int, List<IPostBattleModifier>> postBattleMods;
         private SortedDictionary<int, List<ITechModifier>> techMods;
+        private SortedDictionary<int, List<IStatusEffectModifier>> statusMods;
 
         private List<Modifier> uniqueRegisteredModifiers;
 
@@ -24,6 +25,7 @@ namespace Modifiers
             postDamageMods = new SortedDictionary<int, List<IPostDamageModifier>>();
             postBattleMods = new SortedDictionary<int, List<IPostBattleModifier>>();
             techMods = new SortedDictionary<int, List<ITechModifier>>();
+            statusMods = new SortedDictionary<int, List<IStatusEffectModifier>>();
             uniqueRegisteredModifiers = new List<Modifier>();
         }
 
@@ -61,6 +63,11 @@ namespace Modifiers
         public List<ITechModifier> GetTechModifiers()
         {
             return GetModifiers(techMods);
+        }
+
+        public List<IStatusEffectModifier> GetStatusModifiers()
+        {
+            return GetModifiers(statusMods);
         }
 
         public void RegisterModifier(Modifier mod)
@@ -110,6 +117,11 @@ namespace Modifiers
             {
                 registered = true;
                 RegisterModifier((ITechModifier)mod, mod.priority);
+            }
+            if (mod is IStatusEffectModifier)
+            {
+                registered = true;
+                RegisterModifier((IStatusEffectModifier)mod, mod.priority);
             }
 
             // One shot modifiers are usually just instantly applied and don't need to be registered
@@ -165,6 +177,11 @@ namespace Modifiers
             RegisterModifier(techMods, mod, priority);
         }
 
+        private void RegisterModifier(IStatusEffectModifier mod, int priority)
+        {
+            RegisterModifier(statusMods, mod, priority);
+        }
+
         public bool DeregisterModifier(Modifier mod)
         {
             bool deregistered = false;
@@ -191,6 +208,10 @@ namespace Modifiers
             if (mod is ITechModifier)
             {
                 deregistered |= DeregisterModifier((ITechModifier)mod);
+            }
+            if (mod is IStatusEffectModifier)
+            {
+                deregistered |= DeregisterModifier((IStatusEffectModifier)mod);
             }
             uniqueRegisteredModifiers.Remove(mod);
             return deregistered;
@@ -224,6 +245,11 @@ namespace Modifiers
         private bool DeregisterModifier(ITechModifier mod)
         {
             return DeregisterModifier(techMods, mod);
+        }
+
+        private bool DeregisterModifier(IStatusEffectModifier mod)
+        {
+            return DeregisterModifier(statusMods, mod);
         }
 
         public void DecrementAndDeregisterModsIfNecessary()

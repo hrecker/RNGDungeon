@@ -72,6 +72,8 @@ namespace Data
         PANACEA = 401,
         HOLYWATER = 402,
         ENERGYDRINK = 403,
-        INVIGORATINGPOTION = 404
+        INVIGORATINGPOTION = 404,
+        EVILAURA = 405,
+        VOODOODOLL = 406
     }
 }

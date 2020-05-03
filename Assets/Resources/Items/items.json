@@ -165,6 +165,24 @@
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1
             }
+        },
+        {
+            "name": "EvilAura",
+            "displayName": "Evil Aura",
+            "itemType": 2,
+            "rarity": 1,
+            "tooltipText": "Status effects inflicted on enemies last longer",
+            "equipSlot": 2,
+            "modType": 405
+        },
+        {
+            "name": "VoodooDoll",
+            "displayName": "Voodoo Doll",
+            "itemType": 2,
+            "rarity": 2,
+            "tooltipText": "Status effects have increased intensity for enemies",
+            "equipSlot": 2,
+            "modType": 406
         }
     ]
 }

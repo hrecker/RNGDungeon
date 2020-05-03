@@ -56,6 +56,66 @@ namespace Modifiers
         {
             return actor.Status();
         }
+
+        // Method used when registering a status effect - allows modifiers that
+        // affect status duration to be applied
+        public void SetStatusRollsRemaining(int baseRollsRemaining)
+        {
+            if (statusEffect == Battle.StatusEffect.NONE)
+            {
+                numRollsRemaining = baseRollsRemaining;
+                return;
+            }
+
+            // Get duration diffs applying to self
+            foreach (IStatusEffectModifier statusMod in 
+                actor.Status().Mods.GetStatusModifiers())
+            {
+                baseRollsRemaining += statusMod.GetStatusEffectDurationDiff();
+            }
+            // Get duration diffs applied by the opponent
+            foreach (IStatusEffectModifier statusMod in 
+                actor.Opponent().Status().Mods.GetStatusModifiers())
+            {
+                baseRollsRemaining += statusMod.GetOpponentStatusEffectDurationDiff();
+            }
+            // Statuses must last at least one roll
+            if (baseRollsRemaining < 1)
+            {
+                baseRollsRemaining = 1;
+            }
+
+            numRollsRemaining = baseRollsRemaining;
+        }
+
+        // Get intensity (default is 1) of status effect based on actor and opponent mods
+        protected int GetStatusEffectIntensity(BattleActor actor)
+        {
+            if (statusEffect == Battle.StatusEffect.NONE)
+            {
+                return 1;
+            }
+
+            int intensity = 1;
+            // Get intensity diffs applying to self
+            foreach (IStatusEffectModifier actorMod in 
+                actor.Status().Mods.GetStatusModifiers())
+            {
+                intensity += actorMod.GetStatusEffectIntensityDiff();
+            }
+            // Get intensity diffs applied by the opponent
+            foreach (IStatusEffectModifier actorMod in 
+                actor.Opponent().Status().Mods.GetStatusModifiers())
+            {
+                intensity += actorMod.GetOpponentStatusEffectIntensityDiff();
+            }
+            // Intensity must be at least 1
+            if (intensity < 1)
+            {
+                intensity = 1;
+            }
+            return intensity;
+        }
     }
 
     // General enum describing the type of effect this modifier has in battle

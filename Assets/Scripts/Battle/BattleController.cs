@@ -152,6 +152,12 @@ namespace Battle
             // If there are modifiers to add, add before the roll starts
             // Add mods for selected techs
             Tech selectedTech = null;
+
+            IEnumerable<Modifier> playerNextRollMods = PlayerStatus.Status.NextRollMods.ToList();
+            IEnumerable<Modifier> enemyNextRollMods = EnemyStatus.Status.NextRollMods.ToList();
+            PlayerStatus.Status.NextRollMods.Clear();
+            EnemyStatus.Status.NextRollMods.Clear();
+
             if (techUI.GetSelectedTech() != null)
             {
                 selectedTech = techUI.GetSelectedTech();
@@ -164,16 +170,14 @@ namespace Battle
                 }
             }
             // Add any other mods that should be active before the roll
-            foreach (Modifier mod in PlayerStatus.Status.NextRollMods)
+            foreach (Modifier mod in playerNextRollMods)
             {
                 PlayerStatus.Status.Mods.RegisterModifier(mod);
             }
-            PlayerStatus.Status.NextRollMods.Clear();
-            foreach (Modifier mod in EnemyStatus.Status.NextRollMods)
+            foreach (Modifier mod in enemyNextRollMods)
             {
                 EnemyStatus.Status.Mods.RegisterModifier(mod);
             }
-            EnemyStatus.Status.NextRollMods.Clear();
 
             // Generate roll numeric values
             int playerInitial = playerRollGenerator.GenerateInitialRoll(selectedTech, currentRoll);

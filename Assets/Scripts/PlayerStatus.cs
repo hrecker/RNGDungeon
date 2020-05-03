@@ -4,6 +4,7 @@ using Data;
 using Modifiers;
 using Levels;
 using Battle;
+using System;
 
 public class PlayerStatus
 {
@@ -40,7 +41,10 @@ public class PlayerStatus
             }
         }
     }
-    public static List<Item> EquippedTrinkets { get; set; }
+    // Trinkets currently equipped, each with an assigned ID
+    public static Dictionary<Item, List<Guid>> EquippedTrinketIds { get; set; }
+    // Modifiers identified by trinket ID
+    private static Dictionary<Guid, List<Modifier>> trinketModifiers;
     private static List<Ability> abilities;
     public static List<Tech> EnabledTechs { get; set; }
 
@@ -62,7 +66,8 @@ public class PlayerStatus
         Inventory.Add(Data.Cache.GetItem("Panacea"), 2);
         abilities = new List<Ability>();
         weaponMods = new List<Modifier>();
-        EquippedTrinkets = new List<Item>();
+        EquippedTrinketIds = new Dictionary<Item, List<Guid>>();
+        trinketModifiers = new Dictionary<Guid, List<Modifier>>();
         EnabledTechs = new List<Tech>();
         Initialized = true;
     }
@@ -99,7 +104,7 @@ public class PlayerStatus
                         EquippedWeapon = item;
                         break;
                     case EquipSlot.TRINKET:
-                        EquippedTrinkets.Add(item);
+                        EquipTrinket(item);
                         break;
                 }
                 break;
@@ -168,5 +173,36 @@ public class PlayerStatus
     {
         tech.ResetCooldown();
         EnabledTechs.Add(tech);
+    }
+
+    private static void EquipTrinket(Item trinket)
+    {
+        Guid trinketID = Guid.NewGuid();
+        if (!EquippedTrinketIds.ContainsKey(trinket))
+        {
+            EquippedTrinketIds.Add(trinket, new List<Guid>());
+        }
+        EquippedTrinketIds[trinket].Add(trinketID);
+        trinketModifiers.Add(trinketID, trinket.CreateItemModifiers());
+        foreach (Modifier mod in trinketModifiers[trinketID])
+        {
+            Status.Mods.RegisterModifier(mod);
+        }
+    }
+
+    public static void UnequipTrinket(Item trinket)
+    {
+        List<Guid> trinketIDs = EquippedTrinketIds[trinket];
+        Guid trinketID = trinketIDs[0];
+        trinketIDs.Remove(trinketID);
+        if (trinketIDs.Count == 0)
+        {
+            EquippedTrinketIds.Remove(trinket);
+        }
+        foreach (Modifier mod in trinketModifiers[trinketID])
+        {
+            mod.DeregisterSelf();
+        }
+        trinketModifiers.Remove(trinketID);
     }
 }

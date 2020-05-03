@@ -29,10 +29,10 @@ namespace Modifiers.StatusEffect
             if (rollResult.GetRollDamage(actor.Opponent()) > 0 && RollTrigger())
             {
                 trigger = true;
-                Modifier statusMod = status.Modifier();
+                Modifier statusMod = status.Modifier(actor.Opponent());
                 statusMod.actor = actor.Opponent();
                 statusMod.isRollBounded = true;
-                statusMod.numRollsRemaining = numStatusRolls;
+                statusMod.SetStatusRollsRemaining(numStatusRolls);
                 actor.Opponent().Status().NextRollMods.Add(statusMod);
                 BattleController.AddStatusMessage(actor.Opponent(),
                     status.Name() + ": " + statusMod.numRollsRemaining + " turns");

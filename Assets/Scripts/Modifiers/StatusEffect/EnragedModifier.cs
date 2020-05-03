@@ -8,8 +8,13 @@ namespace Modifiers.StatusEffect
     // to half of the roll difference when this actor rolls higher
     public class EnragedModifier : RollBuffModifier, IRollResultModifier, IOneTimeEffectModifier
     {
-        public EnragedModifier() : base(-1, 1) 
+        private float recoilRatio = 0.5f;
+
+        public EnragedModifier(BattleActor actor) : base(-1, 1) 
         {
+            // Higher intensity increases recoil
+            int intensity = GetStatusEffectIntensity(actor);
+            recoilRatio += (0.5f * intensity);
             statusEffect = Battle.StatusEffect.ENRAGED;
             battleEffect = RollBoundedBattleEffect.ENRAGED;
         }
@@ -35,7 +40,7 @@ namespace Modifiers.StatusEffect
             {
                 // Half of roll difference is dealt back as recoil
                 int recoilDamage = (int)Math.Ceiling(
-                    (initial.GetRollValue(actor) - initial.GetRollValue(actor.Opponent())) / 2.0f);
+                    (initial.GetRollValue(actor) - initial.GetRollValue(actor.Opponent())) * recoilRatio);
                 initial.AddNonRollDamage(actor, recoilDamage);
             }
             return initial;

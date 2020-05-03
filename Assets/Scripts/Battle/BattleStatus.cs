@@ -116,16 +116,16 @@ namespace Battle
             }
         }
 
-        public static Modifier Modifier(this StatusEffect effect)
+        public static Modifier Modifier(this StatusEffect effect, BattleActor actor)
         {
             switch (effect)
             {
                 case StatusEffect.BREAK:
-                    return new BreakModifier();
+                    return new BreakModifier(actor);
                 case StatusEffect.POISON:
-                    return new PoisonModifier();
+                    return new PoisonModifier(actor);
                 case StatusEffect.ENRAGED:
-                    return new EnragedModifier();
+                    return new EnragedModifier(actor);
                 default:
                     return null;
             }

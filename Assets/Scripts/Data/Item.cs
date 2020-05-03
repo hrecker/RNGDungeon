@@ -86,6 +86,12 @@ namespace Data
                     buffMod.battleEffect = RollBoundedBattleEffect.BUFF;
                     result.Add(buffMod);
                     break;
+                case ModType.EVILAURA:
+                    result.Add(new StatusDurationModifier(0, 1));
+                    break;
+                case ModType.VOODOODOLL:
+                    result.Add(new StatusIntensityModifier(0, 1));
+                    break;
             }
             if (result.Count > 0)
             {

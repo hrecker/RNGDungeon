@@ -122,9 +122,9 @@ R[A]re          9
 12Demonic Sword - RA                Deal more damage on low health
 13Specialty Sword - TOA             Increases roll when using techs
 14Invigorating Potion - CO          Buff self for 2 turns
--
-15EvilAura - WU                     Status effects (rage, break, poison) last longer on enemies
+15EvilAura - WU                     Status effects (rage, break, poison) last one roll longer on enemies
 16Voodoo Doll - WA                  Status effect have more dramatic effects on enemies
+-
 17Lucky Clover - LU                 Increases luck by 1
 18SentimentalItem - GU              Buff player at start of battle
 19DailyVitamins - TU                First tech used in battle has reduced cooldown

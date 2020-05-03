@@ -6,8 +6,11 @@ namespace Modifiers.StatusEffect
     // Break is a status effect that lowers min roll by one
     public class BreakModifier : RollBuffModifier, IOneTimeEffectModifier
     {
-        public BreakModifier() : base(-1, 0) 
+        public BreakModifier(BattleActor actor) : base(0, 0) 
         {
+            // Higher intensity increases debuff of min roll
+            int intensity = GetStatusEffectIntensity(actor);
+            minRollDiff = -1 * intensity;
             statusEffect = Battle.StatusEffect.BREAK;
             battleEffect = RollBoundedBattleEffect.BREAK;
         }

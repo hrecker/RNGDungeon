@@ -5,8 +5,13 @@ namespace Modifiers.StatusEffect
     // Poison is a status effect that causes one damage every roll
     public class PoisonModifier : Modifier, IRollResultModifier, IOneTimeEffectModifier
     {
-        public PoisonModifier()
+        private int poisonDamage = 1;
+
+        public PoisonModifier(BattleActor actor)
         {
+            // Higher intensity increases poison damage
+            int intensity = GetStatusEffectIntensity(actor);
+            poisonDamage = intensity;
             statusEffect = Battle.StatusEffect.POISON;
             battleEffect = RollBoundedBattleEffect.POISON;
         }
@@ -18,7 +23,7 @@ namespace Modifiers.StatusEffect
 
         public RollResult ApplyRollResultMod(RollResult initial)
         {
-            initial.AddNonRollDamage(actor, 1);
+            initial.AddNonRollDamage(actor, poisonDamage);
             return initial;
         }
 
