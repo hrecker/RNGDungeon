@@ -152,6 +152,19 @@
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1
             }
+        },
+        {
+            "name": "InvigoratingPotion",
+            "displayName": "Invigorating Potion",
+            "itemType": 1,
+            "tooltipText": "Buffs roll by 1 for 2 turns",
+            "playerStatusMessage": "+1 roll: 2 turns",
+            "modType": 404,
+            "numRollsInEffect": 2,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1
+            }
         }
     ]
 }

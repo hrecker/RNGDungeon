@@ -80,6 +80,12 @@ namespace Data
                         modEffect.playerMaxRollChange));
                     result.Add(new TechBuffModifier(2, 2));
                     break;
+                case ModType.INVIGORATINGPOTION:
+                    Modifier buffMod = new RollBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange);
+                    buffMod.battleEffect = RollBoundedBattleEffect.BUFF;
+                    result.Add(buffMod);
+                    break;
             }
             if (result.Count > 0)
             {

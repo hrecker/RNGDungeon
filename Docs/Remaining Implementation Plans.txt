@@ -121,8 +121,8 @@ R[A]re          9
 11Cursed Sword - LA                 Chance to debuff or buff the player every 3 rolls
 12Demonic Sword - RA                Deal more damage on low health
 13Specialty Sword - TOA             Increases roll when using techs
--
 14Invigorating Potion - CO          Buff self for 2 turns
+-
 15EvilAura - WU                     Status effects (rage, break, poison) last longer on enemies
 16Voodoo Doll - WA                  Status effect have more dramatic effects on enemies
 17Lucky Clover - LU                 Increases luck by 1

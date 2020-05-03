@@ -71,6 +71,7 @@ namespace Data
         // Items: 401 - 500
         PANACEA = 401,
         HOLYWATER = 402,
-        ENERGYDRINK = 403
+        ENERGYDRINK = 403,
+        INVIGORATINGPOTION = 404
     }
 }
