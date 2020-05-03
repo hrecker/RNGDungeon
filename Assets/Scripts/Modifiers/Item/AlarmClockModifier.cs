@@ -3,26 +3,26 @@ using Modifiers.Generic;
 
 namespace Modifiers.Item
 {
-    // Creates a buff every x turns
+    // Creates a buff every x rolls
     public class AlarmClockModifier : Modifier, IRollGenerationModifier
     {
-        private int turnsBetweenBuffs;
+        private int rollsBetweenBuffs;
         private int buffDuration;
         private int minRollDiff;
         private int maxRollDiff;
 
         public AlarmClockModifier(int minRollDiff, int maxRollDiff,
-            int turnsBetweenBuffs, int buffDuration)
+            int rollsBetweenBuffs, int buffDuration)
         {
             this.minRollDiff = minRollDiff;
             this.maxRollDiff = maxRollDiff;
-            this.turnsBetweenBuffs = turnsBetweenBuffs;
+            this.rollsBetweenBuffs = rollsBetweenBuffs;
             this.buffDuration = buffDuration;
         }
 
         public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
-            if (currentRollGen.CurrentRoll % turnsBetweenBuffs == 0)
+            if (currentRollGen.CurrentRoll % rollsBetweenBuffs == 0)
             {
                 Modifier mod = new RollBuffModifier(minRollDiff, maxRollDiff);
                 mod.actor = actor;

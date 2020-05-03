@@ -60,6 +60,7 @@ namespace Battle
         private static List<string> enemyStatusMessagesToShow = new List<string>();
         private static List<string> playerModMessagesToShow = new List<string>();
         private static List<string> enemyModMessagesToShow = new List<string>();
+        private static List<NonRollDamage> nonRollDamageToApply = new List<NonRollDamage>();
         private static int currentRoll;
         private bool firstUpdate;
 
@@ -79,8 +80,8 @@ namespace Battle
             enemyHealthBar = enemyGameObject.GetComponent<BattleHealthBar>();
             enemyRollDamageUI = enemyGameObject.gameObject.transform.Find("RollDamage").gameObject;
             enemyRollHealUI = enemyGameObject.gameObject.transform.Find("RollHeal").gameObject;
-            playerModMessagesToShow = new List<string>();
-            enemyModMessagesToShow = new List<string>();
+            playerModMessagesToShow.Clear();
+            enemyModMessagesToShow.Clear();
             enemyHealthBar.status = EnemyStatus.Status;
             playerHealthBar.status = PlayerStatus.Status;
         }
@@ -97,8 +98,9 @@ namespace Battle
             playerRollHealText = playerRollHealUI.GetComponentInChildren<Text>();
             enemyRollDamageText = enemyRollDamageUI.GetComponentInChildren<Text>();
             enemyRollHealText = enemyRollHealUI.GetComponentInChildren<Text>();
-            playerStatusMessagesToShow = new List<string>();
-            enemyStatusMessagesToShow = new List<string>();
+            playerStatusMessagesToShow.Clear();
+            enemyStatusMessagesToShow.Clear();
+            nonRollDamageToApply.Clear();
             playerRollDamageUI.SetActive(false);
             playerRollHealUI.SetActive(false);
             enemyRollDamageUI.SetActive(false);
@@ -115,6 +117,11 @@ namespace Battle
             }
 
             timer += Time.deltaTime;
+
+            if (nonRollDamageToApply.Count > 0)
+            {
+                ApplyNonRollDamages();
+            }
 
             if (!completed && timer >= rollInterval)
             {
@@ -370,9 +377,12 @@ namespace Battle
             if (PlayerStatus.UseItem(item, true))
             {
                 // Add status messages if there are any
-                CreateMessages(new List<string>() { item.playerStatusMessage },
-                    new List<string>() { item.enemyStatusMessage },
-                    playerStatusMessagesParent, enemyStatusMessagesParent);
+                if (item.playerStatusMessages != null)
+                {
+                    CreateMessages(item.playerStatusMessages.ToList(),
+                        new List<string>(),
+                        playerStatusMessagesParent, enemyStatusMessagesParent);
+                }
                 // Update status icons in case status has changed
                 statusUI.UpdateStatusIcons();
                 return true;
@@ -476,6 +486,28 @@ namespace Battle
         private void UpdateRollCountUI()
         {
             rollCountText.text = "Roll " + currentRoll;
+        }
+
+        public static void AddNonRollDamage(NonRollDamage damage)
+        {
+            nonRollDamageToApply.Add(damage);
+        }
+
+        private void ApplyNonRollDamages()
+        {
+            RollResult nonRollResult = new RollResult();
+            foreach (NonRollDamage damage in nonRollDamageToApply)
+            {
+                nonRollResult.PlayerNonRollDamage += damage.PlayerDamage;
+                nonRollResult.EnemyNonRollDamage += damage.EnemyDamage;
+            }
+
+            playerHealthBar.ApplyResult(nonRollResult);
+            enemyHealthBar.ApplyResult(nonRollResult);
+            CheckBattleComplete();
+            UpdateHealthUI(nonRollResult, !completed);
+
+            nonRollDamageToApply.Clear();
         }
     }
 }

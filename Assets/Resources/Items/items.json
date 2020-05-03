@@ -8,7 +8,7 @@
             "name": "HealthPotion",
             "displayName": "Health Potion",
             "tooltipText": "Heals 3 health",
-            "playerStatusMessage": "+3 health",
+            "playerStatusMessages": ["+3 health"],
             "failedUseMessage": "Already at maximum health",
             "modType": 3,
             "modEffect": {
@@ -20,8 +20,8 @@
             "displayName": "Blocking Potion",
             "itemType": 1,
             "rarity": 2,
-            "tooltipText": "Blocks incoming damage for 3 turns",
-            "playerStatusMessage": "Block: 3 turns",
+            "tooltipText": "Blocks incoming damage for 3 rolls",
+            "playerStatusMessages": ["Block: 3 rolls"],
             "numRollsInEffect": 3,
             "modType": 1
         },
@@ -30,8 +30,8 @@
             "displayName": "Recoil Potion",
             "itemType": 1,
             "rarity": 1,
-            "tooltipText": "Recoils 1 damage to enemy for 3 turns",
-            "playerStatusMessage": "Recoil: 3 turns",
+            "tooltipText": "Recoils 1 damage to enemy for 3 rolls",
+            "playerStatusMessages": ["Recoil: 3 rolls"],
             "numRollsInEffect": 3,
             "modType": 2,
             "modEffect": {
@@ -55,7 +55,7 @@
             "name": "Panacea",
             "itemType": 1,
             "tooltipText": "Cure all active debuffs",
-            "playerStatusMessage": "Cured!",
+            "playerStatusMessages": ["Cured!"],
             "modType": 401
         },
         {
@@ -63,7 +63,7 @@
             "itemType": 1,
             "displayName": "Holy Water",
             "tooltipText": "Increases luck for 2 rolls",
-            "playerStatusMessage": "+2 Luck: 2 rolls",
+            "playerStatusMessages": ["+2 Luck: 2 rolls"],
             "numRollsInEffect": 2,
             "modType": 402
         },
@@ -72,6 +72,7 @@
             "itemType": 1,
             "displayName": "Enery Drink",
             "tooltipText": "Reduces active tech cooldowns by 1",
+            "playerStatusMessages": ["-1 cooldown"],
             "modType": 403
         },
         {
@@ -79,7 +80,7 @@
             "displayName": "Large Health Potion",
             "rarity": 1,
             "tooltipText": "Heals 10 health",
-            "playerStatusMessage": "+10 health",
+            "playerStatusMessages": ["+10 health"],
             "failedUseMessage": "Already at maximum health",
             "modType": 3,
             "modEffect": {
@@ -157,8 +158,8 @@
             "name": "InvigoratingPotion",
             "displayName": "Invigorating Potion",
             "itemType": 1,
-            "tooltipText": "Buffs roll by 1 for 2 turns",
-            "playerStatusMessage": "+1 roll: 2 turns",
+            "tooltipText": "Buffs roll by 1 for 2 rolls",
+            "playerStatusMessages": ["+1 roll: 2 rolls"],
             "modType": 404,
             "numRollsInEffect": 2,
             "modEffect": {
@@ -227,6 +228,38 @@
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1
             }
+        },
+        {
+            "name": "SmartHelmet",
+            "itemType": 2,
+            "rarity": 1,
+            "tooltipText": "Reduces damage taken when under 25% health",
+            "equipSlot": 2,
+            "modType": 411
+        },
+        {
+            "name": "SuperPotion",
+            "rarity": 2,
+            "tooltipText": "Restores 15 health, removes all debuffs, and buffs player",
+            "modType": 412,
+            "playerStatusMessages": 
+            [
+                "Cured!",
+                "+15 health",
+                "+2 roll: 3 rolls"
+            ],
+            "failedUseMessage": "Already at maximum health",
+            "modEffect": {
+                "playerMinRollChange": 2,
+                "playerMaxRollChange": 2,
+                "playerHealthChange": 15
+            }
+        },
+        {
+            "name": "Explosives",
+            "itemType": 1,
+            "tooltipText": "Deals 2 damage to the player and the enemy",
+            "modType": 413
         }
     ]
 }

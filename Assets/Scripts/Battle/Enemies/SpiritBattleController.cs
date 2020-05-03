@@ -4,7 +4,7 @@ using Modifiers.Ability;
 
 namespace Battle.Enemies
 {
-    // Enemy that curses player with 3 turn debuff when taking damage
+    // Enemy that curses player with 3 roll debuff when taking damage
     public class SpiritBattleController : EnemyBattleController
     {
         private void Start()

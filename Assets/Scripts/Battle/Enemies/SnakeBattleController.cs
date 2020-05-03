@@ -2,7 +2,7 @@
 
 namespace Battle.Enemies
 {
-    // Snake enemy that has 50% chance to cause 2 turn poison on hit
+    // Snake enemy that has 50% chance to cause 2 roll poison on hit
     public class SnakeBattleController : EnemyBattleController
     {
         private void Start()

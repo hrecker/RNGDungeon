@@ -35,7 +35,7 @@ namespace Modifiers.StatusEffect
                 statusMod.SetStatusRollsRemaining(numStatusRolls);
                 actor.Opponent().Status().NextRollMods.Add(statusMod);
                 BattleController.AddStatusMessage(actor.Opponent(),
-                    status.Name() + ": " + statusMod.numRollsRemaining + " turns");
+                    status.Name() + ": " + statusMod.numRollsRemaining + " rolls");
             }
             if ((trigger || !onlyShowModMessageOnTrigger) && modMessage != null)
             {

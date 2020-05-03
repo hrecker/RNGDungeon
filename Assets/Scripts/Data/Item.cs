@@ -14,8 +14,7 @@ namespace Data
         public string displayName;
         public string tooltipText;
         public int numRollsInEffect; // For in-battle items
-        public string playerStatusMessage;
-        public string enemyStatusMessage;
+        public string[] playerStatusMessages;
         public string failedUseMessage;
         public ItemType itemType;
         public Rarity rarity;
@@ -105,6 +104,16 @@ namespace Data
                 case ModType.ALARMCLOCK:
                     result.Add(new AlarmClockModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange, 10, 3));
+                    break;
+                case ModType.SMARTHELMET:
+                    result.Add(new SmartHelmetModifier(1));
+                    break;
+                case ModType.SUPERPOTION:
+                    result.Add(new SuperPotionModifier(modEffect.playerHealthChange,
+                        modEffect.playerMinRollChange, 3));
+                    break;
+                case ModType.EXPLOSIVES:
+                    result.Add(new ExplosivesModifier());
                     break;
             }
             if (result.Count > 0)

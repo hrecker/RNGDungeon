@@ -8,7 +8,7 @@ namespace Battle.Enemies
     {
         private int rollDebuff = 2;
         private bool debuffActive;
-        private int debuffTurnsRemaining;
+        private int debuffRollsRemaining;
 
         private void Start()
         {
@@ -37,14 +37,14 @@ namespace Battle.Enemies
                     mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
                     BattleController.AddStatusMessage(BattleActor.PLAYER, "-2 Roll: 2 rolls");
                     PlayerStatus.Status.NextRollMods.Add(mod);
-                    controller.debuffTurnsRemaining = 2;
+                    controller.debuffRollsRemaining = 2;
                     controller.debuffActive = true;
                     BattleController.AddModMessage(BattleActor.ENEMY, "Fear!");
                 }
                 else if (controller.debuffActive)
                 {
-                    controller.debuffTurnsRemaining--;
-                    if (controller.debuffTurnsRemaining <= 0)
+                    controller.debuffRollsRemaining--;
+                    if (controller.debuffRollsRemaining <= 0)
                     {
                         controller.debuffActive = false;
                     }

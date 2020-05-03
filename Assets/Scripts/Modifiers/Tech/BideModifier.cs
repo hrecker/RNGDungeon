@@ -3,22 +3,22 @@ using Modifiers.Generic;
 
 namespace Modifiers.Tech
 {
-    // Debuff for two turns, then buff equal to roll damage received in those turns
+    // Debuff for two rolls, then buff equal to roll damage received in those turns
     public class BideModifier : RollBuffModifier, IPostDamageModifier
     {
-        private int turnCount;
+        private int rollCount;
         private int rollDamageReceived;
 
         public BideModifier() : base(0, 0) { }
 
         public void ApplyPostDamageMod(RollResult rollResult)
         {
-            if (turnCount < 3)
+            if (rollCount < 3)
             {
                 rollDamageReceived += rollResult.GetRollDamage(actor);
             }
-            // Switch to buff after turn two
-            if (turnCount == 2)
+            // Switch to buff after roll two
+            if (rollCount == 2)
             {
                 minRollDiff = rollDamageReceived;
                 maxRollDiff = rollDamageReceived;
@@ -27,8 +27,8 @@ namespace Modifiers.Tech
 
         public override RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
-            turnCount++;
-            switch (turnCount)
+            rollCount++;
+            switch (rollCount)
             {
                 case 1:
                     BattleController.AddModMessage(actor, "Bide!");

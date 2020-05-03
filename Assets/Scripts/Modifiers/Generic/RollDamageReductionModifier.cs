@@ -1,18 +1,19 @@
 ﻿using Battle;
 
-namespace Modifiers.Ability
+namespace Modifiers.Generic
 {
     // Reduces roll damage taken
-    public class ThickSkinModifier : Modifier, IRollResultModifier
+    public class RollDamageReductionModifier : Modifier, IRollResultModifier
     {
-        private int damageReduction = 1;
+        protected int damageReduction = 1;
 
-        public ThickSkinModifier()
+        public RollDamageReductionModifier(int damageReduction)
         {
+            this.damageReduction = damageReduction;
             priority = 2;
         }
 
-        public RollResult ApplyRollResultMod(RollResult initial)
+        public virtual RollResult ApplyRollResultMod(RollResult initial)
         {
             int rollDamage = initial.GetRollDamage(actor);
             if (rollDamage > 1)

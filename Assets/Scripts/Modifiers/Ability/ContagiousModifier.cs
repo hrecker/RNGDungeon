@@ -7,14 +7,14 @@ namespace Modifiers.Ability
     public class ContagiousModifier : Modifier, IPostDamageModifier
     {
         private int rollDebuff;
-        private int rollDebuffTurns;
+        private int rollDebuffDuration;
         private string modMessage;
 
-        public ContagiousModifier(int rollDebuff, int rollDebuffTurns,
+        public ContagiousModifier(int rollDebuff, int rollDebuffDuration,
             string modMessage)
         {
             this.rollDebuff = rollDebuff;
-            this.rollDebuffTurns = rollDebuffTurns;
+            this.rollDebuffDuration = rollDebuffDuration;
             this.modMessage = modMessage;
         }
 
@@ -25,11 +25,11 @@ namespace Modifiers.Ability
             {
                 Modifier mod = new RollBuffModifier(-rollDebuff, -rollDebuff);
                 mod.isRollBounded = true;
-                mod.numRollsRemaining = rollDebuffTurns;
+                mod.numRollsRemaining = rollDebuffDuration;
                 mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
                 mod.actor = actor.Opponent();
                 BattleController.AddStatusMessage(actor.Opponent(), 
-                    "-" + rollDebuff + " Roll: " + rollDebuffTurns + " turns");
+                    "-" + rollDebuff + " Roll: " + rollDebuffDuration + " turns");
                 actor.Opponent().Status().NextRollMods.Add(mod);
                 BattleController.AddModMessage(actor, modMessage);
             }

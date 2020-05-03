@@ -128,10 +128,10 @@ R[A]re          9
 18HeartyBreakfast - GU              Buff player at start of battle
 19DailyVitamins - TU                First tech used in battle has reduced cooldown
 20AlarmClock - OU                   Player receives 3 turn buff on 10th roll of every battle
--
 21SmartHelmet - RU                  Damage reduction when below 25% health
-22Super Potion - GA                 Heals to full health, removes all debuffs, and buffs player
-23Small Explosives - GC             Deal 2 damage to enemy and player
+22SuperPotion - GA                  Heals 15 health, removes all debuffs, and buffs player
+23Explosives - GC                   Deal 2 damage to enemy and player
+-
 
 
 

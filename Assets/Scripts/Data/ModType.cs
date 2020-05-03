@@ -78,6 +78,9 @@ namespace Data
         FOURLEAFCLOVER = 407,
         HEARTYBREAKFAST = 408,
         DAILYVITAMINS = 409,
-        ALARMCLOCK = 410
+        ALARMCLOCK = 410,
+        SMARTHELMET = 411,
+        SUPERPOTION = 412,
+        EXPLOSIVES = 413
     }
 }

@@ -79,7 +79,7 @@ namespace Data
                         modEffect.playerMaxRollChange);
                     break;
                 case ModType.THICKSKIN:
-                    result = new ThickSkinModifier();
+                    result = new RollDamageReductionModifier(1);
                     break;
                 case ModType.RETALIATION:
                     result = new RetaliationModifier();

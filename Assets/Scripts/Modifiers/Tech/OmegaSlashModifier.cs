@@ -14,7 +14,10 @@ namespace Modifiers.Tech
             // Put all techs on cooldown
             foreach (Data.Tech tech in PlayerStatus.EnabledTechs)
             {
-                tech.scheduledCooldownActivate = true;
+                if (tech != currentRollGen.PlayerTech)
+                {
+                    tech.scheduledCooldownActivate = true;
+                }
             }
             return base.ApplyRollGenerationMod(currentRollGen);
         }
