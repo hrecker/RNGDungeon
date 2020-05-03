@@ -52,7 +52,8 @@ namespace UI
             RollGeneration rollGen = new RollGeneration()
             {
                 MinRoll = PlayerStatus.Status.BaseMinRoll,
-                MaxRoll = PlayerStatus.Status.BaseMaxRoll
+                MaxRoll = PlayerStatus.Status.BaseMaxRoll,
+                CurrentRoll = -1,
             };
             foreach (IRollGenerationModifier mod in PlayerStatus.Status.Mods.GetRollGenerationModifiers())
             {
@@ -240,7 +241,8 @@ namespace UI
             selectableInventory = UpdateSelectableListUI(PlayerStatus.Inventory.Keys.Select(
                 i => new UIText
                 {
-                    displayName = PlayerStatus.Inventory[i] + "x " + i.GetDisplayName(),
+                    displayName = PlayerStatus.Inventory[i] + "x " + i.GetDisplayName() + 
+                    " (" + i.GetTypeSymbol() + ")",
                     callbackIdentifier = i.name,
                     tooltipText = i.tooltipText,
                     sprite = Data.Cache.GetItemIcon(i.name)

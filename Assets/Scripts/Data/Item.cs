@@ -92,6 +92,20 @@ namespace Data
                 case ModType.VOODOODOLL:
                     result.Add(new StatusIntensityModifier(0, 1));
                     break;
+                case ModType.FOURLEAFCLOVER:
+                    result.Add(new LuckBuffModifier(1));
+                    break;
+                case ModType.HEARTYBREAKFAST:
+                    result.Add(new HeartyBreakfastModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
+                    break;
+                case ModType.DAILYVITAMINS:
+                    result.Add(new DailyVitaminsModifier(-2));
+                    break;
+                case ModType.ALARMCLOCK:
+                    result.Add(new AlarmClockModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange, 10, 3));
+                    break;
             }
             if (result.Count > 0)
             {
@@ -110,6 +124,24 @@ namespace Data
         public string GetDisplayName()
         {
             return string.IsNullOrEmpty(displayName) ? name : displayName;
+        }
+
+        // Get a letter indicating the type of item this is
+        public char GetTypeSymbol()
+        {
+            if (itemType != ItemType.EQUIPMENT)
+            {
+                return 'U';
+            }
+            else if (equipSlot == EquipSlot.WEAPON)
+            {
+                return 'W';
+            }
+            else if (equipSlot == EquipSlot.TRINKET)
+            {
+                return 'T';
+            }
+            throw new Exception("Invalid item type");
         }
     }
 

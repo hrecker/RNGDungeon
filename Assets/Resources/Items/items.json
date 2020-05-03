@@ -183,6 +183,50 @@
             "tooltipText": "Status effects have increased intensity for enemies",
             "equipSlot": 2,
             "modType": 406
+        },
+        {
+            "name": "Four-leafClover",
+            "displayName": "Four-leaf Clover",
+            "itemType": 2,
+            "rarity": 1,
+            "tooltipText": "Increases luck by 1",
+            "equipSlot": 2,
+            "modType": 407
+        },
+        {
+            "name": "HeartyBreakfast",
+            "displayName": "Hearty Breakfast",
+            "itemType": 2,
+            "rarity": 1,
+            "tooltipText": "Buffs player for two rolls at start of battle",
+            "equipSlot": 2,
+            "modType": 408,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1
+            }
+        },
+        {
+            "name": "DailyVitamins",
+            "displayName": "Daily Vitamins",
+            "itemType": 2,
+            "rarity": 1,
+            "tooltipText": "First tech used each battle has cooldown reduced by 2",
+            "equipSlot": 2,
+            "modType": 409
+        },
+        {
+            "name": "AlarmClock",
+            "displayName": "Alarm Clock",
+            "itemType": 2,
+            "rarity": 1,
+            "tooltipText": "Buffs player for three rolls every 10th roll of a battle",
+            "equipSlot": 2,
+            "modType": 410,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1
+            }
         }
     ]
 }

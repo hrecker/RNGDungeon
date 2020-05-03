@@ -1,0 +1,40 @@
+﻿using Battle;
+using Modifiers.Generic;
+
+namespace Modifiers.Item
+{
+    // Creates a buff every x turns
+    public class AlarmClockModifier : Modifier, IRollGenerationModifier
+    {
+        private int turnsBetweenBuffs;
+        private int buffDuration;
+        private int minRollDiff;
+        private int maxRollDiff;
+
+        public AlarmClockModifier(int minRollDiff, int maxRollDiff,
+            int turnsBetweenBuffs, int buffDuration)
+        {
+            this.minRollDiff = minRollDiff;
+            this.maxRollDiff = maxRollDiff;
+            this.turnsBetweenBuffs = turnsBetweenBuffs;
+            this.buffDuration = buffDuration;
+        }
+
+        public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
+        {
+            if (currentRollGen.CurrentRoll % turnsBetweenBuffs == 0)
+            {
+                Modifier mod = new RollBuffModifier(minRollDiff, maxRollDiff);
+                mod.actor = actor;
+                mod.isRollBounded = true;
+                mod.numRollsRemaining = buffDuration;
+                mod.battleEffect = RollBoundedBattleEffect.BUFF;
+                BattleController.AddStatusMessage(actor, "+" + minRollDiff + 
+                    " Roll: " + buffDuration + " rolls");
+                actor.Status().NextRollMods.Add(mod);
+                BattleController.AddModMessage(actor, "Alarm Clock!");
+            }
+            return currentRollGen;
+        }
+    }
+}

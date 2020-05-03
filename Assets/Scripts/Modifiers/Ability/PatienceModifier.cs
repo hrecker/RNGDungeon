@@ -21,9 +21,14 @@ namespace Modifiers.Ability
 
         public override RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
         {
-            int buffCount = Math.Min(maxBuffCount, currentRollGen.CurrentRoll / rollsPerBuff);
+            int buffCount = 0;
+            if (currentRollGen.CurrentRoll > 0)
+            {
+                buffCount = Math.Min(maxBuffCount, currentRollGen.CurrentRoll / rollsPerBuff);
+            }
             minRollDiff = (baseMinBuff * buffCount);
             maxRollDiff = (baseMaxBuff * buffCount);
+
             RollGeneration result = base.ApplyRollGenerationMod(currentRollGen);
 
             // Reset diff in case battle ends and for inventory display

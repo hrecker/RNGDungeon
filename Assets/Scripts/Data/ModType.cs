@@ -74,6 +74,10 @@ namespace Data
         ENERGYDRINK = 403,
         INVIGORATINGPOTION = 404,
         EVILAURA = 405,
-        VOODOODOLL = 406
+        VOODOODOLL = 406,
+        FOURLEAFCLOVER = 407,
+        HEARTYBREAKFAST = 408,
+        DAILYVITAMINS = 409,
+        ALARMCLOCK = 410
     }
 }
