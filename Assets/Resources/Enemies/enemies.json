@@ -55,6 +55,12 @@
             "maxHealth": 8
         },
         {
+            "name": "TauntingFairy",
+            "baseMinRoll": 3,
+            "baseMaxRoll": 5,
+            "maxHealth": 9
+        },
+        {
             "name": "Boss",
             "baseMinRoll": 4,
             "baseMaxRoll": 6,
