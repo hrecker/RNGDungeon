@@ -37,6 +37,12 @@
             "maxHealth": 5
         },
         {
+            "name": "PossessedAxe",
+            "baseMinRoll": 1,
+            "baseMaxRoll": 5,
+            "maxHealth": 4
+        },
+        {
             "name": "FireBug",
             "baseMinRoll": 1,
             "baseMaxRoll": 4,

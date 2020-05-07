@@ -1,5 +1,8 @@
 ﻿using Battle;
 using Modifiers.Generic;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Modifiers.StatusEffect
 {
@@ -9,18 +12,38 @@ namespace Modifiers.StatusEffect
         private int punishMinRollBuff;
         private int punishMaxRollBuff;
         private string modMessage;
+        private List<Battle.StatusEffect> punishedEffects;
 
         public StatusPunishingRollBuffModifier(
             int punishMinRollBuff, int punishMaxRollBuff) : 
-            this(punishMinRollBuff, punishMaxRollBuff, null) { }
+            this(punishMinRollBuff, punishMaxRollBuff, null, null) { }
 
         public StatusPunishingRollBuffModifier(
             int punishMinRollBuff, int punishMaxRollBuff,
-            string modMessage) : base(0, 0)
+            string modMessage) : 
+            this(punishMinRollBuff, punishMaxRollBuff, modMessage, null) { }
+
+        public StatusPunishingRollBuffModifier(
+            int punishMinRollBuff, int punishMaxRollBuff,
+            string modMessage,
+            List<Battle.StatusEffect> punishedEffects) : base(0, 0)
         {
             this.punishMinRollBuff = punishMinRollBuff;
             this.punishMaxRollBuff = punishMaxRollBuff;
             this.modMessage = modMessage;
+            if (punishedEffects != null)
+            {
+                this.punishedEffects = punishedEffects;
+            }
+            else
+            {
+                this.punishedEffects = new List<Battle.StatusEffect>()
+                { 
+                    Battle.StatusEffect.BREAK,
+                    Battle.StatusEffect.ENRAGED,
+                    Battle.StatusEffect.POISON
+                };
+            }
         }
 
         public override RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
@@ -34,7 +57,7 @@ namespace Modifiers.StatusEffect
                 foreach (Modifier mod in actor.Opponent().Status().
                     GetActiveRollBoundedBattleEffectModifiers())
                 {
-                    if (mod.statusEffect != Battle.StatusEffect.NONE)
+                    if (punishedEffects.Contains(mod.statusEffect))
                     {
                         minRollDiff = punishMinRollBuff;
                         maxRollDiff = punishMaxRollBuff;

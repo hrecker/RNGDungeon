@@ -153,8 +153,8 @@ Enemies
 2 Snake                 Chance to poison
 2 Ghost                 Cuases fear on hit, low health
 2 Mysterious Statue     buffs after being hit 3 times, damage reduction until then
+2 Possessed Axe         Breaks the player and uses break-punishing moves
 -
-2 Possessed Mace        Breaks the player and uses break-punishing moves
 
 3 FireBug               Buffs at lower health
 3 Spirit                Debuffs player when taking damage
@@ -168,4 +168,4 @@ Enemies
 4 WolfPack              Roll increases on consecutive hits to player
 4 Ent                   Bides. Self heal. Retaliates if hit particularly hard.
 4 Witch                 Stacks debuffs and statuses on the player
-4 MoodyGiant            Alternate between high and low roll periods of 2 rolls.
+4 MoodyGiant            Alternate between high and low roll periods of 2 rolls. Causes break.
