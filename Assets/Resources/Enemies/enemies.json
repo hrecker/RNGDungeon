@@ -61,6 +61,18 @@
             "maxHealth": 9
         },
         {
+            "name": "Tortoise",
+            "baseMinRoll": 2,
+            "baseMaxRoll": 5,
+            "maxHealth": 15
+        },
+        {
+            "name": "Hare",
+            "baseMinRoll": 1,
+            "baseMaxRoll": 4,
+            "maxHealth": 5
+        },
+        {
             "name": "Boss",
             "baseMinRoll": 4,
             "baseMaxRoll": 6,

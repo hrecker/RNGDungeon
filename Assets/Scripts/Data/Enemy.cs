@@ -35,6 +35,10 @@ namespace Data
                     return typeof(SpiritBattleController);
                 case "TauntingFairy":
                     return typeof(TauntingFairyBattleController);
+                case "Tortoise":
+                    return typeof(TortoiseBattleController);
+                case "Hare":
+                    return typeof(HareBattleController);
                 case "Boss":
                     return typeof(BossBattleController);
                 default:

@@ -158,10 +158,10 @@ Enemies
 
 3 FireBug               Buffs at lower health
 3 Spirit                Debuffs player when taking damage
--
 3 Taunting Fairy        Causes rage for the player, with a self heal
 3 Tortoise              High damage reduction, increasing roll later in the battle (up to a point)
-3 Hare                  High rolls right off the bat, tails off                    
+3 Hare                  High rolls right off the bat, tails off     
+-               
 
 -
 4 VolatileRobot         Initiates self destruct when at 25 % health, can do massive damage if not killed in 5 turns
