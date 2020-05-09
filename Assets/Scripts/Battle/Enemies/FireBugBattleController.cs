@@ -41,13 +41,13 @@ namespace Battle.Enemies
             {
                 currentPhase = 3;
                 enemySprite.sprite = phase3;
-                mod.battleEffect = RollBoundedBattleEffect.BUFF;
+                mod.SetBattleEffect(RollBoundedBattleEffect.BUFF);
             }
             else if (healthFraction < phase2HealthFraction)
             {
                 currentPhase = 2;
                 enemySprite.sprite = phase2;
-                mod.battleEffect = RollBoundedBattleEffect.BUFF;
+                mod.SetBattleEffect(RollBoundedBattleEffect.BUFF);
             }
         }
 

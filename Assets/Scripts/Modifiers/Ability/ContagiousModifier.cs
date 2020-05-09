@@ -26,7 +26,7 @@ namespace Modifiers.Ability
                 Modifier mod = new RollBuffModifier(-rollDebuff, -rollDebuff);
                 mod.isRollBounded = true;
                 mod.numRollsRemaining = rollDebuffDuration;
-                mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                mod.SetBattleEffect(RollBoundedBattleEffect.DEBUFF);
                 mod.actor = actor.Opponent();
                 BattleController.AddStatusMessage(actor.Opponent(), 
                     "-" + rollDebuff + " Roll: " + rollDebuffDuration + " turns");

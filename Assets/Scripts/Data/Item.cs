@@ -33,7 +33,7 @@ namespace Data
                     break;
                 case ModType.RECOIL:
                     Modifier mod = new RecoilModifer();
-                    mod.battleEffect = RollBoundedBattleEffect.RECOIL;
+                    mod.SetBattleEffect(RollBoundedBattleEffect.RECOIL);
                     result.Add(mod);
                     break;
                 case ModType.WEAPON:
@@ -82,7 +82,7 @@ namespace Data
                 case ModType.INVIGORATINGPOTION:
                     Modifier buffMod = new RollBuffModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange);
-                    buffMod.battleEffect = RollBoundedBattleEffect.BUFF;
+                    buffMod.SetBattleEffect(RollBoundedBattleEffect.BUFF);
                     result.Add(buffMod);
                     break;
                 case ModType.EVILAURA:
@@ -106,7 +106,7 @@ namespace Data
                         modEffect.playerMaxRollChange, 10, 3));
                     break;
                 case ModType.SMARTHELMET:
-                    result.Add(new SmartHelmetModifier(1));
+                    result.Add(new SmartHelmetModifier(modEffect.actor, 1));
                     break;
                 case ModType.SUPERPOTION:
                     result.Add(new SuperPotionModifier(modEffect.playerHealthChange,

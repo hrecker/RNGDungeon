@@ -27,7 +27,7 @@ namespace Modifiers.Item
             Modifier buff = new RollBuffModifier(rollDiff, rollDiff);
             buff.isRollBounded = true;
             buff.numRollsRemaining = buffDuration;
-            buff.battleEffect = RollBoundedBattleEffect.BUFF;
+            buff.SetBattleEffect(RollBoundedBattleEffect.BUFF);
             actor.Status().NextRollMods.Add(buff);
         }
 

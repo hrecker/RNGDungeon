@@ -49,12 +49,13 @@ namespace Battle
             List<RollBoundedBattleEffect> foundEffects = new List<RollBoundedBattleEffect>();
             foreach (Modifier mod in statusMods)
             {
-                if (mod.battleEffect != RollBoundedBattleEffect.NONE)
+                RollBoundedBattleEffect modEffect = mod.GetBattleEffect();
+                if (modEffect != RollBoundedBattleEffect.NONE)
                 {
-                    foundEffects.Add(mod.battleEffect);
-                    if (!icons.ContainsKey(mod.battleEffect))
+                    foundEffects.Add(modEffect);
+                    if (!icons.ContainsKey(modEffect))
                     {
-                        InstantiateStatusIcon(mod.battleEffect, icons, iconParent);
+                        InstantiateStatusIcon(modEffect, icons, iconParent);
                     }
                 }
             }

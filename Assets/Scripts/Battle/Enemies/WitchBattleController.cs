@@ -28,7 +28,7 @@ namespace Battle.Enemies
                 debuff.actor = BattleActor.PLAYER;
                 debuff.isRollBounded = true;
                 debuff.numRollsRemaining = debuffDuration;
-                debuff.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                debuff.SetBattleEffect(RollBoundedBattleEffect.DEBUFF);
                 BattleController.AddStatusMessage(BattleActor.PLAYER, 
                     "-" + rollDebuff + " Roll: " + debuffDuration + " rolls");
                 PlayerStatus.Status.NextRollMods.Add(debuff);

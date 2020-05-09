@@ -23,7 +23,7 @@ namespace Modifiers.Tech
                 Modifier buff = new RollBuffModifier(0, maxRollBuff);
                 buff.isRollBounded = true;
                 buff.numRollsRemaining = buffDuration;
-                buff.battleEffect = RollBoundedBattleEffect.BUFF;
+                buff.SetBattleEffect(RollBoundedBattleEffect.BUFF);
                 BattleController.AddStatusMessage(actor, 
                     "+" + maxRollBuff + " Max Roll: " + buffDuration + " rolls");
                 actor.Status().NextRollMods.Add(buff);

@@ -28,7 +28,7 @@ namespace Modifiers.Item
                 mod.actor = actor;
                 mod.isRollBounded = true;
                 mod.numRollsRemaining = buffDuration;
-                mod.battleEffect = RollBoundedBattleEffect.BUFF;
+                mod.SetBattleEffect(RollBoundedBattleEffect.BUFF);
                 BattleController.AddStatusMessage(actor, "+" + minRollDiff + 
                     " Roll: " + buffDuration + " rolls");
                 actor.Status().NextRollMods.Add(mod);

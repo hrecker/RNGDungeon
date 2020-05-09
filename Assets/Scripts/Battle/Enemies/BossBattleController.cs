@@ -77,7 +77,7 @@ namespace Battle.Enemies
                     phaseRollsRemaining = healOrChargeRolls;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll - healOrChargeDebuff;
                     EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll - healOrChargeDebuff;
-                    mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                    mod.SetBattleEffect(RollBoundedBattleEffect.DEBUFF);
                     break;
                 case BossPhase.CHARGE: // Charge moves to release
                     currentPhase = BossPhase.RELEASE;
@@ -86,7 +86,7 @@ namespace Battle.Enemies
                     enemySprite.sprite = releaseSprite;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll + chargeBuff;
                     EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll + chargeBuff;
-                    mod.battleEffect = RollBoundedBattleEffect.BUFF;
+                    mod.SetBattleEffect(RollBoundedBattleEffect.BUFF);
                     break;
                 case BossPhase.RELEASE: // Release moves to exhaustion
                     currentPhase = BossPhase.EXHAUSTED;
@@ -94,7 +94,7 @@ namespace Battle.Enemies
                     enemySprite.sprite = exhaustSprite;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll - exhaustDebuff;
                     EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll - exhaustDebuff;
-                    mod.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                    mod.SetBattleEffect(RollBoundedBattleEffect.DEBUFF);
                     break;
                 case BossPhase.HEAL: // Heal and exhaustion move back to default
                 case BossPhase.EXHAUSTED:
@@ -104,7 +104,7 @@ namespace Battle.Enemies
                     enemySprite.sprite = defaultSprite;
                     EnemyStatus.Status.BaseMinRoll = defaultPhaseMinRoll;
                     EnemyStatus.Status.BaseMaxRoll = defaultPhaseMaxRoll;
-                    mod.battleEffect = RollBoundedBattleEffect.NONE;
+                    mod.SetBattleEffect(RollBoundedBattleEffect.NONE);
                     break;
             }
         }

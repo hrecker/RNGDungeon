@@ -8,12 +8,14 @@ namespace Modifiers.Item
     {
         private int fullDamageReduction;
 
-        public SmartHelmetModifier(int damageReduction) : base(0)
+        public SmartHelmetModifier(BattleActor actor, int damageReduction) : base(0)
         {
+            this.actor = actor;
             fullDamageReduction = damageReduction;
+            UpdateBattleEffect();
         }
 
-        public void ApplyPostDamageMod(RollResult rollResult)
+        private void UpdateBattleEffect()
         {
             if (Status().Health / (float)Status().MaxHealth < 0.25f)
             {
@@ -23,6 +25,17 @@ namespace Modifiers.Item
             {
                 battleEffect = RollBoundedBattleEffect.NONE;
             }
+        }
+
+        public override RollBoundedBattleEffect GetBattleEffect()
+        {
+            UpdateBattleEffect();
+            return battleEffect;
+        }
+
+        public void ApplyPostDamageMod(RollResult rollResult)
+        {
+            UpdateBattleEffect();
         }
 
         public override RollResult ApplyRollResultMod(RollResult initial)

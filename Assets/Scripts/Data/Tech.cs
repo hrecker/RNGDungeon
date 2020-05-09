@@ -59,7 +59,7 @@ namespace Data
                     Modifier fortifyMod = new RollBuffModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange,
                         "Fortify!");
-                    fortifyMod.battleEffect = RollBoundedBattleEffect.BUFF;
+                    fortifyMod.SetBattleEffect(RollBoundedBattleEffect.BUFF);
                     result.Add(fortifyMod);
                     break;
                 case ModType.BANDAGE:
@@ -69,21 +69,21 @@ namespace Data
                 case ModType.WILDCHARGE:
                     Modifier buffMod = new RollBuffModifier(0, modEffect.playerMaxRollChange,
                         "Wild Charge!");
-                    buffMod.battleEffect = RollBoundedBattleEffect.BUFF;
+                    buffMod.SetBattleEffect(RollBoundedBattleEffect.BUFF);
                     Modifier debuffMod = new RollBuffModifier(modEffect.playerMinRollChange, 0);
-                    debuffMod.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                    debuffMod.SetBattleEffect(RollBoundedBattleEffect.DEBUFF);
                     result.Add(buffMod);
                     result.Add(debuffMod);
                     break;
                 case ModType.PRAYER:
                     Modifier luckMod = new LuckBuffModifier(3, "Prayer!");
-                    luckMod.battleEffect = RollBoundedBattleEffect.LUCKBUFF;
+                    luckMod.SetBattleEffect(RollBoundedBattleEffect.LUCKBUFF);
                     result.Add(luckMod);
                     break;
                 case ModType.BIDE:
                     Modifier initialDebuff = new RollBuffModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange);
-                    initialDebuff.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                    initialDebuff.SetBattleEffect(RollBoundedBattleEffect.DEBUFF);
                     initialDebuff.numRollsRemaining = numRollsInEffect - 1;
                     result.Add(initialDebuff);
                     result.Add(new BideModifier());

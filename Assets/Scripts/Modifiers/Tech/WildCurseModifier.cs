@@ -24,7 +24,7 @@ namespace Modifiers.Tech
                 debuff.actor = actor.Opponent();
                 debuff.isRollBounded = true;
                 debuff.numRollsRemaining = debuffDuration;
-                debuff.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                debuff.SetBattleEffect(RollBoundedBattleEffect.DEBUFF);
                 BattleController.AddStatusMessage(actor.Opponent(),
                     minRollDebuff + " Min Roll: " + debuffDuration + " rolls");
                 actor.Opponent().Status().NextRollMods.Add(debuff);

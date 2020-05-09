@@ -32,7 +32,7 @@ namespace Modifiers
         public IEnumerable<Modifier> GetRollBoundedBattleEffectModifiers()
         {
             return uniqueRegisteredModifiers.Where(m => 
-                m.battleEffect != RollBoundedBattleEffect.NONE);
+                m.GetBattleEffect() != RollBoundedBattleEffect.NONE);
         }
 
         public List<IRollGenerationModifier> GetRollGenerationModifiers()

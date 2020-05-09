@@ -49,7 +49,7 @@ namespace Battle.Enemies
             {
                 currentPhase = 3;
                 enemySprite.sprite = phase3;
-                mod.battleEffect = RollBoundedBattleEffect.NONE;
+                mod.SetBattleEffect(RollBoundedBattleEffect.NONE);
                 EnemyStatus.Status.BaseMinRoll = finalPhaseMinRoll;
                 EnemyStatus.Status.BaseMaxRoll = finalPhaseMaxRoll;
             }

@@ -87,7 +87,7 @@ namespace Battle
         // Get mods for this actor that will apply next roll that have roll bounded effects
         public IEnumerable<Modifier> GetNextRollRollBoundedBattleEffectModifiers()
         {
-            return NextRollMods.Where(m => m.battleEffect != RollBoundedBattleEffect.NONE);
+            return NextRollMods.Where(m => m.GetBattleEffect() != RollBoundedBattleEffect.NONE);
         }
     }
 

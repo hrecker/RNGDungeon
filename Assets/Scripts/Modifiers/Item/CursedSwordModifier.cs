@@ -29,13 +29,13 @@ namespace Modifiers.Item
                 if (RollTrigger())
                 {
                     rollBuffMod = new RollBuffModifier(rollDiff, rollDiff);
-                    rollBuffMod.battleEffect = RollBoundedBattleEffect.BUFF;
+                    rollBuffMod.SetBattleEffect(RollBoundedBattleEffect.BUFF);
                     statusMessage = "+";
                 }
                 else
                 {
                     rollBuffMod = new RollBuffModifier(-rollDiff, -rollDiff);
-                    rollBuffMod.battleEffect = RollBoundedBattleEffect.DEBUFF;
+                    rollBuffMod.SetBattleEffect(RollBoundedBattleEffect.DEBUFF);
                     statusMessage = "-";
                 }
                 statusMessage += rollDiff + " Roll: 3 rolls";

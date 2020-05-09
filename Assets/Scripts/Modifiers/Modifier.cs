@@ -24,7 +24,7 @@ namespace Modifiers
         public Battle.StatusEffect statusEffect = Battle.StatusEffect.NONE;
         // General type of temporary effect this mod has in battle.
         // Only applies to roll bounded mods in general, or enemies with phases.
-        public RollBoundedBattleEffect battleEffect = RollBoundedBattleEffect.NONE;
+        protected RollBoundedBattleEffect battleEffect = RollBoundedBattleEffect.NONE;
         // Whether this mod has been deregistered
         public bool isDeregistered;
 
@@ -115,6 +115,16 @@ namespace Modifiers
                 intensity = 1;
             }
             return intensity;
+        }
+
+        public virtual RollBoundedBattleEffect GetBattleEffect()
+        {
+            return battleEffect;
+        }
+
+        public void SetBattleEffect(RollBoundedBattleEffect battleEffect)
+        {
+            this.battleEffect = battleEffect;
         }
     }
 
