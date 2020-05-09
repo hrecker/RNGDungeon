@@ -16,8 +16,8 @@ namespace Battle.Enemies
         {
             private int firstBuff = 1;
             private int secondBuff = 2;
-            private int firstBuffStartRoll = 10;
-            private int secondBuffStartRoll = 20;
+            private int firstBuffStartRoll = 8;
+            private int secondBuffStartRoll = 16;
 
             public TortoiseModifier() : base(0, 0) { }
 

@@ -14,6 +14,7 @@ namespace Modifiers.Ability
             if (initial.GetRollValue(actor) - 
                 initial.GetRollValue(actor.Opponent()) >= rollDiff)
             {
+                BattleController.AddModMessage(actor, "Overkill!");
                 initial.AddRollDamage(actor.Opponent(), bonusDamage);
             }
             return initial;

@@ -19,12 +19,12 @@
         },
         {
             "floor": 2,
-            "roomWidth": 6,
-            "roomHeight": 7,
+            "roomWidth": 5,
+            "roomHeight": 5,
             "numRooms": 10,
-            "floorItems": 3,
+            "floorItems": 2,
             "encounterRate": 0.08,
-            "enemyItemDropRate": 0.4,
+            "enemyItemDropRate": 0.3,
             "enemyEncounterRates": [
                 0.25,
                 0.35,
@@ -36,6 +36,52 @@
                 "Ghost",
                 "MysteriousStatue",
                 "PossessedAxe"
+            ]
+        },
+        {
+            "floor": 3,
+            "roomWidth": 6,
+            "roomHeight": 5,
+            "numRooms": 12,
+            "floorItems": 4,
+            "encounterRate": 0.08,
+            "enemyItemDropRate": 0.3,
+            "enemyEncounterRates": [
+                0.25,
+                0.20,
+                0.20,
+                0.18,
+                0.17
+            ],
+            "enemies": [
+                "FireBug",
+                "Tortoise",
+                "Hare",
+                "Spirit",
+                "TauntingFairy"
+            ]
+        },
+        {
+            "floor": 4,
+            "roomWidth": 6,
+            "roomHeight": 6,
+            "numRooms": 14,
+            "floorItems": 5,
+            "encounterRate": 0.08,
+            "enemyItemDropRate": 0.35,
+            "enemyEncounterRates": [
+                0.25,
+                0.25,
+                0.20,
+                0.20,
+                0.10
+            ],
+            "enemies": [
+                "Robot",
+                "WolfPack",
+                "Ent",
+                "Witch",
+                "Giant"
             ]
         }
     ]

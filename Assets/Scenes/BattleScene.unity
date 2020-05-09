@@ -367,7 +367,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2108076845}
   m_HandleRect: {fileID: 2108076844}
   m_Direction: 0
-  m_Value: 0.5
+  m_Value: 0.4999999
   m_Size: 0.6
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3218,7 +3218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65167c8f5a2009345b67ef5025132461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollInterval: 1.5
+  rollInterval: 2
   victoryDisplayTime: 2
   enemyGameObject: {fileID: 3997820038344054838}
   resultTextPanel: {fileID: 1683875630}

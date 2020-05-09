@@ -204,7 +204,13 @@ namespace Levels
             abilityAndTechSelection.gameObject.SetActive(true);
             if (availableAbilities == null || availableAbilities.Count == 0)
             {
-                availableAbilities = Data.Cache.GetRandomAbilities(3, PlayerStatus.GetAbilities());
+                List<Ability> excludedAbilities = PlayerStatus.GetAbilities();
+                if (CurrentLevel.GetCurrentFloorNumber() == 1)
+                {
+                    // Remove CarePackage from options on the first selection, since it is useless
+                    excludedAbilities.Add(Data.Cache.GetAbility("CarePackage"));
+                }
+                availableAbilities = Data.Cache.GetRandomAbilities(3, excludedAbilities);
             }
             if (availableTechs == null || availableTechs.Count == 0)
             {

@@ -12,11 +12,15 @@ namespace Modifiers.Tech
 
         public RollResult ApplyRollResultMod(RollResult initial)
         {
-            BattleController.AddModMessage(actor, "Crit!");
             if (initial.GetRollDamage(actor.Opponent()) > 0 && RollTrigger())
             {
+                BattleController.AddModMessage(actor, "Crit!");
                 initial.AddRollDamage(actor.Opponent(),
                     initial.GetRollDamage(actor.Opponent()));
+            }
+            else
+            {
+                BattleController.AddModMessage(actor, "Crit failed!");
             }
             return initial;
         }
