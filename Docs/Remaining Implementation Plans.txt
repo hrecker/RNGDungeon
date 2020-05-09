@@ -163,9 +163,9 @@ Enemies
 3 Hare                  High rolls right off the bat, tails off     
 -               
 
--
-4 VolatileRobot         Initiates self destruct when at 25 % health, can do massive damage if not killed in 5 turns
+4 Robot                 Initiates self destruct when at 25 % health, can do massive damage if not killed in 5 turns
 4 WolfPack              Roll increases on consecutive hits to player
-4 Ent                   Bides. Self heal. Retaliates if hit particularly hard.
+4 Ent                   Bides. Self heal.
 4 Witch                 Stacks debuffs and statuses on the player
-4 MoodyGiant            Alternate between high and low roll periods of 2 rolls. Causes break.
+4 Giant                 Alternate between high and low roll periods of 2 rolls. Causes break.
+-

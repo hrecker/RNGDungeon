@@ -209,7 +209,8 @@ namespace Battle
                 EnemyRollValue = rollValues.Item2,
                 PlayerRollDamage = playerDamage, 
                 EnemyRollDamage = enemyDamage,
-                PlayerTech = selectedTech
+                PlayerTech = selectedTech,
+                CurrentRoll = currentRoll
             };
             // Again apply enemy and player mods
             IEnumerable<IRollResultModifier> rrMods =

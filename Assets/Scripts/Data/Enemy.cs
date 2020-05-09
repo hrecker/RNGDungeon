@@ -39,6 +39,16 @@ namespace Data
                     return typeof(TortoiseBattleController);
                 case "Hare":
                     return typeof(HareBattleController);
+                case "Robot":
+                    return typeof(RobotBattleController);
+                case "WolfPack":
+                    return typeof(WolfPackBattleController);
+                case "Ent":
+                    return typeof(EntBattleController);
+                case "Witch":
+                    return typeof(WitchBattleController);
+                case "Giant":
+                    return typeof(GiantBattleController);
                 case "Boss":
                     return typeof(BossBattleController);
                 default:

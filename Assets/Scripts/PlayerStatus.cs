@@ -58,7 +58,7 @@ public class PlayerStatus
 
     public static void Restart()
     {
-        Status = new BattleStatus(300, 1, 4);
+        Status = new BattleStatus(300, 1, 6);
         Status.Actor = BattleActor.PLAYER;
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
         Inventory = new Dictionary<Item, int>();

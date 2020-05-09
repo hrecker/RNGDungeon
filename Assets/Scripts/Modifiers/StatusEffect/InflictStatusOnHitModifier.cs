@@ -29,18 +29,25 @@ namespace Modifiers.StatusEffect
             if (rollResult.GetRollDamage(actor.Opponent()) > 0 && RollTrigger())
             {
                 trigger = true;
-                Modifier statusMod = status.Modifier(actor.Opponent());
-                statusMod.actor = actor.Opponent();
-                statusMod.isRollBounded = true;
-                statusMod.SetStatusRollsRemaining(numStatusRolls);
-                actor.Opponent().Status().NextRollMods.Add(statusMod);
-                BattleController.AddStatusMessage(actor.Opponent(),
-                    status.Name() + ": " + statusMod.numRollsRemaining + " rolls");
+                AddStatusModifier(actor.Opponent(), status, numStatusRolls);
             }
             if ((trigger || !onlyShowModMessageOnTrigger) && modMessage != null)
             {
                 BattleController.AddModMessage(actor, modMessage);
             }
+        }
+
+        public static Modifier AddStatusModifier(BattleActor actor, 
+            Battle.StatusEffect status, int numStatusRolls)
+        {
+            Modifier statusMod = status.Modifier(actor);
+            statusMod.actor = actor;
+            statusMod.isRollBounded = true;
+            statusMod.SetStatusRollsRemaining(numStatusRolls);
+            actor.Status().NextRollMods.Add(statusMod);
+            BattleController.AddStatusMessage(actor,
+                status.Name() + ": " + statusMod.numRollsRemaining + " rolls");
+            return statusMod;
         }
     }
 }

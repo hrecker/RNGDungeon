@@ -73,10 +73,40 @@
             "maxHealth": 5
         },
         {
+            "name": "Robot",
+            "baseMinRoll": 3,
+            "baseMaxRoll": 6,
+            "maxHealth": 12
+        },
+        {
+            "name": "WolfPack",
+            "baseMinRoll": 2,
+            "baseMaxRoll": 5,
+            "maxHealth": 8
+        },
+        {
+            "name": "Ent",
+            "baseMinRoll": 3,
+            "baseMaxRoll": 5,
+            "maxHealth": 20
+        },
+        {
+            "name": "Witch",
+            "baseMinRoll": 4,
+            "baseMaxRoll": 5,
+            "maxHealth": 9
+        },
+        {
+            "name": "Giant",
+            "baseMinRoll": 4,
+            "baseMaxRoll": 6,
+            "maxHealth": 15
+        },
+        {
             "name": "Boss",
             "baseMinRoll": 4,
             "baseMaxRoll": 6,
-            "maxHealth": 25
+            "maxHealth": 30
         }
     ]
 }

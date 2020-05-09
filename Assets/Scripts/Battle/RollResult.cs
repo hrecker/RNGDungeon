@@ -20,6 +20,7 @@
         public int EnemyHeal { get; set; }
         // Tech used by the player on this roll, or null if no tech was used
         public Data.Tech PlayerTech { get; set; }
+        public int CurrentRoll { get; set; }
 
         public void SetRollDamage(BattleActor actor, int damage)
         {
