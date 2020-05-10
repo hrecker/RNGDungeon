@@ -254,6 +254,19 @@ namespace Battle
             }
             techUI.Roll();
 
+            // Apply post battle mods if player has won
+            if (completed && PlayerStatus.Status.Health > 0)
+            {
+                IEnumerable<IPostBattleModifier> pbMods =
+                    PlayerStatus.Status.Mods.GetPostBattleModifiers().Union(
+                    EnemyStatus.Status.Mods.GetPostBattleModifiers()).
+                    OrderBy(m => ((Modifier)m).priority);
+                foreach (IPostBattleModifier mod in pbMods)
+                {
+                    mod.ApplyPostBattleMod();
+                }
+            }
+
             if (!completed)
             {
                 UpdateRollCountUI();
@@ -292,15 +305,6 @@ namespace Battle
                     {
                         ShowResult("Victory", false);
                         GenerateItemDrop();
-                        // Apply any post battle mods when player defeats enemy
-                        IEnumerable<IPostBattleModifier> pbMods =
-                            PlayerStatus.Status.Mods.GetPostBattleModifiers().Union(
-                            EnemyStatus.Status.Mods.GetPostBattleModifiers()).
-                            OrderBy(m => ((Modifier)m).priority);
-                        foreach (IPostBattleModifier mod in pbMods)
-                        {
-                            mod.ApplyPostBattleMod();
-                        }
                     }
                 }
                 else
