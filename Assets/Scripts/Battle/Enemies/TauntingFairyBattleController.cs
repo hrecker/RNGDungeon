@@ -34,6 +34,7 @@ namespace Battle.Enemies
             {
                 if (Status().Health < Status().MaxHealth && RollTrigger())
                 {
+                    BattleController.AddModMessage(BattleActor.ENEMY, "Regen!");
                     currentRollGen.MinRoll -= healDebuff;
                     currentRollGen.MaxRoll -= healDebuff;
                     healing = true;
