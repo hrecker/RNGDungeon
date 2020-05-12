@@ -33,5 +33,15 @@ namespace Modifiers.Generic
             currentRollGen.MaxRoll += maxRollDiff;
             return currentRollGen;
         }
+
+        public void SetMinRollDiff(int minRollDiff)
+        {
+            this.minRollDiff = minRollDiff;
+        }
+
+        public void SetMaxRollDiff(int maxRollDiff)
+        {
+            this.maxRollDiff = maxRollDiff;
+        }
     }
 }

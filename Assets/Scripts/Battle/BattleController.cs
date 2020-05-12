@@ -8,6 +8,7 @@ using Data;
 using Modifiers;
 using Levels;
 using System.Linq;
+using Modifiers.Generic;
 
 namespace Battle
 {
@@ -63,6 +64,10 @@ namespace Battle
         private static List<NonRollDamage> nonRollDamageToApply = new List<NonRollDamage>();
         private static int currentRoll;
         private bool firstUpdate;
+
+        private RollBuffModifier fatigueModifier;
+        private int fatigueStartRoll = 50;
+        private int fatigueIncreaseInterval = 10;
 
         private void Awake()
         {
@@ -240,7 +245,18 @@ namespace Battle
             PlayerStatus.Status.Mods.DecrementAndDeregisterModsIfNecessary();
             EnemyStatus.Status.Mods.DecrementAndDeregisterModsIfNecessary();
             currentRoll++;
-            
+
+            // Add or increase fatigue if necessary
+            if (currentRoll == fatigueStartRoll)
+            {
+                AddFatigue(1);
+            }
+            else if (currentRoll > fatigueStartRoll && 
+                currentRoll % fatigueIncreaseInterval == 0)
+            {
+                AddFatigue(1 + ((currentRoll - fatigueStartRoll) / fatigueIncreaseInterval));
+            }
+
             statusUI.UpdateStatusIcons();
 
             CheckBattleComplete();
@@ -291,6 +307,13 @@ namespace Battle
                 // End any roll-bounded modifiers
                 PlayerStatus.Status.Mods.DeregisterAllRollBoundedMods();
                 PlayerStatus.Status.NextRollMods.Clear();
+                
+                // End fatigue if it's active
+                if (fatigueModifier != null && !fatigueModifier.isDeregistered)
+                {
+                    fatigueModifier.DeregisterSelf();
+                    fatigueModifier = null;
+                }
 
                 // Reset roll count
                 currentRoll = 0;
@@ -513,6 +536,25 @@ namespace Battle
             UpdateHealthUI(nonRollResult, !completed);
 
             nonRollDamageToApply.Clear();
+        }
+
+        private void AddFatigue(int fatigueCount)
+        {
+            int debuff = -fatigueCount;
+            if (fatigueModifier == null || fatigueModifier.isDeregistered)
+            {
+                fatigueModifier = new RollBuffModifier(debuff, debuff);
+                fatigueModifier.actor = BattleActor.PLAYER;
+                fatigueModifier.SetBattleEffect(RollBoundedBattleEffect.DEBUFF);
+                PlayerStatus.Status.NextRollMods.Add(fatigueModifier);
+            }
+            else
+            {
+                fatigueModifier.SetMinRollDiff(debuff);
+                fatigueModifier.SetMaxRollDiff(debuff);
+            }
+            AddStatusMessage(BattleActor.PLAYER, debuff + " roll");
+            AddModMessage(BattleActor.PLAYER, "Fatigue!");
         }
     }
 }
