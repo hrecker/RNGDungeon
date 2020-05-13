@@ -6,7 +6,7 @@
             "modType": 201,
             "modEffect": {
                 "modPriority": 3,
-                "baseModTriggerChance": 0.2
+                "baseModTriggerChance": 0.50
             }
         },
         {
@@ -15,7 +15,7 @@
             "description": "Chance to double any roll",
             "modType": 202,
             "modEffect": {
-                "baseModTriggerChance": 0.1
+                "baseModTriggerChance": 0.025
             }
         },
         {
@@ -23,7 +23,7 @@
             "description": "Chance to sap health on hit",
             "modType": 203,
             "modEffect": {
-                "baseModTriggerChance": 0.15
+                "baseModTriggerChance": 0.1
             }
         },
         {
@@ -31,7 +31,7 @@
             "description": "Increases roll when on low health",
             "modType": 204,
             "modEffect": {
-                "playerMaxRollChange": 2
+                "playerMaxRollChange": 1
             }
         },
         {
@@ -46,8 +46,8 @@
             "description": "Increases max health",
             "modType": 3,
             "modEffect": {
-                "playerHealthChange": 5,
-                "playerMaxHealthChange": 5
+                "playerHealthChange": 10,
+                "playerMaxHealthChange": 10
             }
         },
         {
@@ -64,7 +64,7 @@
             "description": "Chance to deal recoil damage when hit by an enemy",
             "modType": 207,
             "modEffect": {
-                "baseModTriggerChance": 0.33
+                "baseModTriggerChance": 0.15
             }
         },
         {
@@ -72,7 +72,7 @@
             "description": "Heal after battles",
             "modType": 208,
             "modEffect": {
-                "playerHealthChange": 2
+                "playerHealthChange": 3
             }
         },
         {
@@ -80,7 +80,7 @@
             "description": "Chance to inflict poison on hit",
             "modType": 209,
             "modEffect": {
-                "baseModTriggerChance": 0.2
+                "baseModTriggerChance": 0.1
             }
         },
         {
@@ -100,7 +100,7 @@
             "description": "Chance to debuff enemy when hit",
             "modType": 212,
             "modEffect": {
-                "baseModTriggerChance": 0.25
+                "baseModTriggerChance": 0.1
             }
         },
         {
@@ -131,7 +131,6 @@
             "description": "Using techs consecutively increases roll",
             "modType": 216,
             "modEffect": {
-                "playerMinRollChange": 1,
                 "playerMaxRollChange": 1
             }
         },
@@ -156,7 +155,7 @@
             "description": "Chance to enrage enemy on hit",
             "modType": 220,
             "modEffect": {
-                "baseModTriggerChance": 0.2
+                "baseModTriggerChance": 0.15
             }
         },
         {

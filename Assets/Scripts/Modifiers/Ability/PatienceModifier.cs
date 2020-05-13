@@ -8,7 +8,7 @@ namespace Modifiers.Ability
     public class PatienceModifier : RollBuffModifier, IPostBattleModifier
     {
         private int rollsPerBuff = 10;
-        private int maxBuffCount = 3;
+        private int maxBuffCount = 2;
 
         private int baseMinBuff;
         private int baseMaxBuff;

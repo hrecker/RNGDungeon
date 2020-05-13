@@ -1,0 +1,123 @@
+Abilities
+
+1 Stalwart - G              Chance to survive when reduced to 0 health
+2 HighRoller - LO           Chance to double roll
+3 Vampirism - LRW           Chance to sap health
+4 Heroic - RO               Increases roll at lower health
+5 LuckyHorseshoe - L        Increases luck
+6 HealthyDiet - W           Increases max health
+7 Procrastination - RO      Alternates between high and low rolls
+8 Spiky - RWL               Chance to deal recoil damage
+9 Recovery - RW             Heal after each battle
+10Venomous - LW             Chance to poison on hit
+11CarePackage - G           One time full heal
+12HighStamina - T           Reduces tech cooldown
+13Intimidate - W            Debuffs enemy at start of battle
+14Contagious - WL           Chance to debuff enemy when player is hit
+15Snowball - T              Tech cooldown is reduced by 2 after a hit
+16Skilled - T               All techs include an extra +1 max roll when activated
+17LifeDrain - T             On hit, techs restore player health
+18Overwhelming Speed - TO   Consecutively used techs increase roll
+19Thick Skin - W            Reduce damage taken by 1
+20Retaliation - RT          Taking damage reduces tech cooldown
+21Overkill - O              When the player rolls 5 greater than enemy, add 3 bonus damage
+22Taunting - LR             Chance to enrage enemy on hit
+23Patience - WO             Increases roll the longer the battle lasts
+24Relic - G                 One time get a rare item
+-
+
+
+
+
+Techs
+
+1 HeavySwing - RO           Increases roll by 2, then debuffs player for 2 rolls
+2 Rage - RO                 Increases roll at lower health
+3 Bulwark - W               Raises roll greatly but deals no damage
+4 Sideswipe - OW            Inflicts break on hit
+5 Topple - O                Deals extra damage to broken enemies
+6 Infect - W                Inflicts poison on hit
+7 Fortify - W               Increases min roll for 3 turns
+8 Omegaslash - O            Huge roll increase, but puts ALL techs on cooldown
+9 Bandage - RW              Heals player
+10WildCharge - OR           Increases max roll and decreases min roll for 3 turns
+11Prayer - LO               Temporarily boosts luck
+12Bide - RO                 Debuffs player for 2 turns, then buffs based on damage player was dealt
+13Crit - LO                 Chance to deal double damage on hit
+14WildGuess - L             Chance to greatly buff the player
+15WildCurse - L             Chance to greatly debuff the enemy
+16OccultHealing - L         Chance to greatly heal the player
+17FinishingBlow - W         Increased damage to enemies inflicted with break, poison, or rage
+18Zero - R                  Roll a zero
+19Warm-up - T               Next tech used has no cooldown
+20Risky Kick - R            Does heavy damage but inflicts recoil on the player
+
+
+
+
+Items
+
+0 Key
+1 HealthPotion - GC                 Heals 3 health
+2 BlockingPotion - WA               Blocks damage for 3 turns
+3 RecoilPotion - WUR                Recoils damage to enemy for 3 turns
+4 Shortsword - GA                   Buffs roll by 1
+5 Panacea - GC                      Cures active debuffs on the player
+6 Holy Water - LC                   Increases luck for 2 turns
+7 Energy Drink - TC                 Decreases current tech cooldowns by 1
+8 Large Health Potion - GU          Heals 10 health
+9 Poisoned Sword - WAL              Chance to inflict poison
+10Punishing Sword - WAT             Does increased damage to enemies affected by break, poison, or rage
+11Cursed Sword - LA                 Chance to debuff or buff the player every 3 rolls
+12Demonic Sword - RA                Deal more damage on low health
+13Specialty Sword - TOA             Increases roll when using techs
+14Invigorating Potion - CO          Buff self for 2 turns
+15EvilAura - WU                     Status effects (rage, break, poison) last one roll longer on enemies
+16Voodoo Doll - WA                  Status effect have more dramatic effects on enemies
+17Four-leaf Clover - LU             Increases luck by 1
+18HeartyBreakfast - GU              Buff player at start of battle
+19DailyVitamins - TU                First tech used in battle has reduced cooldown
+20AlarmClock - OU                   Player receives 3 turn buff on 10th roll of every battle
+21SmartHelmet - RU                  Damage reduction when below 25% health
+22SuperPotion - GA                  Heals 15 health, removes all debuffs, and buffs player
+23Explosives - GC                   Deal 2 damage to enemy and player
+
+
+
+
+Enemies
+
+0 Boss                  The boss
+0 Collector             Drains health on hit, drops key always
+1 Bat                   Plain old enemy
+1 Slime                 Regens every other turn
+2 Snake                 Chance to poison
+2 Ghost                 Cuases fear on hit, low health
+2 Mysterious Statue     buffs after being hit 3 times, damage reduction until then
+2 Possessed Axe         Breaks the player and uses break-punishing moves
+3 FireBug               Buffs at lower health
+3 Spirit                Debuffs player when taking damage
+3 Taunting Fairy        Causes rage for the player, with a self heal
+3 Tortoise              High damage reduction, increasing roll later in the battle (up to a point)
+3 Hare                  High rolls right off the bat, tails off     
+4 Robot                 Initiates self destruct when at 25 % health, can do massive damage if not killed in 5 turns
+4 WolfPack              Roll increases on consecutive hits to player
+4 Ent                   Bides. Self heal.
+4 Witch                 Stacks debuffs and statuses on the player
+4 Giant                 Alternate between high and low roll periods of 2 rolls. Causes break.
+
+
+
+
+Item Drop Rates and Ratios
+
+Enemies
+Floor items
+Chests
+
+
+
+Player Stats
+
+Health
+Roll
