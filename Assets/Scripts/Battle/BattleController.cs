@@ -57,10 +57,10 @@ namespace Battle
         public GameObject statusMessagePrefab;
         public float statusMessageSpacing = 40.0f;
 
-        private static List<string> playerStatusMessagesToShow = new List<string>();
-        private static List<string> enemyStatusMessagesToShow = new List<string>();
-        private static List<string> playerModMessagesToShow = new List<string>();
-        private static List<string> enemyModMessagesToShow = new List<string>();
+        private static HashSet<string> playerStatusMessagesToShow = new HashSet<string>();
+        private static HashSet<string> enemyStatusMessagesToShow = new HashSet<string>();
+        private static HashSet<string> playerModMessagesToShow = new HashSet<string>();
+        private static HashSet<string> enemyModMessagesToShow = new HashSet<string>();
         private static List<NonRollDamage> nonRollDamageToApply = new List<NonRollDamage>();
         private static int currentRoll;
         private bool firstUpdate;
@@ -476,16 +476,20 @@ namespace Battle
                 playerStatusMessagesParent, enemyStatusMessagesParent);
         }
 
-        private void CreateMessages(List<string> playerMessages, List<string> enemyMessages, 
+        private void CreateMessages(IEnumerable<string> playerMessages, IEnumerable<string> enemyMessages, 
             RectTransform playerMessageParent, RectTransform enemyMessageParent)
         {
-            for (int i = 0; i < playerMessages.Count; i++)
+            int i = 0;
+            foreach (String playerMessage in playerMessages)
             {
-                CreateStatusMessage(playerMessages[i], playerMessageParent, i);
+                CreateStatusMessage(playerMessage, playerMessageParent, i);
+                i++;
             }
-            for (int i = 0; i < enemyMessages.Count; i++)
+            i = 0;
+            foreach (String enemyMessage in enemyMessages)
             {
-                CreateStatusMessage(enemyMessages[i], enemyMessageParent, i);
+                CreateStatusMessage(enemyMessage, enemyMessageParent, i);
+                i++;
             }
         }
 

@@ -102,7 +102,10 @@ namespace Data
             if (result != null)
             {
                 result.triggerChance = modEffect.baseModTriggerChance;
-                result.priority = modEffect.modPriority;
+                if (result.priority == 0)
+                {
+                    result.priority = modEffect.modPriority;
+                }
                 result.actor = modEffect.actor;
             }
             return result;

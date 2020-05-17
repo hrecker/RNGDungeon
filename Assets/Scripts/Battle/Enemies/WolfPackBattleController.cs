@@ -3,7 +3,7 @@ using Modifiers.Generic;
 
 namespace Battle.Enemies
 {
-    // Buffs on consecutive hits to the player, up to +5 roll
+    // Buffs on consecutive hits to the player, up to +3 roll
     public class WolfPackBattleController : EnemyBattleController
     {
         public void Start()
@@ -16,7 +16,7 @@ namespace Battle.Enemies
         private class WolfPackModifier : RollBuffModifier, IPostDamageModifier
         {
             private int buffPerConsecutiveHit = 1;
-            private int resetBuff = 6;
+            private int resetBuff = 4;
 
             public WolfPackModifier() : base(0, 0) { }
 

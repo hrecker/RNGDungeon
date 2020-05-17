@@ -7,25 +7,37 @@ namespace Battle.Enemies
     {
         private void Start()
         {
-            SlimeModifier mod = new SlimeModifier();
+            SlimeModifier mod = new SlimeModifier(this);
             EnemyStatus.Status.Mods.RegisterModifier(mod);
         }
 
-        private class SlimeModifier : Modifier, IRollResultModifier
+        private class SlimeModifier : Modifier, IRollResultModifier, IRollGenerationModifier
         {
             private int regenRate = 1;
             private bool regenRoll;
+            private EnemyBattleController controller;
 
-            public SlimeModifier()
+            public SlimeModifier(EnemyBattleController controller)
             {
                 actor = BattleActor.ENEMY;
+                this.controller = controller;
+            }
+
+            public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
+            {
+                if (regenRoll)
+                {
+                    BattleController.AddModMessage(BattleActor.ENEMY, "Regen!");
+                    BattleActor.ENEMY.Status().Mods.RegisterModifier(
+                        controller.GetSingleTurnRollDamagePreventionMod(false, true));
+                }
+                return currentRollGen;
             }
 
             public RollResult ApplyRollResultMod(RollResult initial)
             {
                 if (regenRoll)
                 {
-                    BattleController.AddModMessage(BattleActor.ENEMY, "Regen!");
                     initial.EnemyHeal += regenRate;
                 }
                 regenRoll = !regenRoll;

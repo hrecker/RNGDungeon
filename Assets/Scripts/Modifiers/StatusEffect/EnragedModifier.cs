@@ -10,13 +10,13 @@ namespace Modifiers.StatusEffect
     {
         private float recoilRatio = 0.5f;
 
-        public EnragedModifier(BattleActor actor) : base(-1, 1) 
+        public EnragedModifier(BattleActor actor) : base(-1, 1)
         {
+            statusEffect = Battle.StatusEffect.ENRAGED;
+            battleEffect = RollBoundedBattleEffect.ENRAGED;
             // Higher intensity increases recoil
             int intensity = GetStatusEffectIntensity(actor);
             recoilRatio += (0.5f * intensity);
-            statusEffect = Battle.StatusEffect.ENRAGED;
-            battleEffect = RollBoundedBattleEffect.ENRAGED;
         }
 
         public void ApplyOneTimeEffectMod()

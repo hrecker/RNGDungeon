@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Levels;
 using Data;
+using Modifiers.Generic;
 
 namespace Battle.Enemies
 {
@@ -29,6 +30,18 @@ namespace Battle.Enemies
         protected void SetSprite(Sprite sprite)
         {
             enemySprite.sprite = sprite;
+        }
+
+        public RollDamagePreventionModifier GetSingleTurnRollDamagePreventionMod(
+            bool preventDamageToSelf,
+            bool preventDamageToOpponent)
+        {
+            RollDamagePreventionModifier preventionMod = new RollDamagePreventionModifier(
+                preventDamageToSelf, preventDamageToOpponent);
+            preventionMod.actor = BattleActor.ENEMY;
+            preventionMod.isRollBounded = true;
+            preventionMod.numRollsRemaining = 1;
+            return preventionMod;
         }
     }
 }

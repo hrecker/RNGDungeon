@@ -13,7 +13,7 @@ namespace Battle.Enemies
             inflictMod.actor = BattleActor.ENEMY;
             inflictMod.triggerChance = 0.2f;
             EnemyStatus.Status.Mods.RegisterModifier(inflictMod);
-            TauntingFairyModifier fairyMod = new TauntingFairyModifier();
+            TauntingFairyModifier fairyMod = new TauntingFairyModifier(this);
             fairyMod.actor = BattleActor.ENEMY;
             EnemyStatus.Status.Mods.RegisterModifier(fairyMod);
         }
@@ -23,11 +23,12 @@ namespace Battle.Enemies
             private int regenRate = 2;
             private float healChance = 0.25f;
             private bool healing;
-            private int healDebuff = 1;
+            private EnemyBattleController controller;
 
-            public TauntingFairyModifier()
+            public TauntingFairyModifier(EnemyBattleController controller)
             {
                 triggerChance = healChance;
+                this.controller = controller;
             }
 
             public RollGeneration ApplyRollGenerationMod(RollGeneration currentRollGen)
@@ -35,8 +36,8 @@ namespace Battle.Enemies
                 if (Status().Health < Status().MaxHealth && RollTrigger())
                 {
                     BattleController.AddModMessage(BattleActor.ENEMY, "Regen!");
-                    currentRollGen.MinRoll -= healDebuff;
-                    currentRollGen.MaxRoll -= healDebuff;
+                    BattleActor.ENEMY.Status().Mods.RegisterModifier(
+                        controller.GetSingleTurnRollDamagePreventionMod(false, true));
                     healing = true;
                 }
                 return currentRollGen;

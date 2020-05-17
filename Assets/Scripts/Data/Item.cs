@@ -99,7 +99,7 @@ namespace Data
                         modEffect.playerMaxRollChange));
                     break;
                 case ModType.DAILYVITAMINS:
-                    result.Add(new DailyVitaminsModifier(-1));
+                    result.Add(new DailyVitaminsModifier(-2));
                     break;
                 case ModType.ALARMCLOCK:
                     result.Add(new AlarmClockModifier(modEffect.playerMinRollChange,
@@ -123,7 +123,10 @@ namespace Data
                     mod.isRollBounded = numRollsInEffect > 0;
                     mod.numRollsRemaining = numRollsInEffect;
                     mod.triggerChance = modEffect.baseModTriggerChance;
-                    mod.priority = modEffect.modPriority;
+                    if (mod.priority == 0)
+                    {
+                        mod.priority = modEffect.modPriority;
+                    }
                     mod.actor = modEffect.actor;
                 }
             }

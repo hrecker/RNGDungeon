@@ -70,7 +70,7 @@ namespace Data
                     break;
                 case ModType.BANDAGE:
                     result.Add(new RollHealthChangeModifier(modEffect.playerHealthChange,
-                        0, "Bandage!"));
+                        "Bandage!"));
                     result.Add(new RollDamagePreventionModifier(false, true));
                     break;
                 case ModType.WILDCHARGE:
@@ -141,7 +141,10 @@ namespace Data
                     mod.numRollsRemaining = numRollsInEffect;
                 }
                 mod.triggerChance = modEffect.baseModTriggerChance;
-                mod.priority = modEffect.modPriority;
+                if (mod.priority == 0)
+                {
+                    mod.priority = modEffect.modPriority;
+                }
                 mod.actor = modEffect.actor;
             }
             return result;

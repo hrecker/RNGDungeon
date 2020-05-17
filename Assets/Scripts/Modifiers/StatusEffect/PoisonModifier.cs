@@ -9,11 +9,11 @@ namespace Modifiers.StatusEffect
 
         public PoisonModifier(BattleActor actor)
         {
+            statusEffect = Battle.StatusEffect.POISON;
+            battleEffect = RollBoundedBattleEffect.POISON;
             // Higher intensity increases poison damage
             int intensity = GetStatusEffectIntensity(actor);
             poisonDamage = intensity;
-            statusEffect = Battle.StatusEffect.POISON;
-            battleEffect = RollBoundedBattleEffect.POISON;
         }
 
         public void ApplyOneTimeEffectMod()

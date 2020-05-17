@@ -143,6 +143,12 @@ namespace Battle.Enemies
                     {
                         controller.UpdatePhase();
                     }
+
+                    if (controller.currentPhase == BossPhase.HEAL)
+                    {
+                        actor.Status().NextRollMods.Add(
+                            controller.GetSingleTurnRollDamagePreventionMod(false, true));
+                    }
                 }
                 else if (EnemyStatus.Status.Health <= 0)
                 {

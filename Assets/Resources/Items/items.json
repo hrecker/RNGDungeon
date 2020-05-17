@@ -2,6 +2,7 @@
     "items": [
         {
             "name": "Key",
+            "tooltipText": "Unlocks chests",
             "rarity": 4
         },
         {
@@ -98,7 +99,7 @@
             "modEffect": {
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1,
-                "baseModTriggerChance": 0.05
+                "baseModTriggerChance": 0.15
             }
         },
         {
@@ -125,7 +126,7 @@
             "modEffect": {
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1,
-                "baseModTriggerChance": 0.4
+                "baseModTriggerChance": 0.45
             }
         },
         {
@@ -211,7 +212,7 @@
             "displayName": "Daily Vitamins",
             "itemType": 2,
             "rarity": 1,
-            "tooltipText": "First tech used each battle has cooldown reduced by 1",
+            "tooltipText": "First tech used each battle has cooldown reduced by 2",
             "equipSlot": 2,
             "modType": 409
         },
@@ -231,7 +232,7 @@
         {
             "name": "SmartHelmet",
             "itemType": 2,
-            "rarity": 2,
+            "rarity": 1,
             "tooltipText": "Reduces damage taken when under 25% health",
             "equipSlot": 2,
             "modType": 411
