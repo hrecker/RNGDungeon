@@ -82,6 +82,7 @@ Items
 21SmartHelmet - RU                  Damage reduction when below 25% health
 22SuperPotion - GA                  Heals 15 health, removes all debuffs, and buffs player
 23Explosives - GC                   Deal 2 damage to enemy and player
+-
 
 
 

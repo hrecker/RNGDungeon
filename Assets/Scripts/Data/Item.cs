@@ -67,7 +67,7 @@ namespace Data
                 case ModType.CURSEDSWORD:
                     result.Add(new RollBuffModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange));
-                    result.Add(new CursedSwordModifier(3));
+                    result.Add(new CursedSwordModifier(2));
                     break;
                 case ModType.DEMONICSWORD:
                     result.Add(new RollBuffModifier(modEffect.playerMinRollChange,
@@ -77,7 +77,7 @@ namespace Data
                 case ModType.SPECIALTYSWORD:
                     result.Add(new RollBuffModifier(modEffect.playerMinRollChange,
                         modEffect.playerMaxRollChange));
-                    result.Add(new TechBuffModifier(2, 2));
+                    result.Add(new TechBuffModifier(0, 1));
                     break;
                 case ModType.INVIGORATINGPOTION:
                     Modifier buffMod = new RollBuffModifier(modEffect.playerMinRollChange,
@@ -99,11 +99,11 @@ namespace Data
                         modEffect.playerMaxRollChange));
                     break;
                 case ModType.DAILYVITAMINS:
-                    result.Add(new DailyVitaminsModifier(-2));
+                    result.Add(new DailyVitaminsModifier(-1));
                     break;
                 case ModType.ALARMCLOCK:
                     result.Add(new AlarmClockModifier(modEffect.playerMinRollChange,
-                        modEffect.playerMaxRollChange, 10, 3));
+                        modEffect.playerMaxRollChange, 10, 2));
                     break;
                 case ModType.SMARTHELMET:
                     result.Add(new SmartHelmetModifier(modEffect.actor, 1));

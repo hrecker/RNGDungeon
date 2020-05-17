@@ -98,7 +98,7 @@
             "modEffect": {
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1,
-                "baseModTriggerChance": 0.15
+                "baseModTriggerChance": 0.05
             }
         },
         {
@@ -125,7 +125,7 @@
             "modEffect": {
                 "playerMinRollChange": 1,
                 "playerMaxRollChange": 1,
-                "baseModTriggerChance": 0.5
+                "baseModTriggerChance": 0.4
             }
         },
         {
@@ -146,7 +146,7 @@
             "displayName": "Specialty Sword",
             "itemType": 2,
             "rarity": 2,
-            "tooltipText": "+1 roll, +3 when using a tech",
+            "tooltipText": "+1 roll, +2 max roll when using a tech",
             "equipSlot": 1,
             "modType": 106,
             "modEffect": {
@@ -199,11 +199,10 @@
             "displayName": "Hearty Breakfast",
             "itemType": 2,
             "rarity": 1,
-            "tooltipText": "Buffs player for two rolls at start of battle",
+            "tooltipText": "Buffs max roll for two rolls at start of battle",
             "equipSlot": 2,
             "modType": 408,
             "modEffect": {
-                "playerMinRollChange": 1,
                 "playerMaxRollChange": 1
             }
         },
@@ -212,7 +211,7 @@
             "displayName": "Daily Vitamins",
             "itemType": 2,
             "rarity": 1,
-            "tooltipText": "First tech used each battle has cooldown reduced by 2",
+            "tooltipText": "First tech used each battle has cooldown reduced by 1",
             "equipSlot": 2,
             "modType": 409
         },
@@ -221,7 +220,7 @@
             "displayName": "Alarm Clock",
             "itemType": 2,
             "rarity": 1,
-            "tooltipText": "Buffs player for three rolls every 10th roll of a battle",
+            "tooltipText": "Buffs roll by 1 for two rolls every 10th roll of a battle",
             "equipSlot": 2,
             "modType": 410,
             "modEffect": {
