@@ -51,6 +51,7 @@ Techs
 18Zero - R                  Roll a zero
 19Warm-up - T               Next tech used has no cooldown
 20Risky Kick - R            Does heavy damage but inflicts recoil on the player
+-
 
 
 

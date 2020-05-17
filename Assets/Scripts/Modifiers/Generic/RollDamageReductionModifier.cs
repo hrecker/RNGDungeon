@@ -10,7 +10,7 @@ namespace Modifiers.Generic
         public RollDamageReductionModifier(int damageReduction)
         {
             this.damageReduction = damageReduction;
-            priority = 2;
+            priority = 3;
         }
 
         public virtual RollResult ApplyRollResultMod(RollResult initial)

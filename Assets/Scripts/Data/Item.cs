@@ -29,7 +29,7 @@ namespace Data
             switch (modType)
             {
                 case ModType.BLOCK:
-                    result.Add(new BlockingModifier());
+                    result.Add(new RollDamagePreventionModifier(true, false));
                     break;
                 case ModType.RECOIL:
                     Modifier mod = new RecoilModifer();

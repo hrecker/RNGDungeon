@@ -12,22 +12,27 @@
         {
             "name": "Rage",
             "description": "Buffs when on low health",
-            "cooldownRolls": 5,
-            "modType": 302
+            "cooldownRolls": 8,
+            "modType": 302,
+            "modEffect": {
+                "playerMinRollChange": 1,
+                "playerMaxRollChange": 1
+            }
         },
         {
             "name": "Bulwark",
-            "description": "Raises roll, but does not deal damage",
-            "cooldownRolls": 8,
+            "description": "Raises roll greatly, but does not deal damage",
+            "cooldownRolls": 10,
             "modType": 303,
             "modEffect": {
-                "playerMinRollChange": 3
+                "playerMinRollChange": 4,
+                "playerMaxRollChange": 4
             }
         },
         {
             "name": "Sideswipe",
             "description": "Inflicts break",
-            "cooldownRolls": 4,
+            "cooldownRolls": 6,
             "modType": 304,
             "modEffect": {
                 "baseModTriggerChance": 1
@@ -36,7 +41,7 @@
         {
             "name": "Topple",
             "description": "Raises roll against broken enemies",
-            "cooldownRolls": 5,
+            "cooldownRolls": 6,
             "modType": 305,
             "modEffect": {
                 "playerMinRollChange": 2,
@@ -46,7 +51,7 @@
         {
             "name": "Infect",
             "description": "Inflicts poison",
-            "cooldownRolls": 5,
+            "cooldownRolls": 9,
             "modType": 306,
             "modEffect": {
                 "baseModTriggerChance": 1
@@ -55,7 +60,7 @@
         {
             "name": "OmegaSlash",
             "description": "Buffs roll greatly, but puts all techs on full cooldown",
-            "cooldownRolls": 15,
+            "cooldownRolls": 20,
             "modType": 307,
             "modEffect": {
                 "playerMinRollChange": 5,
@@ -64,8 +69,8 @@
         },
         {
             "name": "Fortify",
-            "description": "Increases min roll for 3 turns",
-            "cooldownRolls": 6,
+            "description": "Increases min roll for 3 turns, no roll damage",
+            "cooldownRolls": 10,
             "modType": 308,
             "numRollsInEffect": 3,
             "modEffect": {
@@ -74,8 +79,8 @@
         },
         {
             "name": "Bandage",
-            "description": "Heals 3 health",
-            "cooldownRolls": 8,
+            "description": "Heals 3 health, no roll damage",
+            "cooldownRolls": 12,
             "modType": 309,
             "modEffect": {
                 "playerHealthChange": 3
@@ -95,7 +100,7 @@
         },
         {
             "name": "Prayer",
-            "description": "Boosts luck for 3 rolls",
+            "description": "Boosts luck for 3 rolls, no roll damage",
             "cooldownRolls": 9,
             "modType": 311,
             "numRollsInEffect": 3
@@ -103,7 +108,7 @@
         {
             "name": "Bide",
             "description": "Debuffs player for 2 rolls, the buffs based on damage received",
-            "cooldownRolls": 8,
+            "cooldownRolls": 9,
             "modType": 312,
             "numRollsInEffect": 3,
             "modEffect": {
@@ -114,56 +119,56 @@
         {
             "name": "Crit",
             "description": "Chance to deal double damage on hit",
-            "cooldownRolls": 6,
+            "cooldownRolls": 10,
             "modType": 313,
             "modEffect": {
-                "baseModTriggerChance": 0.5
+                "baseModTriggerChance": 0.3
             }
         },
         {
             "name": "WildGuess",
             "displayName": "Wild Guess",
-            "description": "Chance to greatly buff the player",
-            "cooldownRolls": 8,
+            "description": "Chance to greatly buff the player, no roll damage",
+            "cooldownRolls": 10,
             "modType": 314,
             "numRollsInEffect": 3,
             "modEffect": {
                 "playerMaxRollChange": 5,
-                "baseModTriggerChance": 0.35
+                "baseModTriggerChance": 0.15
             }
         },
         {
             "name": "WildCurse",
             "displayName": "Wild Curse",
-            "description": "Chance to greatly debuff the enemy",
-            "cooldownRolls": 8,
+            "description": "Chance to greatly debuff the enemy, no roll damage",
+            "cooldownRolls": 10,
             "modType": 315,
             "numRollsInEffect": 3,
             "modEffect": {
                 "playerMinRollChange": -5,
-                "baseModTriggerChance": 0.35
+                "baseModTriggerChance": 0.15
             }
         },
         {
             "name": "OccultHealing",
             "displayName": "Occult Healing",
-            "description": "Chance to greatly heal the player",
-            "cooldownRolls": 8,
+            "description": "Chance to greatly heal the player, no roll damage",
+            "cooldownRolls": 10,
             "modType": 316,
             "modEffect": {
                 "playerHealthChange": 10,
-                "baseModTriggerChance": 0.35
+                "baseModTriggerChance": 0.1
             }
         },
         {
             "name": "FinishingBlow",
             "displayName": "Finishing Blow",
             "description": "Buffs roll against enemies inflicted with a status",
-            "cooldownRolls": 5,
+            "cooldownRolls": 9,
             "modType": 317,
             "modEffect": {
-                "playerMinRollChange": 3,
-                "playerMaxRollChange": 3
+                "playerMinRollChange": 2,
+                "playerMaxRollChange": 2
             }
         },
         {
@@ -174,18 +179,18 @@
         },
         {
             "name": "Warm-up",
-            "description": "Reduces cooldown of the next tech used in this battle to 1",
-            "cooldownRolls": 10,
+            "description": "Reduces cooldown of the next tech used in this battle to 1, no roll damage",
+            "cooldownRolls": 12,
             "modType": 319
         },
         {
             "name": "RiskyKick",
             "displayName": "Risky Kick",
             "description": "Raises max roll but deals 1 damage to the player",
-            "cooldownRolls": 8,
+            "cooldownRolls": 9,
             "modType": 320,
             "modEffect": {
-                "playerMaxRollChange": 3
+                "playerMaxRollChange": 2
             }
         }
     ]

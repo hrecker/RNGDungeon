@@ -34,10 +34,13 @@ namespace Data
                     result.Add(new HeavySwingModifier());
                     break;
                 case ModType.RAGE:
-                    result.Add(new RageModifier());
+                    result.Add(new LowHealthBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
                     break;
                 case ModType.BULWARK:
-                    result.Add(new BulwarkModifier(modEffect.playerMinRollChange));
+                    result.Add(new RollBuffModifier(modEffect.playerMinRollChange,
+                        modEffect.playerMaxRollChange));
+                    result.Add(new RollDamagePreventionModifier(false, true));
                     break;
                 case ModType.SIDESWIPE:
                     result.Add(new InflictStatusOnHitModifier(StatusEffect.BREAK,
@@ -61,10 +64,14 @@ namespace Data
                         "Fortify!");
                     fortifyMod.SetBattleEffect(RollBoundedBattleEffect.BUFF);
                     result.Add(fortifyMod);
+                    Modifier noDamageModFortify = new RollDamagePreventionModifier(false, true);
+                    noDamageModFortify.numRollsRemaining = 1;
+                    result.Add(noDamageModFortify);
                     break;
                 case ModType.BANDAGE:
                     result.Add(new RollHealthChangeModifier(modEffect.playerHealthChange,
                         0, "Bandage!"));
+                    result.Add(new RollDamagePreventionModifier(false, true));
                     break;
                 case ModType.WILDCHARGE:
                     Modifier buffMod = new RollBuffModifier(0, modEffect.playerMaxRollChange,
@@ -79,6 +86,9 @@ namespace Data
                     Modifier luckMod = new LuckBuffModifier(3, "Prayer!");
                     luckMod.SetBattleEffect(RollBoundedBattleEffect.LUCKBUFF);
                     result.Add(luckMod);
+                    Modifier noDamageModPrayer = new RollDamagePreventionModifier(false, true);
+                    noDamageModPrayer.numRollsRemaining = 1;
+                    result.Add(noDamageModPrayer);
                     break;
                 case ModType.BIDE:
                     Modifier initialDebuff = new RollBuffModifier(modEffect.playerMinRollChange,
@@ -93,12 +103,19 @@ namespace Data
                     break;
                 case ModType.WILDGUESS:
                     result.Add(new WildGuessModifier(modEffect.playerMaxRollChange, 3));
+                    Modifier noDamageModWG = new RollDamagePreventionModifier(false, true);
+                    noDamageModWG.numRollsRemaining = 1;
+                    result.Add(noDamageModWG);
                     break;
                 case ModType.WILDCURSE:
                     result.Add(new WildCurseModifier(modEffect.playerMinRollChange, 3));
+                    Modifier noDamageModWC = new RollDamagePreventionModifier(false, true);
+                    noDamageModWC.numRollsRemaining = 1;
+                    result.Add(noDamageModWC);
                     break;
                 case ModType.OCCULTHEALING:
                     result.Add(new OccultHealingModifier(modEffect.playerHealthChange));
+                    result.Add(new RollDamagePreventionModifier(false, true));
                     break;
                 case ModType.FINISHINGBLOW:
                     result.Add(new StatusPunishingRollBuffModifier(
@@ -110,6 +127,7 @@ namespace Data
                     break;
                 case ModType.WARMUP:
                     result.Add(new WarmupModifier());
+                    result.Add(new RollDamagePreventionModifier(false, true));
                     break;
                 case ModType.RISKYKICK:
                     result.Add(new RiskyKickModifier(modEffect.playerMaxRollChange));
