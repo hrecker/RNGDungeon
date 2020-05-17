@@ -41,7 +41,7 @@ namespace Battle.Enemies
             public RobotModifier(RobotBattleController controller) : base(0, 0) 
             {
                 this.controller = controller;
-                selfDestructInitiateHealth = (int) Math.Round(0.25f * EnemyStatus.Status.MaxHealth);
+                selfDestructInitiateHealth = (int) Math.Round(0.33f * EnemyStatus.Status.MaxHealth);
             }
 
             public void ApplyPostDamageMod(RollResult rollResult)

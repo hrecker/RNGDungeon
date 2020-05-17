@@ -34,7 +34,7 @@
             "name": "MysteriousStatue",
             "baseMinRoll": 2,
             "baseMaxRoll": 6,
-            "maxHealth": 5
+            "maxHealth": 6
         },
         {
             "name": "PossessedAxe",
@@ -44,7 +44,7 @@
         },
         {
             "name": "FireBug",
-            "baseMinRoll": 1,
+            "baseMinRoll": 2,
             "baseMaxRoll": 4,
             "maxHealth": 9
         },
@@ -82,12 +82,12 @@
             "name": "WolfPack",
             "baseMinRoll": 2,
             "baseMaxRoll": 5,
-            "maxHealth": 8
+            "maxHealth": 10
         },
         {
             "name": "Ent",
             "baseMinRoll": 3,
-            "baseMaxRoll": 5,
+            "baseMaxRoll": 6,
             "maxHealth": 20
         },
         {
@@ -105,7 +105,7 @@
         {
             "name": "Boss",
             "baseMinRoll": 4,
-            "baseMaxRoll": 6,
+            "baseMaxRoll": 7,
             "maxHealth": 30
         }
     ]
