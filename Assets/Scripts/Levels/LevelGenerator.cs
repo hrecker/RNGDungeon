@@ -129,7 +129,7 @@ namespace Levels
 
             //Set exit
             Room exitRoom = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
-            Vector2Int exitPosition = GetRandomRoomTile(exitRoom);
+            Vector2Int exitPosition = GetRandomRoomTile(exitRoom, true);
             tiles[exitPosition.x, exitPosition.y].tileType = TileType.STAIRS;
             allRooms.Remove(exitRoom);
 
@@ -139,7 +139,7 @@ namespace Levels
         private Room SetRandomRoomContents(List<Room> allRooms, TileContents contents)
         {
             Room selected = allRooms[UnityEngine.Random.Range(0, allRooms.Count)];
-            Vector2Int contentsPosition = GetRandomRoomTile(selected);
+            Vector2Int contentsPosition = GetRandomRoomTile(selected, true);
             tiles[contentsPosition.x, contentsPosition.y].tileContents = contents;
             return selected;
         }
@@ -266,11 +266,23 @@ namespace Levels
                 (room.minFloorX - level.roomWidth - 2) >= 0;
         }
 
-        private Vector2Int GetRandomRoomTile(Room room)
+        // If exclude borders is true, the returned tile will not be on the edge of the room
+        private Vector2Int GetRandomRoomTile(Room room, bool excludeBorders)
         {
-            int itemX = room.minFloorX + UnityEngine.Random.Range(0, level.roomWidth);
-            int itemY = room.minFloorY + UnityEngine.Random.Range(0, level.roomHeight);
-            return new Vector2Int(itemX, itemY);
+            int minX = 0;
+            int minY = 0;
+            int maxX = level.roomWidth;
+            int maxY = level.roomHeight;
+            if (excludeBorders)
+            {
+                minX++;
+                minY++;
+                maxX--;
+                maxY--;
+            }
+            int tileX = room.minFloorX + UnityEngine.Random.Range(minX, maxX);
+            int tileY = room.minFloorY + UnityEngine.Random.Range(minY, maxY);
+            return new Vector2Int(tileX, tileY);
         }
     }
 
