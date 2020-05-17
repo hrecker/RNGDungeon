@@ -11,7 +11,7 @@ namespace Modifiers.Ability
         {
             Dictionary<Rarity, float> alwaysRare = new Dictionary<Rarity, float>()
             {
-                { Rarity.RARE, 1.0f }
+                { Rarity.ULTRARARE, 1.0f }
             };
             PlayerController.randomlyGivenItem = Data.Cache.GetRandomItem(alwaysRare);
         }

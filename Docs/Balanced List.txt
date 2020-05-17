@@ -107,6 +107,7 @@ Enemies
 4 Ent                   Bides. Self heal.
 4 Witch                 Stacks debuffs and statuses on the player
 4 Giant                 Alternate between high and low roll periods of 2 rolls. Causes break.
+-
 
 
 
@@ -116,6 +117,7 @@ Item Drop Rates and Ratios
 Enemies
 Floor items
 Chests
+-
 
 
 

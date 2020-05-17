@@ -176,6 +176,7 @@ namespace Data
         COMMON = 0,
         UNCOMMON = 1,
         RARE = 2,
-        NEVER = 3 // Items that are never dropped randomly
+        ULTRARARE = 3,
+        NEVER = 4 // Items that are never dropped randomly
     }
 }

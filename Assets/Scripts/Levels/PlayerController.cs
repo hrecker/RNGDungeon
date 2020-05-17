@@ -62,14 +62,16 @@ namespace Levels
 
             itemPickupRarityChances = new Dictionary<Rarity, float>()
             {
-                { Rarity.COMMON, 0.35f },
-                { Rarity.UNCOMMON, 0.5f },
-                { Rarity.RARE, 0.15f }
+                { Rarity.COMMON, 0.45f },
+                { Rarity.UNCOMMON, 0.325f },
+                { Rarity.RARE, 0.2f },
+                { Rarity.ULTRARARE, 0.025f }
             };
             chestRarityChances = new Dictionary<Rarity, float>()
             {
-                { Rarity.UNCOMMON, 0.2f },
-                { Rarity.RARE, 0.8f }
+                { Rarity.UNCOMMON, 0.15f },
+                { Rarity.RARE, 0.6f },
+                { Rarity.ULTRARARE, 0.25f }
             };
         }
 

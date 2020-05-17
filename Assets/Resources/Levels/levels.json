@@ -43,7 +43,7 @@
             "roomWidth": 6,
             "roomHeight": 5,
             "numRooms": 12,
-            "floorItems": 4,
+            "floorItems": 3,
             "encounterRate": 0.08,
             "enemyItemDropRate": 0.3,
             "enemyEncounterRates": [
@@ -66,7 +66,7 @@
             "roomWidth": 6,
             "roomHeight": 6,
             "numRooms": 14,
-            "floorItems": 5,
+            "floorItems": 4,
             "encounterRate": 0.08,
             "enemyItemDropRate": 0.35,
             "enemyEncounterRates": [

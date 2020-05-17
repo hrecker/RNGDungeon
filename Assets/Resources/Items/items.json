@@ -2,7 +2,7 @@
     "items": [
         {
             "name": "Key",
-            "rarity": 3
+            "rarity": 4
         },
         {
             "name": "HealthPotion",
@@ -19,10 +19,10 @@
             "name": "BlockingPotion",
             "displayName": "Blocking Potion",
             "itemType": 1,
-            "rarity": 2,
-            "tooltipText": "Blocks incoming damage for 3 rolls",
-            "playerStatusMessages": ["Block: 3 rolls"],
-            "numRollsInEffect": 3,
+            "rarity": 1,
+            "tooltipText": "Blocks incoming damage for 2 rolls",
+            "playerStatusMessages": ["Block: 2 rolls"],
+            "numRollsInEffect": 2,
             "modType": 1
         },
         {
@@ -42,7 +42,7 @@
             "name": "SharpenedSword",
             "displayName": "Sharpened Sword",
             "itemType": 2,
-            "rarity": 2,
+            "rarity": 3,
             "tooltipText": "+2 roll",
             "equipSlot": 1,
             "modType": 101,
@@ -91,7 +91,7 @@
             "name": "PoisonedSword",
             "displayName": "Poisoned Sword",
             "itemType": 2,
-            "rarity": 2,
+            "rarity": 3,
             "tooltipText": "+1 roll, chance to poison on hit",
             "equipSlot": 1,
             "modType": 102,
@@ -105,7 +105,7 @@
             "name": "PunishingSword",
             "displayName": "Punishing Sword",
             "itemType": 2,
-            "rarity": 2,
+            "rarity": 3,
             "tooltipText": "+1 roll, +3 against enemies with a status",
             "equipSlot": 1,
             "modType": 103,
@@ -118,7 +118,7 @@
             "name": "CursedSword",
             "displayName": "Cursed Sword",
             "itemType": 2,
-            "rarity": 2,
+            "rarity": 3,
             "tooltipText": "+1 roll, randomly buff or debuff every 3 rolls",
             "equipSlot": 1,
             "modType": 104,
@@ -132,7 +132,7 @@
             "name": "DemonicSword",
             "displayName": "Demonic Sword",
             "itemType": 2,
-            "rarity": 2,
+            "rarity": 3,
             "tooltipText": "+1 roll, with increased buff when on low health",
             "equipSlot": 1,
             "modType": 105,
@@ -145,7 +145,7 @@
             "name": "SpecialtySword",
             "displayName": "Specialty Sword",
             "itemType": 2,
-            "rarity": 2,
+            "rarity": 3,
             "tooltipText": "+1 roll, +2 max roll when using a tech",
             "equipSlot": 1,
             "modType": 106,
@@ -171,7 +171,7 @@
             "name": "EvilAura",
             "displayName": "Evil Aura",
             "itemType": 2,
-            "rarity": 1,
+            "rarity": 2,
             "tooltipText": "Status effects inflicted on enemies last longer",
             "equipSlot": 2,
             "modType": 405
@@ -219,19 +219,19 @@
             "name": "AlarmClock",
             "displayName": "Alarm Clock",
             "itemType": 2,
-            "rarity": 1,
-            "tooltipText": "Buffs roll by 1 for two rolls every 10th roll of a battle",
+            "rarity": 2,
+            "tooltipText": "Buffs roll by 2 for two rolls every 10th roll of a battle",
             "equipSlot": 2,
             "modType": 410,
             "modEffect": {
-                "playerMinRollChange": 1,
-                "playerMaxRollChange": 1
+                "playerMinRollChange": 2,
+                "playerMaxRollChange": 2
             }
         },
         {
             "name": "SmartHelmet",
             "itemType": 2,
-            "rarity": 1,
+            "rarity": 2,
             "tooltipText": "Reduces damage taken when under 25% health",
             "equipSlot": 2,
             "modType": 411

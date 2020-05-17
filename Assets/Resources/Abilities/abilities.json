@@ -169,7 +169,7 @@
         },
         {
             "name": "Relic",
-            "description": "Receive a random rare item",
+            "description": "Receive a random ultrarare weapon",
             "modType": 222
         }
     ]

@@ -192,8 +192,8 @@ namespace Levels
                 dropsReceivedOnActiveLevel++;
                 Dictionary<Rarity, float> rarityChances = new Dictionary<Rarity, float>()
             {
-                { Rarity.COMMON, 0.8f },
-                { Rarity.UNCOMMON, 0.15f },
+                { Rarity.COMMON, 0.85f },
+                { Rarity.UNCOMMON, 0.1f },
                 { Rarity.RARE, 0.05f }
             };
                 return Data.Cache.GetRandomItem(rarityChances);
