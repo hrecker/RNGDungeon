@@ -16,6 +16,7 @@ public class GameInitialization
         Level level1 = Cache.GetLevel(1);
         CurrentLevel.InitLevel(level1);
         PlayerStatus.Restart();
+        PlayerController.ResetAbilityAndTechSelection();
         SceneManager.LoadScene("MapScene");
         hasInitialized = true;
     }

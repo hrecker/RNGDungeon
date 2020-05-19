@@ -16,7 +16,7 @@
             "modType": 302,
             "modEffect": {
                 "playerMinRollChange": 1,
-                "playerMaxRollChange": 1
+                "playerMaxRollChange": 2
             }
         },
         {
@@ -122,7 +122,7 @@
             "cooldownRolls": 7,
             "modType": 313,
             "modEffect": {
-                "baseModTriggerChance": 0.5
+                "baseModTriggerChance": 0.75
             }
         },
         {
@@ -134,7 +134,7 @@
             "numRollsInEffect": 3,
             "modEffect": {
                 "playerMaxRollChange": 5,
-                "baseModTriggerChance": 0.25
+                "baseModTriggerChance": 0.55
             }
         },
         {
@@ -146,7 +146,7 @@
             "numRollsInEffect": 3,
             "modEffect": {
                 "playerMinRollChange": -5,
-                "baseModTriggerChance": 0.25
+                "baseModTriggerChance": 0.55
             }
         },
         {
@@ -157,7 +157,7 @@
             "modType": 316,
             "modEffect": {
                 "playerHealthChange": 10,
-                "baseModTriggerChance": 0.25
+                "baseModTriggerChance": 0.40
             }
         },
         {

@@ -222,6 +222,12 @@ namespace Levels
             selectingAbility = true;
         }
 
+        public static void ResetAbilityAndTechSelection()
+        {
+            availableAbilities = null;
+            availableTechs = null;
+        }
+
         public void SelectAbilityAndTech(Ability ability, Tech tech)
         {
             PlayerStatus.AddAbility(ability);

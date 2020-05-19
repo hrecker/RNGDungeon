@@ -58,7 +58,7 @@ public class PlayerStatus
 
     public static void Restart()
     {
-        Status = new BattleStatus(50, 1, 4);
+        Status = new BattleStatus(60, 1, 5);
         Status.Actor = BattleActor.PLAYER;
         MapPosition = CurrentLevel.GetPlayerStartingPosition();
         Inventory = new Dictionary<Item, int>();
@@ -66,9 +66,11 @@ public class PlayerStatus
         Inventory.Add(Data.Cache.GetItem("Panacea"), 2);
         abilities = new List<Ability>();
         weaponMods = new List<Modifier>();
+		EquippedWeapon = null;
         EquippedTrinketIds = new Dictionary<Item, List<Guid>>();
         trinketModifiers = new Dictionary<Guid, List<Modifier>>();
         EnabledTechs = new List<Tech>();
+        KeyCount = 0;
         Initialized = true;
     }
 
